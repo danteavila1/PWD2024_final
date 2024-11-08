@@ -37,7 +37,7 @@ include_once('../../configuracion.php');
             });
         </script>
     <?php endif; ?>
-    <form id="form" name="form" method="post" onsubmit="encriptar()" action="accion/iniciarSesion.php">
+    <form id="form" name="form" method="post" onsubmit="encriptar()" action="./accion/iniciarSesion.php">
         <h3>Iniciar sesión</h3>
         <label class for="usnombre">Nombre de usuario</label>
         <input type="text" class="form-control" id="usnombre" name="usnombre">

@@ -34,5 +34,8 @@ if (!empty($colUsuarios)) {
         header("Location: ../formIniciarSesion.php");
     }
 } else {
+    setcookie("mensaje", "Usuario o contraseña incorrectos", time() + 60, "/");
+    setcookie("icono", "error", time() + 60, "/");
     header("Location: ../formIniciarSesion.php");
+    exit();
 }

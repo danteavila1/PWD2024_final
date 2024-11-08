@@ -32,6 +32,30 @@ CREATE TABLE usuariorol (
     FOREIGN KEY (idrol) REFERENCES rol(idrol) ON UPDATE CASCADE ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+-- TABLA COMPRA
+CREATE TABLE `compra` (
+  `idcompra` bigint(20) NOT NULL,
+  `cofecha` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `idusuario` bigint(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- TABLE COMPRA ITEM
+CREATE TABLE `compraitem` (
+  `idcompraitem` bigint(20) UNSIGNED NOT NULL,
+  `idproducto` bigint(20) NOT NULL,
+  `idcompra` bigint(20) NOT NULL,
+  `cicantidad` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- TABLA DE PRODUCTO
+
+CREATE TABLE `producto` (
+  `idproducto` bigint(20) NOT NULL,
+  `pronombre` varchar(11) NOT NULL,
+  `prodetalle` varchar(512) NOT NULL,
+  `procantstock` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
 -- POBLAMIENTO
 INSERT INTO rol (idrol, rodescripcion) VALUES 
 (1, 'admin'),
