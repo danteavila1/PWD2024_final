@@ -59,6 +59,9 @@ if (isset($_SESSION['mensaje'])) {
                     <a href="formAlta.php">
                         <input type="submit" class="btn btn-success me-2" value="Añadir usuario">
                     </a>
+                    <a href="formAltaRol.php">
+                        <input type="submit" class="btn btn-success me-2" value="Añadir rol">
+                    </a>
                     <a href="../login/accion/cerrarSesion.php">
                         <input type="submit" class="btn btn-secondary me-2" value="Cerrar sesión">
                     </a>
@@ -87,6 +90,7 @@ if (isset($_SESSION['mensaje'])) {
                             $objUsuarioRol = new AbmUsuarioRol();
 
                             $usuario = ['idusuario' => $idusuario];
+                            // $usuario = ['idusuario' => 1];
                             $colUsuarioRol = $objUsuarioRol->buscar($usuario);
                             $cantRoles = count($colUsuarioRol);
 
@@ -107,7 +111,7 @@ if (isset($_SESSION['mensaje'])) {
                             }
 
                             $usdeshabilitado = $colUsuarios[$i]->getUsDeshabilitado();
-                            if ($usdeshabilitado == NULL) {
+                            if ($usdeshabilitado == '0000-00-00 00:00:00') {
                                 $usdeshabilitado = "Activo";
                             }
                         ?>

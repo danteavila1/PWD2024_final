@@ -1,5 +1,6 @@
 <?php
 
+
 class Session
 {
     public function __construct()
@@ -9,18 +10,13 @@ class Session
         }
     }
 
-    /**
-     * Dado un mail y una contraseña, se encarga de iniciar una sesión
-     */
-    public function iniciar($usMail, $usPass)
+    public function iniciar($nombreUsuario, $pswUsuario)
     {
         $resp = false;
-
-        if ($this->activa() && $this->validar($usMail, $usPass)) {
-            $objUsuario = $this->getUsuario();
-            $_SESSION['usmail'] = $usMail;
-            $_SESSION['idusuario'] = $objUsuario->getIdUsuario();
-            $_SESSION['usnombre'] = $objUsuario->getUsNombre();
+        if ($this->activa() && $this->validar($nombreUsuario, $pswUsuario)) {
+            $_SESSION['usnombre'] = $nombreUsuario;
+            $user = $this->getUsuario();
+            $_SESSION['idusuario'] = $user->getIdUsuario();
             $resp = true;
         }
         return $resp;
@@ -28,6 +24,20 @@ class Session
 
     public function activa()
     {
+
+        // $resp = false;
+        // if (php_sapi_name() !== 'cli') {
+        //     if (version_compare(PHP_VERSION, '7.0.0') >= 0) {
+        //         $resp = session_status() === PHP_SESSION_ACTIVE ? true : false;
+        //     } else {
+        //         $resp = session_id() === '' ? false : true;
+        //     }
+        // }
+        // return  $resp;
+
+
+
+
         if (php_sapi_name() !== 'cli') {
             if (version_compare(phpversion(), '5.4.0', '>=')) {
                 //compara la version de php para ver si se puede usar el metodo session_status()
@@ -42,19 +52,16 @@ class Session
         return false;
     }
 
-    /**
-     * Recibe por parámetro el mail y la contraseña encriptada de un usuario
-     * @param string $usMail, $usPsw
-     * @return boolean
-     */
-    public function validar($usMail, $usPass)
+    public function validar($usNombre, $usPsw)
     {
+
+        //Viene por parametro el nombre de usuario y la contraseña encriptada
         $resp = false;
         if ($this->activa()) {
             $objAbmUsuario = new AbmUsuario();
-            $param = ["usmail" => $usMail, "uspass" => $usPass];
-            $colUsuarios = $objAbmUsuario->buscar($param);
-            if (!empty($colUsuarios)) {
+            $param = ["usnombre" => $usNombre, "uspass" => $usPsw];
+            $listaUsuario = $objAbmUsuario->buscar($param);
+            if (!empty($listaUsuario)) {
                 $resp = true;
             }
         }
@@ -65,9 +72,9 @@ class Session
     {
         //Método privado para no devolver el usuario fuera de la clase Session
         $user = null;
-        if ($this->activa() && isset($_SESSION['usmail'])) {
+        if ($this->activa() && isset($_SESSION['usnombre'])) {
             $objAbmUsuario = new AbmUsuario();
-            $param['usmail'] = $_SESSION['usmail'];
+            $param['usnombre'] = $_SESSION['usnombre'];
             $listaUsuario = $objAbmUsuario->buscar($param);
             $user = $listaUsuario[0];
         }

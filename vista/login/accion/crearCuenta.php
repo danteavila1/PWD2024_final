@@ -5,7 +5,7 @@ include_once('../../../configuracion.php');
 $datos = data_submitted();
 
 // Extraigo mail recibido
-$mailRecibido = $datos['usmail'];
+$nombreForm = $datos['usmail'];
 
 // Creo instancia del objeto Usuario
 $objUsuario = new AbmUsuario();
@@ -13,9 +13,9 @@ $colUsuarios = $objUsuario->buscar("");
 
 // Verifico si ese mail existe en la base de datos
 $existe = false;
-foreach ($colUsuarios as $email) {
-    $mailExistente = $email->getUsMail();
-    if ($mailExistente == $mailRecibido) {
+foreach ($colUsuarios as $usuario) {
+    $usuarioExistente = $usuario->getUsNombre();
+    if ($usuarioExistente == $nombreForm) {
         $existe = true;
     }
 }
@@ -29,9 +29,10 @@ if (!$existe) {
         $colUsuarios = $objUsuario->buscar($usnombre);
         $idusuario = $colUsuarios[0]->getIdUsuario();
 
-        //Creo instancia del objeto AbmUsuarioRol
+        // Creo instancia del objeto AbmUsuarioRol
         $objUsuarioRol = new AbmUsuarioRol();
 
+        // Creo al usuario con rol por defecto 'usuario'
         $tupla = ['idusuario' => $idusuario, 'idrol' => 2];
         $objUsuarioRol->alta($tupla);
 
@@ -44,7 +45,8 @@ if (!$existe) {
         header("Location: ../formIniciarSesion.php");
     }
 } else {
-    setcookie("mensaje", "El mail ya está en uso", time() + 60, "/");
+    // Corregir esto // Corregir esto // Corregir esto // Corregir esto
+    setcookie("mensaje", "Nombre de usuario en uso", time() + 60, "/");
     setcookie("icono", "error", time() + 60, "/");
     header("Location: ../formCrearCuenta.php");
 }

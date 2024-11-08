@@ -7,39 +7,60 @@ $session = new Session();
 // Recibo los datos del formulario
 $datos = data_submitted();
 
+// Extraigo el nombre de usuario para verificar si está en uso
+$nombreForm = $datos['usnombre'];
+
 // Creo instancia del objeto Usuario
 $objUsuario = new AbmUsuario();
+$colUsuarios = $objUsuario->buscar("");
 
-// Doy de alta al usuario
-if ($objUsuario->alta($datos)) {
+// Verifico si ese mail existe en la base de datos
+$existe = false;
+foreach ($colUsuarios as $usuario) {
+    $usuarioExistente = $usuario->getUsNombre();
+    if ($usuarioExistente == $nombreForm) {
+        $existe = true;
+    }
+}
 
-    // Busco ID del usuario recién creado
-    $usnombre['usnombre'] = $datos['usnombre'];
-    $colUsuarios = $objUsuario->buscar($usnombre);
-    $idusuario = $colUsuarios[0]->getIdUsuario();
+if (!$existe) {
+    // Doy de alta al usuario
+    if ($objUsuario->alta($datos)) {
 
-    //Creo instancia del objeto AbmUsuarioRol
-    $objUsuarioRol = new AbmUsuarioRol();
+        // Busco ID del usuario recién creado
+        $usnombre['usnombre'] = $datos['usnombre'];
+        $colUsuarios = $objUsuario->buscar($usnombre);
+        $idusuario = $colUsuarios[0]->getIdUsuario();
 
-    // Creo instancia del objeto AbmRol
-    $objRol = new AbmRol();
-    // Pongo colección de id's de roles recibidos
-    $roles = $datos['idrol'];
+        //Creo instancia del objeto AbmUsuarioRol
+        $objUsuarioRol = new AbmUsuarioRol();
 
-    // Realizo alta con cada uno de los roles
-    foreach ($roles as $rol) {
-        // Formo una tupla para darle de alta
-        $tupla = ['idusuario' => $idusuario, 'idrol' => $rol];
-        $objUsuarioRol->alta($tupla);
+        // Creo instancia del objeto AbmRol
+        $objRol = new AbmRol();
+        // Pongo colección de id's de roles recibidos
+        $roles = $datos['idrol'];
 
-        $_SESSION['mensaje'] = "Se realizó el alta con éxito";
-        $_SESSION['icono'] = "success";
+        // Realizo alta con cada uno de los roles
+        foreach ($roles as $rol) {
+            // Formo una tupla para darle de alta
+            $tupla = ['idusuario' => $idusuario, 'idrol' => $rol];
+            $objUsuarioRol->alta($tupla);
+
+            $_SESSION['mensaje'] = "Se realizó el alta con éxito";
+            $_SESSION['icono'] = "success";
+        }
+    } else {
+        $_SESSION['mensaje'] = "No se pudo realizar el alta";
+        $_SESSION['icono'] = "error";
     }
 } else {
-    $_SESSION['mensaje'] = "No se pudo realizar el alta";
+    // Corregir esto // Corregir esto // Corregir esto // Corregir esto
+    $_SESSION['mensaje'] = "Nombre de usuario en uso";
     $_SESSION['icono'] = "error";
 }
 
 // Redirijo al listado de usuarios
+
+// Corregir esto // Corregir esto // Corregir esto // Corregir esto
 header("Location: ../listarUsuario.php");
 exit();

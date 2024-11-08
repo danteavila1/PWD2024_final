@@ -25,25 +25,22 @@ $colUsuarios = $objUsuario->buscar($datos);
 $objUsuarioRol = new AbmUsuarioRol();
 $colUsuarioRol = $objUsuarioRol->buscar($datos);
 
-// Creamos array para guardar los roles del usuario
-$colRoles = [];
-
-// Recorremos todos los roles del usuario
+// Creamos array para guardar los roles que actualmente tiene el usuario
+$tieneRol = [];
 foreach ($colUsuarioRol as $rol) {
-    $roldescripcion = $rol->getObjRol()->getRolDescripcion();
-    $colRoles[] = $roldescripcion;
+    $idRol = $rol->getObjRol()->getIdRol();
+    $tieneRol[] = $idRol;
 }
 
-$esUsuario = "";
-$esAdmin = "";
+// Creo instancia de AbmRol y listo todos los roles existentes en la base de datos
+$objRol = new AbmRol();
+$colRoles = $objRol->buscar("");
 
+// Creamos array para guardar todos los roles de la base de datos
+$rolesExistentes = [];
 foreach ($colRoles as $rol) {
-    if ($rol == "usuario") {
-        $esUsuario = "checked";
-    }
-    if ($rol == "admin") {
-        $esAdmin = "checked";
-    }
+    $idRol = $rol->getIdRol();
+    $rolesExistentes[] = $idRol;
 }
 
 ?>
@@ -53,23 +50,28 @@ foreach ($colRoles as $rol) {
     <form id="form" name="form" method="post" action="accion/modificarRoles.php">
         <h3>Modificar roles</h3>
 
-        <input type="hidden" class="form-control" id="idusuario" name="idusuario" value="<?php echo $colUsuarios[0]->getIdUsuario() ?>" readonly>
+        <h5>Datos del usuario seleccionado</h5>
+        <label for="usnombre">ID usuario</label>
+        <input type="text" class="form-control" id="idusuario" name="idusuario" value="<?php echo $colUsuarios[0]->getIdUsuario() ?>" readonly>
         <label for="usnombre">Nombre usuario</label>
         <input type="text" class="form-control" id="usnombre" name="usnombre" value="<?php echo $colUsuarios[0]->getUsNombre() ?>" readonly>
-        <div class="form-check">
-            <h5>Rol/es</h5>
-            <input class="form-check-input" type="checkbox" name="idrol[]" value="1" id="flexCheckDefault" <?php echo $esUsuario; ?>>
-            <label class="form-check-label" for="flexCheckDefault">
-                Usuario
-            </label>
-        </div>
-        <div class="form-check">
-            <input class="form-check-input" type="checkbox" name="idrol[]" value="2" id="flexCheckChecked" <?php echo $esAdmin; ?>>
-            <label class="form-check-label" for="flexCheckChecked">
-                Admin
-            </label>
-        </div>
 
+        <h5>Rol/es actuales</h5>
+        <?php foreach ($colRoles as $rol) : ?>
+            <?php $check = ""; ?>
+            <?php foreach ($tieneRol as $tiene) {
+                if ($rol->getIdRol() == $tiene) {
+                    $check = "checked";
+                }
+            }
+            ?>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="idrol[]" value="<?php echo $rol->getIdRol(); ?>" id="flexCheckDefault" <?php echo $check; ?>>
+                <label class="form-check-label" for="flexCheckDefault">
+                    <?php echo $rol->getRolDescripcion(); ?>
+                </label>
+            </div>
+        <?php endforeach ?>
         <input type="submit" class="btn btn-success" value="Confirmar">
         <a href="listarUsuario.php">
             <input type="button" class="btn btn-primary" value="Cancelar">

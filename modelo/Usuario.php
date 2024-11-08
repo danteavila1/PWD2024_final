@@ -123,7 +123,7 @@ class Usuario
     {
         $resp = false;
         $base = new BaseDatos();
-        $sql = "INSERT INTO usuario(usnombre, uspass, usmail) VALUES ('" . $this->getUsNombre() . "','" . $this->getUsPass() . "','" . $this->getUsMail() . "');";
+        $sql = "INSERT INTO usuario(usnombre, uspass, usmail, usdeshabilitado) VALUES ('" . $this->getUsNombre() . "','" . $this->getUsPass() . "','" . $this->getUsMail() . "', '0000-00-00 00:00:00');";
         if ($base->Iniciar()) {
             $id = $base->Ejecutar($sql);
             if ($id != null) {

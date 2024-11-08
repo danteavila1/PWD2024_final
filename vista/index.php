@@ -1,3 +1,3 @@
 <?php
-header("Location: /tp5/vista/login/formIniciarSesion.php");
+header("Location: /PWD2024_Final/vista/login/formIniciarSesion.php");
 exit();
