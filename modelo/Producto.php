@@ -164,7 +164,7 @@ class Producto {
             if ($res > 0) {
                 while ($row = $base->Registro()) {
                     $obj = new Producto();
-                    $obj->cargar($row['idproducto'], $row['pronombre'], $row['prodetalle'], $row['precio'], $row['procantstock']);
+                    $obj->cargar($row['idproducto'], $row['pronombre'], $row['prodetalle'], $row['proimporte'], $row['procantstock']);
                     array_push($arreglo, $obj);
                 }
             }
