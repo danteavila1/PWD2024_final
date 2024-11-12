@@ -78,6 +78,7 @@ CREATE TABLE `producto` (
   `idproducto` bigint(20) NOT NULL AUTO_INCREMENT,
   `pronombre` int(11) NOT NULL,
   `prodetalle` varchar(512) NOT NULL,
+  `proimagen` varchar(200) NOT NULL,
   `procantstock` int(11) NOT NULL,
   PRIMARY KEY (`idproducto`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
@@ -150,3 +151,7 @@ INSERT INTO `compraestadotipo` (`idcompraestadotipo`, `cetdescripcion`, `cetdeta
 (2, 'aceptada', 'cuando el usuario administrador da ingreso a uno de las compras en estado = 1 '),
 (3, 'enviada', 'cuando el usuario administrador envia a uno de las compras en estado =2 '),
 (4, 'cancelada', 'un usuario administrador podra cancelar una compra en cualquier estado y un usuario cliente solo en estado=1 ');
+
+-- --------------------- Poblamiento tabla `producto`
+INSERT INTO `producto` (`pronombre`, `prodetalle`, `proimagen`, `procantstock`) VALUES
+('Llavero de conejito', 'Un llavero de conejito. Unico color', 'conejito.jpeg', 15);

@@ -1,7 +1,7 @@
 <?php
 include_once("../configuracion.php");
 
-
+$sesion = new Session();
 $productos = new AbmProducto();
 $listaProductos = $productos->buscar(null);
 if (count($listaProductos) > 0) {
@@ -37,8 +37,8 @@ if (count($listaProductos) > 0) {
 										<input type="number" class="form-control d-none" id= "cantidadProducto" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" placeholder="1" value=1> 
 									</div>
 									<?php
-											if ($sesion->getRolActivo()!== null) {
-												if ($sesion->getRolActivo()->getRolDescripcion() == "Cliente") {
+											if ($sesion->getRoles()!== null) {
+												if ($sesion->getRoles()[0]->getRolDescripcion() == "Cliente") {
 													?>
 													<div class="col-3">
 														<button tytpe="submit" class="btn btn-primary" id="sumarCarrito" data-id="<?php echo $producto->getIdproducto(); ?>" 
@@ -51,16 +51,7 @@ if (count($listaProductos) > 0) {
 											}else {
 												?>
 												<div class="col-3">
-													<button class="btn btn-primary" tytpe="submit" id="sumarCarrito" data-id="<?php echo $producto->getIdproducto(); ?>" onclick = "Swal.fire({
-      icon: 'error',
-      title: 'Hay que iniciar sesion para agregar al carrito',
-      showConfirmButton: false,
-      timer: 1500
-    })
-
-  setTimeout(function () {
-      location.href = base_url+'Vista/public/login.php';
-  }, 1500);"><i class="bi bi-cart-plus-fill"></i></button>
+													<button class="btn btn-primary" tytpe="submit" id="sumarCarrito" data-id="<?php echo $producto->getIdproducto(); ?>" onclick = ""></i></button>
 												</div>
 												<?php
 											}
@@ -139,6 +130,6 @@ if (count($listaProductos) > 0) {
 
 
 <?php
-include_once("../estructura/footer.php");
+//include_once("../estructura/footer.php");
 ?>
-<script src="<?php echo BASE_URL ?>Vista/js/productoCliente.js"></script>
+<!--<script src="<?php //echo BASE_URL ?>Vista/js/productoCliente.js"></script>-->
