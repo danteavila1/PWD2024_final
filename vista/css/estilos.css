@@ -1,0 +1,65 @@
+ 
+body, html {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+:root {
+    --rosa-pastel: #FFB3BA;
+    --celeste-pastel: #B3E5FF;
+    --amarillo-suave: #FFECB3;
+    --lavanda: #D4A5FF;
+    --blanco-crema: #FFF5E1;
+    --gris-claro: #FFF5E1;
+  }
+
+  /* Estilos del header */
+  .header-kawaii {
+    background-color: var(--blanco-crema);
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .navbar-brand {
+    color: var(--rosa-pastel);
+    font-weight: bold;
+    font-size: 1.5rem;
+  }
+
+  .nav-link {
+    color: var(--celeste-pastel);
+    font-weight: 500;
+  }
+
+  .nav-link:hover {
+    color: var(--lavanda);
+  }
+
+  .btn-primary {
+    background-color: var(--amarillo-suave);
+    color: #fff;
+    border: none;
+  }
+
+  .btn-primary:hover {
+    background-color: var(--rosa-pastel);
+    color: #fff;
+  }
+
+  /*footer */
+  .footer-kawaii {
+    background-color: var(--gris-claro);
+    color: var(--rosa-pastel);
+    font-weight: bold;
+  }
+  .footer-kawaii .text-muted {
+    color: #9e9e9e; 
+  }
+ 
+  .content {
+    flex: 1;
+  }
+
+  .main{
+    min-height: 80%;
+  }

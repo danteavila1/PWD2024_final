@@ -1,6 +1,6 @@
 <?php
 include_once("../configuracion.php");
-
+include_once(ROOT_PATH."/vista/estructura/header.php");
 $sesion = new Session();
 $productos = new AbmProducto();
 $listaProductos = $productos->buscar(null);
@@ -130,6 +130,6 @@ if (count($listaProductos) > 0) {
 
 
 <?php
-//include_once("../estructura/footer.php");
+include_once("../estructura/footer.php");
 ?>
-<!--<script src="<?php //echo BASE_URL ?>Vista/js/productoCliente.js"></script>-->
+<script src="<?php echo BASE_URL ?>Vista/js/productoCliente.js"></script>
