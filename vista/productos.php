@@ -14,7 +14,6 @@ if (count($listaProductos) > 0) {
 			<?php
 			foreach ($listaProductos as $producto) {
 					?>
-
 				<div class="col-md-4 mb-4">
 					<div class="card " onclick="verDetalle(this)">
 						<div class="" data-bs-toggle="modal" href="#modalDetalle" role="button">

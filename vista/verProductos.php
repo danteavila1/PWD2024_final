@@ -1,11 +1,8 @@
 <?php
-// Incluir archivos de configuración y encabezado
 include_once("../configuracion.php");
 
-// Incluir clases ABM necesarias
 include_once("../control/AbmProducto.php");
 
-// Cre una instancia del ABM para obtener los datos de los productos
 $abmProducto = new AbmProducto();
 $productos = $abmProducto->buscar(null); // Obtiene todos los productos
 ?>
