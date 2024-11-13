@@ -22,6 +22,8 @@ class CompraItem {
         $this->setCiCantidad($ciCantidad);
     }
 
+    // Metodos GET
+
     public function getIdCompraItem(){
         return $this->idCompraItem;
     }
@@ -37,6 +39,8 @@ class CompraItem {
     public function getMensajeOperacion(){
         return $this->mensajeOperacion;
     }
+
+    // Metodos SET
 
     public function setIdCompraItem($idCompraItem){
         $this->idCompraItem = $idCompraItem;

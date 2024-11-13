@@ -19,6 +19,8 @@ class Compra {
         $this->setIdUsuario($idUsuario);
     }
 
+    // Metodos GET
+
     public function getIdCompra(){
         return $this->idCompra;
     }
@@ -31,6 +33,8 @@ class Compra {
     public function getMensajeOperacion(){
         return $this->mensajeOperacion;
     }
+
+    // Metodos SET
 
     public function setIdCompra($idCompra){
         $this->idCompra = $idCompra;
