@@ -12,7 +12,8 @@ class AbmProducto {
             $proDetalle = $param['prodetalle'];
             $proCantStock = $param['procantstock'];
             $proImagen = $param['proimagen'];
-            $obj->setear($idProducto, $proNombre, $proDetalle, $proCantStock, $proImagen);
+            $proPrecio = $param['proprecio'];
+            $obj->setear($idProducto, $proNombre, $proDetalle, $proCantStock, $proImagen, $proPrecio);
         }
         return $obj;
     }
@@ -21,7 +22,7 @@ class AbmProducto {
         $obj = null;
         if (isset($param['idProducto'])) {
             $obj = new Producto();
-            $obj->setear($param['idProducto'], null, null, null, null);
+            $obj->setear($param['idProducto'], null, null, null, null, null);
         }
         return $obj;
     }
@@ -33,8 +34,6 @@ class AbmProducto {
     public function alta($param) {
         $resp = false;
         $param['idProducto'] = null;
-
-        // aca iria logica para cargar la imagen ??
 
         // Creo el objeto producto y le doy valores
         $objProducto = $this->cargarObjeto($param);
@@ -58,8 +57,6 @@ class AbmProducto {
     public function modificacion($param) {
         $resp = false;
 
-        // aplico logica para verificar si hay nueva imagen ??
-
         if ($this->seteadosCamposClaves($param)) {
             $objProducto = $this->cargarObjeto($param);
             if ($objProducto != null && $objProducto->modificar()) {
@@ -77,6 +74,7 @@ class AbmProducto {
             if (isset($param['prodetalle'])) $where .= " and prodetalle ='" . $param['prodetalle'] . "'";
             if (isset($param['procantstock'])) $where .= " and procantstock =" . $param['procantstock'];
             if (isset($param['proimagen'])) $where .= " and proimagen ='" . $param['proimagen'] . "'";
+            if (isset($param['proprecio'])) $where .= " and proprecio ='" . $param['proprecio'] . "'";
         }
 
         return Producto::listar($where);

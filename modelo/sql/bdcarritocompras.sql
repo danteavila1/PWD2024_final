@@ -155,3 +155,8 @@ INSERT INTO `compraestadotipo` (`idcompraestadotipo`, `cetdescripcion`, `cetdeta
 -- --------------------- Poblamiento tabla `producto`
 INSERT INTO `producto` (`pronombre`, `prodetalle`, `proimagen`, `procantstock`) VALUES
 ('Llavero de conejito', 'Un llavero de conejito. Unico color', 'conejito.jpeg', 15);
+
+-- -----------------------------------------【 ALTERACIONES 】-----------------------------------------
+
+ALTER TABLE `producto`
+ADD COLUMN `proprecio` DECIMAL(10,2) NOT NULL AFTER `procantstock`;

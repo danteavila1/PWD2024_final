@@ -21,7 +21,7 @@ if (count($listaProductos) > 0) {
 								<h5 class="card-title" id= "nombreProducto"><?php echo $producto->getProNombre(); ?></h5>
 								<p class="card-text" id= "descripcionProducto"><?php echo $producto->getProDetalle(); ?></p>
 								<div class="row">
-									<p class="card-text col" id= "precioProducto">Precio: $<?php echo $producto->getPrecio(); ?></p>
+									<p class="card-text col" id= "precioProducto">Precio: $<?php echo $producto->getProPrecio(); ?></p>
 									<p class="card-text col" id= "stock">Disponible: <?php echo $producto->getProCantStock(); ?></p>
 								</div>
 							</div>
@@ -41,7 +41,7 @@ if (count($listaProductos) > 0) {
 													?>
 													<div class="col-3">
 														<button tytpe="submit" class="btn btn-primary" id="sumarCarrito" data-id="<?php echo $producto->getIdproducto(); ?>" 
-														onclick = "agregarCarrito(<?php echo $producto->getIdproducto(); ?>,<?php echo $sesion->getIdUsuario(); ?>, 1)">
+														onclick = "agregarCarrito(<?php echo $producto->getIdproducto(); ?>,<?php echo $session->getIdUsuario(); ?>, 1)">
 														<i class="bi bi-cart-plus-fill"></i>
 													</button>
 												</div>
@@ -115,7 +115,7 @@ if (count($listaProductos) > 0) {
 							Correcto!
 						</div>
 					</div>
-					<input class="btn btn-success me-2"  name="boton_enviar" id="boton_enviar" value="Agregar al Carrito" onclick = "agregarCarrito(<?php echo $producto->getIdproducto(); ?>,<?php echo $sesion->getIdUsuario(); ?>, 1)">
+					<input class="btn btn-success me-2"  name="boton_enviar" id="boton_enviar" value="Agregar al Carrito" onclick = "agregarCarrito(<?php echo $producto->getIdproducto(); ?>,<?php echo $session->getIdUsuario(); ?>, 1)">
 					<!-- <button class="btn btn-danger" data-bs-dismiss="modal" aria-label="Close">Cerrar</button> -->
 				</form>
 			</div>
