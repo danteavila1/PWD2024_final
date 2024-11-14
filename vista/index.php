@@ -1,6 +1,6 @@
 <?php 
 include_once("../configuracion.php");
-include_once(ROOT_PATH . "vista/estructura/header.php");
+include_once(ROOT_PATH . "/vista/estructura/header.php");
 ?>
 
 <main class="main">
