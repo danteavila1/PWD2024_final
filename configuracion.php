@@ -8,13 +8,10 @@ include_once('env.php');
 
 $PROYECTO = $rutaProyecto;
 
-define('ROOT_PATH', $_SERVER['DOCUMENT_ROOT'].$PROYECTO);
-define('BASE_URL', 'http://'.$_SERVER['HTTP_HOST'].$PROYECTO);
+define('ROOT_PATH', $_SERVER['DOCUMENT_ROOT'] . $PROYECTO);
+define('BASE_URL', 'http://' . $_SERVER['HTTP_HOST'] . $PROYECTO);
 //variable que almacena el directorio del proyecto
 $ROOT = $_SERVER['DOCUMENT_ROOT'] . "/$PROYECTO/";
 
 $GLOBALS['ROOT'] = $ROOT;
 include_once($ROOT . 'util/funciones.php');
-?>
-
-<!-- asdasd -->

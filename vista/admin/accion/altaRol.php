@@ -1,24 +1,33 @@
 <?php
 include_once('../../../configuracion.php');
 
-// Inicio sesión -> session_start()
+// Inicia la sesión
 $session = new Session();
 
-// Recibo los datos del formulario
+// Recibe los datos enviados en el formulario
 $datos = data_submitted();
+$rolForm = $datos['rodescripcion'];
 
-// Creo instancia del objeto Usuario
+// Instancia el objeto que maneja la lógica de rol
 $objRol = new AbmRol();
+$colRoles = $objRol->buscar("");
 
-// Doy de alta al usuario
-if ($objRol->alta($datos)) {
-    $_SESSION['mensaje'] = "Rol creado con éxito";
-    $_SESSION['icono'] = "success";
-} else {
-    $_SESSION['mensaje'] = "No se pudo crear el rol";
-    $_SESSION['icono'] = "error";
+$existe = false;
+foreach ($colRoles as $rol) {
+    $rolExistente = $rol->getRolDescripcion();
+    if ($rolExistente == $rolForm) {
+        $existe = true;
+        $response = ['mensaje' => "Rol existente", 'icono' => "info"];
+    }
 }
 
-// Redirijo al listado de usuarios
-header("Location: ../listarUsuario.php");
-exit();
+if (!$existe) {
+    // Realizo el alta de rol
+    if ($objRol->alta($datos)) {
+        $response = ['mensaje' => "Rol creado exitosamente", 'icono' => "success"];
+    } else {
+        $response = ['mensaje' => "Creación de rol fallida", 'icono' => "error"];
+    }
+}
+
+echo json_encode($response);

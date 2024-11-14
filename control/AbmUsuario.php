@@ -9,17 +9,21 @@ class AbmUsuario
      * @param array $param
      * @return object
      */
-
+    //Espera como parametro un arreglo asociativo donde las claves coinciden con los nombres de las variables instancias del objeto
     public function cargarObjeto($param)
     {
         $obj = null;
 
-        if (array_key_exists('usnombre', $param) && array_key_exists('uspass', $param) && array_key_exists('usmail', $param)) {
-
+        if (array_key_exists('idusuario', $param) && array_key_exists('usnombre', $param) && array_key_exists('usmail', $param)) {
             $obj = new Usuario();
 
-            $obj->setear($param['idusuario'], $param['usnombre'], $param['uspass'], $param['usmail'], NULL);
+            // Se asigna 'uspass' solo si está presente en $param, sino se asigna 'NULL'
+            // Cambio realizado para función modificarUsuario
+            $uspass = array_key_exists('uspass', $param) ? $param['uspass'] : NULL;
+
+            $obj->setear($param['idusuario'], $param['usnombre'], $uspass, $param['usmail'], NULL);
         }
+
         return $obj;
     }
 

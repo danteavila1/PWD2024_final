@@ -1,6 +1,17 @@
 function mostrarPass(show) {
     // Selecciono la contraseña
-    const uspass = document.getElementById("uspass");
-    // Realizo condición ternaria para modificar el estado de visualización
-    uspass.type = show ? "text" : "password";
+    const pass = document.getElementById("uspass");
+    const pass2 = document.getElementById("uspassAlta");
+    const icon = document.getElementById("toggleIcon");
+
+    if (pass !== "") {
+        pass.type = show ? "text" : "password";
+        icon.className = show ? "bi bi-eye" : "bi bi-eye-slash";
+    }
+
+    if (pass2 !== "") {
+        pass2.type = show ? "text" : "password";
+        icon.className = show ? "bi bi-eye" : "bi bi-eye-slash";
+    }
+
 }

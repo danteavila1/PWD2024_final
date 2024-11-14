@@ -4,20 +4,31 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Listar usuarios</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <!-- Librerías -->
+    <script src="../js/jquery-3.7.1.min.js"></script>
+    <script src="../js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/bootstrap-icons-1.10.5/font/bootstrap-icons.min.css">
+
     <!-- SweetAlert CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <!-- SweetAlert JS -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
 
+    <title>Listar usuarios</title>
 </head>
-
 <?php
-include_once('../../configuracion.php');
 
-// Inicio sesión (session_start())
+include_once('../../configuracion.php');
 $session = new Session();
+
+// Incluyo modales
+include_once('altaRol.php');
+include_once('modificarUsuario.php');
+include_once('bajaUsuario.php');
+include_once('altaUsuario.php');
+include_once('modificarRoles.php');
+
 
 // Creo instancia del objeto AbmUsuario y accedo al método correspondiente
 $objUsuario = new AbmUsuario();
@@ -29,19 +40,10 @@ if (count($colUsuarios) > 0) {
     $hayUsuarios = true;
 }
 
-// Este paso es para mostrar notificación de SweetAlert en caso de haber realizado alguna acción
-if (isset($_SESSION['mensaje'])) {
-    $mensaje = $_SESSION['mensaje'];
-    $icono = $_SESSION['icono'];
-
-    // Borro dichos datos para que no se muestren al recargar la página
-    unset($_SESSION['mensaje']);
-    unset($_SESSION['icono']);
-}
 ?>
 
 <body>
-    <h3>Iniciado como <?php echo $_SESSION['usnombre'] ?> </h3>
+    <h3> Iniciado como <?php echo $_SESSION['usnombre'] ?></h3>
     <?php if (isset($mensaje)) : ?>
         <script>
             // Mostrar notificación de SweetAlert
@@ -56,12 +58,19 @@ if (isset($_SESSION['mensaje'])) {
             <div class="card-header">
                 <h3>Listado de usuarios cargados en la base de datos</h3>
                 <div class="d-flex">
-                    <a href="formAlta.php">
-                        <input type="submit" class="btn btn-success me-2" value="Añadir usuario">
-                    </a>
-                    <a href="formAltaRol.php">
-                        <input type="submit" class="btn btn-success me-2" value="Añadir rol">
-                    </a>
+
+                    <button class="altaUsuario btn btn-success" type="button"
+                        data-bs-toggle="modal"
+                        data-bs-target="#altaUsuario">
+                        Crear usuario
+                    </button>
+
+                    <button class="altaRol btn btn-success me-2" type="button"
+                        data-bs-toggle="modal"
+                        data-bs-target="#altaRol">
+                        Añadir rol
+                    </button>
+
                     <a href="../login/accion/cerrarSesion.php">
                         <input type="submit" class="btn btn-secondary me-2" value="Cerrar sesión">
                     </a>
@@ -125,15 +134,33 @@ if (isset($_SESSION['mensaje'])) {
                                     <td>
                                         <?php if ($usdeshabilitado == "Activo") : ?>
                                             <div class="d-flex">
-                                                <a href="formModificacion.php?idusuario=<?php echo $idusuario ?>">
-                                                    <input type="submit" class="btn btn-primary me-2" value="Modificar datos">
-                                                </a>
-                                                <a href="formModificarRoles.php?idusuario=<?php echo $idusuario ?>">
-                                                    <input type="submit" class="btn btn-primary me-2" value="Modificar roles">
-                                                </a>
-                                                <a href="formBaja.php?idusuario=<?php echo $idusuario ?>">
-                                                    <input type="submit" class="btn btn-danger me-2" value="Deshabilitar">
-                                                </a>
+                                                <button class="modificarRoles btn btn-primary" type="button"
+                                                    data-idusuario="<?php echo $idusuario; ?>"
+                                                    data-usnombre="<?php echo $usnombre; ?>"
+                                                    data-roles="<?php echo $roles; ?>"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#modificarRoles">
+                                                    Modificar roles
+                                                </button>
+
+                                                <button class="modificarUsuario btn btn-primary" type="button"
+                                                    data-idusuario="<?php echo $idusuario; ?>"
+                                                    data-usnombre="<?php echo $usnombre; ?>"
+                                                    data-usmail="<?php echo $usmail; ?>"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#modificarUsuario">
+                                                    Modificar datos
+                                                </button>
+
+                                                <button class="bajaUsuario btn btn-danger" type="button"
+                                                    data-idusuario="<?php echo $idusuario; ?>"
+                                                    data-usnombre="<?php echo $usnombre; ?>"
+                                                    data-roles="<?php echo $roles; ?>"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#bajaUsuario">
+                                                    Deshabilitar
+                                                </button>
+
                                             </div>
                                         <?php endif ?>
                                     </td>
@@ -147,6 +174,15 @@ if (isset($_SESSION['mensaje'])) {
             </div>
         </div>
     </div>
+
 </body>
+
+<script src="../js/md5.js"></script>
+<script src="../js/verPass.js"></script>
+<script src="../js/ajax/bajaUsuario.js"></script>
+<script src="../js/ajax/altaRol.js"></script>
+<script src="../js/ajax/modificarRoles.js"></script>
+<script src="../js/ajax/modificarUsuario.js"></script>
+<script src="../js/ajax/altaUsuario.js"></script>
 
 </html>

@@ -5,23 +5,29 @@ include_once('../../../configuracion.php');
 $datos = data_submitted();
 
 // Extraigo mail recibido
-$nombreForm = $datos['usmail'];
+$nombreForm = $datos['usnombre'];
+$mailForm = $datos['usmail'];
 
 // Creo instancia del objeto Usuario
 $objUsuario = new AbmUsuario();
 $colUsuarios = $objUsuario->buscar("");
 
-// Verifico si ese mail existe en la base de datos
-$existe = false;
+// Verifico si existe el nombre de usuario y email existen en la base de datos
+$existeNombre = false;
+$existeMail = false;
 foreach ($colUsuarios as $usuario) {
     $usuarioExistente = $usuario->getUsNombre();
     if ($usuarioExistente == $nombreForm) {
-        $existe = true;
+        $existeNombre = true;
+    }
+    $usuarioExistente = $usuario->getUsMail();
+    if ($usuarioExistente == $mailForm) {
+        $existeMail = true;
     }
 }
 
 // Si no existe, procedo a dar de alta al usuario
-if (!$existe) {
+if (!$existeNombre && !$existeMail) {
     if ($objUsuario->alta($datos)) {
 
         // Busco ID del usuario recién creado
@@ -46,7 +52,7 @@ if (!$existe) {
     }
 } else {
     // Corregir esto // Corregir esto // Corregir esto // Corregir esto
-    setcookie("mensaje", "Nombre de usuario en uso", time() + 60, "/");
+    setcookie("mensaje", "El nombre de usuario o mail ya está en uso", time() + 60, "/");
     setcookie("icono", "error", time() + 60, "/");
     header("Location: ../formCrearCuenta.php");
 }
