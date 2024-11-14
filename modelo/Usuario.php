@@ -143,7 +143,17 @@ class Usuario
     {
         $resp = false;
         $base = new BaseDatos();
-        $sql = "UPDATE usuario SET usnombre = '" . $this->getUsNombre() . "', uspass = '" . $this->getUsPass() . "', usmail = '" . $this->getUsMail() . "', usdeshabilitado = NULL";
+
+        // Construyo consulta sql inicial (sin contraseña en caso de que no se haya cambiado)
+        $sql = "UPDATE usuario SET usnombre = '" . $this->getUsNombre() . "', usmail = '" . $this->getUsMail() . "', usdeshabilitado = '0000-00-00 00:00:00'";
+
+        // Agrega 'uspass' SOLO si no está vacío el campo
+        // Cambio realizado para función modificarUsuario
+        $uspass = $this->getUsPass();
+        if (isset($uspass)) {
+            $sql .= ", uspass = '" . $uspass . "'";
+        }
+
         $sql .= " WHERE idusuario = " . $this->getIdUsuario();
 
         if ($base->Iniciar()) {

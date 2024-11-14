@@ -1,30 +1,35 @@
 <?php
 include_once('../../../configuracion.php');
 
-// Inicio sesión -> session_start()
-$session = new Session();
-
 // Recibo los datos del formulario
 $datos = data_submitted();
 
-// Extraigo el nombre de usuario para verificar si está en uso
+// Extraigo nombre de usuario y mail recibido
 $nombreForm = $datos['usnombre'];
+$mailForm = $datos['usmail'];
 
 // Creo instancia del objeto Usuario
 $objUsuario = new AbmUsuario();
 $colUsuarios = $objUsuario->buscar("");
 
-// Verifico si ese mail existe en la base de datos
-$existe = false;
+// Verifico si existe el nombre de usuario y email existen en la base de datos
+$existeNombre = false;
+$existeMail = false;
 foreach ($colUsuarios as $usuario) {
     $usuarioExistente = $usuario->getUsNombre();
     if ($usuarioExistente == $nombreForm) {
-        $existe = true;
+        $existeNombre = true;
+        $response = ['mensaje' => 'Nombre de usuario en uso', 'icono' => 'info'];
+    }
+    $usuarioExistente = $usuario->getUsMail();
+    if ($usuarioExistente == $mailForm) {
+        $existeMail = true;
+        $response = ['mensaje' => 'Mail en uso', 'icono' => 'info'];
     }
 }
 
-if (!$existe) {
-    // Doy de alta al usuario
+// Si no existe, procedo a dar de alta al usuario
+if (!$existeNombre && !$existeMail) {
     if ($objUsuario->alta($datos)) {
 
         // Busco ID del usuario recién creado
@@ -45,22 +50,12 @@ if (!$existe) {
             // Formo una tupla para darle de alta
             $tupla = ['idusuario' => $idusuario, 'idrol' => $rol];
             $objUsuarioRol->alta($tupla);
-
-            $_SESSION['mensaje'] = "Se realizó el alta con éxito";
-            $_SESSION['icono'] = "success";
         }
+        $response = ['mensaje' => 'Alta exitosa', 'icono' => 'success'];
     } else {
-        $_SESSION['mensaje'] = "No se pudo realizar el alta";
-        $_SESSION['icono'] = "error";
+        $response = ['mensaje' => 'Alta fallida', 'icono' => 'error'];
     }
-} else {
-    // Corregir esto // Corregir esto // Corregir esto // Corregir esto
-    $_SESSION['mensaje'] = "Nombre de usuario en uso";
-    $_SESSION['icono'] = "error";
 }
 
-// Redirijo al listado de usuarios
-
-// Corregir esto // Corregir esto // Corregir esto // Corregir esto
-header("Location: ../listarUsuario.php");
-exit();
+echo json_encode($response);
+exit;
