@@ -3,6 +3,7 @@ include_once("../configuracion.php");
 include_once(ROOT_PATH."/vista/estructura/header.php");
 $sesion = new Session();
 $productos = new AbmProducto();
+$dir = 'images/';
 $listaProductos = $productos->buscar(null);
 if (count($listaProductos) > 0) {
 	?>
@@ -17,6 +18,7 @@ if (count($listaProductos) > 0) {
 				<div class="col-md-4 mb-4">
 					<div class="card " onclick="verDetalle(this)">
 						<div class="" data-bs-toggle="modal" href="#modalDetalle" role="button">
+						<img src="<?php echo $dir.$producto->getProimagen(); ?>" class="card-img-top object-fit-cover"  height="200" id= "fotoProducto" alt="">
 							<div class="card-body">
 								<h5 class="card-title" id= "nombreProducto"><?php echo $producto->getProNombre(); ?></h5>
 								<p class="card-text" id= "descripcionProducto"><?php echo $producto->getProDetalle(); ?></p>
