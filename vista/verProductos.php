@@ -1,55 +1,53 @@
 <?php
 include_once("../configuracion.php");
-
-include_once("../control/AbmProducto.php");
-
-$abmProducto = new AbmProducto();
-$productos = $abmProducto->buscar(null); // Obtiene todos los productos
+include_once(ROOT_PATH . "/vista/estructura/header.php");
+include_once(ROOT_PATH . "/vista/accion/accionProductos.php");
 ?>
 
-<body class="bg-dark">
+<div class="container mt-4">
+    <h1 class="mb-4" style="margin-top:5%;">Nuestros Productos</h1>
+    <div class="btn btn-outline-success mb-3" onclick="nuevoProducto()">Nuevo Producto</div>
+    <div class="row">
 
-    <main class="container-fluid tablas container text-center text-light">
-        <h1>Productos</h1>
-        <div class="btn btn-outline-success mb-3" onclick="nuevoProducto()">Nuevo Producto</div>
-
-        <table class="table table-dark table-striped" id="tablaProductos">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Nombre</th>
-                    <th>Detalle</th>
-                    <th>Precio</th>
-                    <th>Stock</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php
-                if (!empty($productos)) {
-                    foreach ($productos as $producto) {
-                        echo "<tr>";
-                        echo "<td>" . $producto->getIdProducto() . "</td>";
-                        echo "<td>" . $producto->getProNombre() . "</td>";
-                        echo "<td>" . $producto->getProDetalle() . "</td>";
-                        echo "<td>$" . number_format($producto->getPrecio(), 2) . "</td>";
-                        echo "<td class='stockProducto'>" . $producto->getProCantStock() . "</td>";
-                        echo "<td>";
-                        echo "<button class='btn btn-warning editarProducto' data-id='" . $producto->getIdProducto() . "'>Editar</button> ";
-                        echo "<button class='btn btn-danger eliminarProducto' data-id='" . $producto->getIdProducto() . "'>Eliminar</button>";
-                        echo "</td>";
-                        echo "</tr>";
-                    }
-                } else {
-                    echo "<tr><td colspan='6'>No hay productos registrados</td></tr>";
-                }
+        <?php
+        if (!empty($productos)) {
+            foreach ($productos as $producto) {
                 ?>
-            </tbody>
-        </table>
-    </main>
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <!-- imagen del producto-->
+                        <img src="<?php echo BASE_URL . 'vista/images/' . $producto->getProImagen(); ?>" class="card-img-top" alt="<?php echo $producto->getProNombre(); ?>">
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script type="text/javascript" src="./js/productos/gestionProductos.js"></script>
-    <script type="text/javascript" src="./js/productos/estilosProductos.js"></script>
-</body>
-</html>
+                        <div class="card-body">
+                            <h5 class="card-title"><?php echo $producto->getProNombre(); ?></h5>
+                            <p class="card-text"><?php echo $producto->getProDetalle(); ?></p>
+                            <div class="row">
+                                <p class="card-text col">Precio: $<?php echo number_format($producto->getProPrecio(), 2); ?></p>
+                                <p class="card-text col">Stock: <?php echo $producto->getProCantStock(); ?></p>
+                            </div>
+                        </div>
+                        <div class="card-footer d-flex justify-content-between">
+                            <button class="btn btn-warning editarProducto" data-id="<?php echo $producto->getIdProducto(); ?>">Editar</button>
+                            <button class="btn btn-danger eliminarProducto" data-id="<?php echo $producto->getIdProducto(); ?>">Eliminar</button>
+                        </div>
+                    </div>
+                </div>
+                <?php
+            }
+        } else {
+            ?>
+            <div class="container p-2">
+                <div class="alert alert-info" role="alert">
+                    No hay productos cargados!
+                </div>
+            </div>
+            <?php
+        }
+        ?>
+    </div>
+</div>
+
+<?php
+include_once("./estructura/footer.php");
+?>
+<script src="<?php echo BASE_URL ?>Vista/js/productoCliente.js"></script>
