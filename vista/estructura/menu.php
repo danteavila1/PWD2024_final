@@ -20,7 +20,7 @@
               <a class="nav-link" href="#">Contacto</a>
             </li>
           </ul>
-          <a href="#" class="btn btn-primary ms-3">Iniciar sesión</a>
+          <a href="../vista/login/formIniciarSesion.php" class="btn btn-primary ms-3">Iniciar sesión</a>
         </div>
       </div>
     </nav>
