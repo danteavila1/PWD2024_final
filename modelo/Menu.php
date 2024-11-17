@@ -112,7 +112,7 @@ class Menu
         //     $idusuariorol[0] = ",idusuariorol,";
         //     $idusuariorol[1] = ",idusuariorol = '" . $this->getObjUsuarioRol()->getIdRol() . "',";
         // }
-        $idusuariorol = $this->getObjUsuarioRol()->getIdRol();
+        //$idusuariorol = $this->getObjUsuarioRol()->getIdRol();
 
         $sql = "INSERT INTO menu(menombre, melink)
         VALUES ('" . $this->getNombreMenu() . "', '" . $this->getarchivomenu() . ")";
@@ -142,8 +142,7 @@ class Menu
         $resp = false;
         $base = new BaseDatos();
 
-        $sql = "UPDATE menu SET nombremenu= '" . $this->getNombreMenu() . "', archivomenu = '" . $this->getArchivoMenu() . "' 
-        ,idusuariorol = '" . $this->getObjUsuarioRol()->getIdRol() . " WHERE idmenu = " . $this->getIdMenu() . "";
+        $sql = "UPDATE menu SET menombre= '" . $this->getNombreMenu() . "', melink = '" . " WHERE idmenu = " . $this->getIdMenu() . "";
         if ($base->Iniciar()) {
             if ($base->Ejecutar($sql)) {
                 $resp = true;
@@ -208,13 +207,13 @@ class Menu
 
                 while ($row = $base->Registro()) {
                     $obj = new Menu();
-                    $objidusuariorol = null;
-                    if ($row['idusuariorol'] != null) {
-                        $objidusuariorol = new Menu();
-                        $objidusuariorol->setIdMenu($row['idusuariorol']);
-                        $objidusuariorol->cargar();
-                    }
-                    $obj->setear($row['idmenu'], $row['nombremenu'], $row['archivomenu'], $objidusuariorol);
+                    //$objidusuariorol = null;
+                    //if ($row['idusuariorol'] != null) {
+                        //$objidusuariorol = new Menu();
+                        //$objidusuariorol->setIdMenu($row['idusuariorol']);
+                        //$objidusuariorol->cargar();
+                    //}
+                    $obj->setear($row['idmenu'], $row['menombre'], $row['melink']);
                     array_push($arreglo, $obj);
                 }
             }

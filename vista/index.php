@@ -54,5 +54,7 @@ include_once(ROOT_PATH . "vista/estructura/header.php");
               </button>
            </section>
     </div>
+    <!-- CODIGO PUESTO SOLO PARA DEPURAR EL MENU DINAMICO, BORRAR CUANDO SE LOGRE -->
+    <div id="menu"></div>
 </main>
 <?php include_once("estructura/footer.php");?>

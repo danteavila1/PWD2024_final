@@ -164,3 +164,6 @@ INSERT INTO `producto` (`pronombre`, `prodetalle`, `proimagen`, `procantstock`) 
 
 ALTER TABLE `producto`
 ADD COLUMN `proprecio` DECIMAL(10,2) NOT NULL AFTER `procantstock`;
+
+ALTER TABLE `menu`
+ADD COLUMN `melink` VARCHAR(50) NOT NULL AFTER `medeshabilitado`;
