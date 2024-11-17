@@ -4,7 +4,6 @@ class Menu
     private $idmenu;
     private $nombremenu;
     private $archivomenu;
-    private $idusuariorol;
     private $mensajeoperacion;
 
     public function __construct()
@@ -12,16 +11,14 @@ class Menu
         $this->idmenu = "";
         $this->nombremenu = "";
         $this->archivomenu = "";
-        $this->idusuariorol = null;
         $this->mensajeoperacion = "";
     }
 
-    public function setear($idmenu, $nombremenu, $archivomenu, $objUsuarioRol)
+    public function setear($idmenu, $nombremenu, $archivomenu)
     {
         $this->setIdMenu($idmenu);
         $this->setNombreMenu($nombremenu);
         $this->setArchivoMenu($archivomenu);
-        $this->setObjUsuarioRol($objUsuarioRol);
     }
 
     /* Medodos get y set para $idmenu*/
@@ -54,19 +51,6 @@ class Menu
         $this->archivomenu = $archivomenu;
     }
 
-    /* Medodos get y set para $idusuariorol*/
-    /**
-     * @return new UsuarioRol
-     */
-    public function getObjUsuarioRol()
-    {
-        return $this->idusuariorol;
-    }
-    public function setObjUsuarioRol($idusuariorol)
-    {
-        $this->idusuariorol = $idusuariorol;
-    }
-
     /* Medodos get y set para mensajeoperacion*/
     public function getMensajeOperacion()
     {
@@ -92,13 +76,13 @@ class Menu
             if ($res > -1) {
                 if ($res > 0) {
                     $row = $base->Registro();
-                    $objidusuariorol = null;
-                    if ($row['idusuariorol'] != null or $row['idusuariorol'] != '') {
+                    //$objidusuariorol = null;
+                    /**if ($row['idusuariorol'] != null or $row['idusuariorol'] != '') {
                         $objidusuariorol = new Menu();
                         $objidusuariorol->setIdMenu($row['idusuariorol']);
                         $objidusuariorol->cargar();
-                    }
-                    $this->setear($row['idmenu'], $row['nombremenu'], $row['archivomenu'], $objidusuariorol);
+                    }*/
+                    $this->setear($row['idmenu'], $row['menombre'], $row['melink']);
                 }
             } else {
                 $this->setMensajeOperacion("Menu->listar: " . $base->getError());
@@ -130,8 +114,8 @@ class Menu
         // }
         $idusuariorol = $this->getObjUsuarioRol()->getIdRol();
 
-        $sql = "INSERT INTO menu(nombremenu, archivomenu, idusuariorol)
-        VALUES ('" . $this->getNombreMenu() . "', '" . $this->getarchivomenu() . "'" . $idusuariorol;
+        $sql = "INSERT INTO menu(menombre, melink)
+        VALUES ('" . $this->getNombreMenu() . "', '" . $this->getarchivomenu() . ")";
 
         if ($base->Iniciar()) {
             if ($elid = $base->Ejecutar($sql)) {
