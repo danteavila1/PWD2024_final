@@ -158,7 +158,7 @@ ALTER TABLE `producto`
 ADD COLUMN `proprecio` DECIMAL(10,2) NOT NULL AFTER `procantstock`;
 
 ALTER TABLE `menu`
-ADD COLUMN `melink` VARCHAR(50) NOT NULL AFTER `medeshabilitado`;
+ADD COLUMN `melink` VARCHAR(50) AFTER `medeshabilitado`;
 
 
 -- --------------------- Poblamiento tabla `menu`
@@ -166,8 +166,12 @@ INSERT INTO `menu` (`idmenu`, `menombre`, `medescripcion`, `idpadre`, `medeshabi
 (1, 'Gestión de usuarios', 'Gestión de usuarios', NULL, NULL,'vista/admin/listarusuario.php'),
 (2, 'Gestión de roles', 'Gestión de roles', NULL, NULL,'vista/admin/listarroles.php'),
 (3, 'Gestión de productos', 'Gestión de productos', NULL, NULL,'vista/admin/listarproductos.php'),
-(4, 'Productos', 'Productos', NULL, NULL,'vista/deposito/productosdeposito.php');
+(4, 'Productos', 'Productos', NULL, NULL,'vista/deposito/productosdeposito.php'),
+(5, 'Inicio', 'Inicio', NULL, NULL,NULL),
+(6, 'Tienda', 'Tienda', NULL, NULL,'vista/productos.php'),
+(7, 'Novedades', 'Novedades', NULL, NULL,NULL),
+(8, 'Contacto', 'Contacto', NULL, NULL,NULL);
 
 -- --------------------- Poblamiento tabla `menurol`
 INSERT INTO `menurol` (`idmenu`, `idrol`) VALUES
-(1, 1),(2, 1),(3, 1),(4, 2);
+(1, 1),(2, 1),(3, 1),(4, 2),(5, 3),(6, 3),(7, 3),(8, 3);
