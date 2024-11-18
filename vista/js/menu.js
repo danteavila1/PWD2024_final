@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
-    fetch("menu_dinamico.php")
+    var ruta = __dirname;
+    fetch(ruta+"menu_dinamico.php")
         .then(response => {
             if (!response.ok) {
                 throw new Error(`Error HTTP: ${response.status}`);
