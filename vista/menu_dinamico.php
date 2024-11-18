@@ -49,7 +49,7 @@ $arr = [];
 $menues = new AbmMenuRol();
 foreach($roles as $rol){
     //De los roles, me traigo los ID de los menu que puede ver
-    $param = ['idRol'=>$rol];
+    $param = ['idrol'=>$rol->getIdRol()];
     $arr = $menues->buscar($param);
     array_push($arrMenu,$arr);
 }
@@ -62,7 +62,7 @@ foreach($arr as $menu){
 }
 echo '<a href="'.BASE_URL.'vista/login/accion/cerrarSesion.php" class="btn btn-primary ms-3">Cerrar sesión</a>';
 echo '</ul>';
-//var_dump($arrMenu);
+
 /**if ($rolDescripcion === 'admin') {
     echo '<li class="list-group-item"><a class="text-decoration-none" href="./admin/listarUsuario.php">Gestión de Usuarios</a></li>';
     echo '<li class="list-group-item"><a class="text-decoration-none" href="./admin/listarRoles.php">Gestión de Roles</a></li>';
