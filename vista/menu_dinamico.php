@@ -14,7 +14,22 @@ if (!$sesion->activa()) {
 // Obtenemos al usuario logueado
 $usuario = $sesion->getUsuario();
 if (!$usuario) {
-    echo "<div class='alert alert-danger'>Error: No se encontró el usuario autenticado.</div>";
+    //echo "<div class='alert alert-danger'>Error: No se encontró el usuario autenticado.</div>"
+    echo '<ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="#">Inicio</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="'.BASE_URL.'vista/productos.php">Tienda</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Novedades</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Contacto</a>
+        </li>
+      </ul>
+      <a href="'.BASE_URL.'vista/login/formIniciarSesion.php" class="btn btn-primary ms-3">Iniciar sesión</a>';
     exit;
 }
 
@@ -28,8 +43,27 @@ if (empty($roles)) {
 $rolDescripcion = $roles[0]->getRolDescripcion(); // Consideramos el primer rol del usuario
 
 // Generamos el contenido del menú dinámico
-echo '<ul class="list-group">';
-if ($rolDescripcion === 'admin') {
+echo '<ul class="navbar-nav ms-auto">';
+$arrMenu = [];
+$arr = [];
+$menues = new AbmMenuRol();
+foreach($roles as $rol){
+    //De los roles, me traigo los ID de los menu que puede ver
+    $param = ['idRol'=>$rol];
+    $arr = $menues->buscar($param);
+    array_push($arrMenu,$arr);
+}
+
+$men = new Menu();
+foreach($arr as $menu){
+    //A partir de los id, me traigo los objeto menu y armo el item de la lista.
+    $men = $menu->getObjMenu();
+    echo '<li class="nav-item"><a class="nav-link" href="'.$men->getArchivoMenu().'">'.$men->getNombreMenu().'</a></li>';
+}
+echo '<a href="'.BASE_URL.'vista/login/accion/cerrarSesion.php" class="btn btn-primary ms-3">Cerrar sesión</a>';
+echo '</ul>';
+//var_dump($arrMenu);
+/**if ($rolDescripcion === 'admin') {
     echo '<li class="list-group-item"><a class="text-decoration-none" href="./admin/listarUsuario.php">Gestión de Usuarios</a></li>';
     echo '<li class="list-group-item"><a class="text-decoration-none" href="./admin/listarRoles.php">Gestión de Roles</a></li>';
     echo '<li class="list-group-item"><a class="text-decoration-none" href="./admin/listarProductos.php">Gestión de Productos</a></li>';
@@ -38,5 +72,5 @@ if ($rolDescripcion === 'admin') {
     echo '<li class="list-group-item"><a class="text-decoration-none" href="./admin/listarProductos.php">Gestión de Productos</a></li>';
 } else {
     echo '<li class="list-group-item"><a class="text-decoration-none" href="carrito.php">Mi Carrito</a></li>';
-}
-echo '</ul>';
+}*/
+
