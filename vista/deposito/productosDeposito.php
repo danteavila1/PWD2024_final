@@ -9,9 +9,12 @@ $productos = $abmProducto->buscar(null);
 $datos = data_submitted();
 ?>
 
-
+        
 <section>
         <h2> Productos </h2>
+        <div>
+            <button class="btn btn-primary"><a href="realizaReporte.php">Reporte PDF</a></button>
+        </div>
             <?php
 
                 if (count($productos) > 0) {
