@@ -154,9 +154,16 @@ INSERT INTO `compraestadotipo` (`idcompraestadotipo`, `cetdescripcion`, `cetdeta
 
 -- --------------------- Poblamiento tabla `producto`
 INSERT INTO `producto` (`pronombre`, `prodetalle`, `proimagen`, `procantstock`) VALUES
-('Llavero de conejito', 'Un llavero de conejito. Unico color', 'conejito.jpeg', 15);
+('Llavero de conejito', 'Un llavero de conejito. Unico color', 'conejito.jpeg', 15),
+('Peluche conejo', 'Sin patitas', 'conejoSinPatas.jpg', 10),
+('Kuromi Black', 'Peluche Kuromi en color negro. Edición limitada', 'kuromiBlack.jpg', 20),
+('Kuromi Rosa', 'Peluche Kuromi. Color rosa', 'kuromiPi.jpeg', 25);
+
 
 -- -----------------------------------------【 ALTERACIONES 】-----------------------------------------
 
 ALTER TABLE `producto`
 ADD COLUMN `proprecio` DECIMAL(10,2) NOT NULL AFTER `procantstock`;
+
+ALTER TABLE `menu`
+ADD COLUMN `melink` VARCHAR(50) NOT NULL AFTER `medeshabilitado`;

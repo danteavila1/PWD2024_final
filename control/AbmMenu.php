@@ -9,21 +9,10 @@ class AbmMenu
     {
         $obj = null;
 
-        if (
-            array_key_exists('idmenu', $param) && array_key_exists('nombremenu', $param) && array_key_exists('archivomenu', $param)
-            && array_key_exists('idusuariorol', $param)
-        ) {
+        if (array_key_exists('idmenu', $param) && array_key_exists('menombre', $param) && array_key_exists('melink', $param)){
             $obj = new Menu();
-
-            if ($param['idusuariorol'] == null) {
-                $objUsuarioRol = null;
-            } else {
-                $objUsuarioRol = new Menu();
-                $objUsuarioRol->setIdMenu($param['idusuariorol']);
-                $objUsuarioRol->cargar();
-            }
-
-            $obj->setear($param['idmenu'], $param['nombremenu'], $param['archivomenu'], $objUsuarioRol);
+            $obj->setIdMenu($param['idmenu']);
+            $obj->cargar();
         }
         return $obj;
     }
@@ -128,10 +117,8 @@ class AbmMenu
         if ($param <> NULL) {
             if (isset($param['idmenu']))
                 $where .= " and idmenu =" . $param['idmenu'];
-            if (isset($param['nombremenu']))
-                $where .= " and nombremenu ='" . $param['nombremenu'] . "'";
-            if (isset($param['idusuariorol']))
-                $where .= " and idusuariorol =" . $param['idusuariorol'];
+            if (isset($param['menombre']))
+                $where .= " and menombre ='" . $param['menombre'] . "'";
         }
         $obj = new Menu();
 
