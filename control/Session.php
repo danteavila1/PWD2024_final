@@ -68,7 +68,7 @@ class Session
         return $resp;
     }
 
-    private function getUsuario()
+    public function getUsuario()
     {
         //Método privado para no devolver el usuario fuera de la clase Session
         $user = null;

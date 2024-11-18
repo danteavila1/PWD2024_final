@@ -1,53 +1,42 @@
 <?php
 include_once("../configuracion.php");
-function generarHTMLMenu($menu) {
-    $html = '<ul>';
-    foreach ($menu as $item) {
-        $html .= "<li>{$item['menombre']}";
-        if (!empty($item['subitems'])) {
-            $html .= generarHTMLMenu($item['subitems']);
-        }
-        $html .= '</li>';
-    }
-    $html .= '</ul>';
-    return $html;
-}
+include_once(ROOT_PATH . "modelo/Usuario.php");
 
-function construirMenu($menuItems) {
-    $menu = [];
-    foreach ($menuItems as $item) {
-        if ($item['idpadre'] === null) {
-            $menu[$item['idmenu']] = $item + ['subitems' => []];
-        } else {
-            $menu[$item['idpadre']]['subitems'][] = $item;
-        }
-    }
-    return $menu;
-}
-
-function obtenerMenuPorRol($idRol) {
-    $objMenuRol = new AbmMenuRol();
-    $param = ['idrol'=>$idRol->getIdRol()];
-    $menues = $objMenuRol->buscar($param);
-    return $menues;
-}
-
-//$idRol = 1; // Supongamos que el rol del usuario es 1 (esto dependerá de tu sistema de autenticación)
+// Inicializamos sesion
 $sesion = new Session();
-$rol = $sesion->getRoles();
-$idRol = $rol[0];
-// Obtener menú del rol
-$menuItems = obtenerMenuPorRol($idRol);
 
-// Construir la estructura del menú
-$menuEstructura = construirMenu($menuItems);
+// Verificamos si el usuario está logueado
+if (!$sesion->activa()) {
+    echo "<div class='alert alert-danger'>Error: Usuario no autenticado.</div>";
+    exit;
+}
 
-// Generar HTML del menú
-$menuHTML = generarHTMLMenu($menuEstructura);
+// Obtenemos al usuario logueado
+$usuario = $sesion->getUsuario();
+if (!$usuario) {
+    echo "<div class='alert alert-danger'>Error: No se encontró el usuario autenticado.</div>";
+    exit;
+}
 
-// Mostrar el menú
-echo $menuHTML;
+// Obtenemos información del usuario
+$roles = $sesion->getRoles();
+if (empty($roles)) {
+    echo "<div class='alert alert-danger'>Error: No se encontraron roles asignados para este usuario.</div>";
+    exit;
+}
 
+$rolDescripcion = $roles[0]->getRolDescripcion(); // Consideramos el primer rol del usuario
 
-
-?>
+// Generamos el contenido del menú dinámico
+echo '<ul class="list-group">';
+if ($rolDescripcion === 'admin') {
+    echo '<li class="list-group-item"><a class="text-decoration-none" href="./admin/listarUsuario.php">Gestión de Usuarios</a></li>';
+    echo '<li class="list-group-item"><a class="text-decoration-none" href="./admin/listarRoles.php">Gestión de Roles</a></li>';
+    echo '<li class="list-group-item"><a class="text-decoration-none" href="./admin/listarProductos.php">Gestión de Productos</a></li>';
+    echo '<li class="list-group-item"><a class="text-decoration-none" href="configuracionGeneral.php">Configuración General</a></li>';
+} elseif ($rolDescripcion === 'deposito') {
+    echo '<li class="list-group-item"><a class="text-decoration-none" href="./admin/listarProductos.php">Gestión de Productos</a></li>';
+} else {
+    echo '<li class="list-group-item"><a class="text-decoration-none" href="carrito.php">Mi Carrito</a></li>';
+}
+echo '</ul>';

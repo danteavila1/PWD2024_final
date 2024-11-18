@@ -178,7 +178,8 @@ class AbmMenuRol
                 $where .= " and idrol = " . $param['idrol'];
 
             if (isset($param['idmenu']))
-                $where .= " and idmenu = '" . $param['idmenu'];
+            $where .= " and idmenu = '" . $param['idmenu'] . "'";
+
         }
 
         //echo "<br>La condición de busqueda es: ".$where." <br><br>";

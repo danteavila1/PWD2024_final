@@ -4,6 +4,7 @@ include_once(ROOT_PATH . "vista/estructura/header.php");
 ?>
 
 <main class="main">
+  
     <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-indicators">
               <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -55,6 +56,5 @@ include_once(ROOT_PATH . "vista/estructura/header.php");
            </section>
     </div>
     <!-- CODIGO PUESTO SOLO PARA DEPURAR EL MENU DINAMICO, BORRAR CUANDO SE LOGRE -->
-    <div id="menu"></div>
 </main>
 <?php include_once("estructura/footer.php");?>
