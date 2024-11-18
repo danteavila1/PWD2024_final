@@ -1,25 +1,25 @@
-$(document).on('click', '.bajaUsuario', function () {
+$(document).on('click', '.bajaProducto', function () {
 
     // Pongo en variables los datos que traje al apretar el botón
-    var idusuario = $(this).data('idusuario');
-    var usnombre = $(this).data('usnombre');
-    var roles = $(this).data('roles');
+    var idproducto = $(this).data('idproducto');
+    var nombre = $(this).data('nombre');
 
     // Preparo los valores para mostrarlos en el modal
-    $('span[name="idusuario"]').text(idusuario);
-    $('span[name="usnombre"]').text(usnombre);
-    $('span[name="roles"]').text(roles);
+    $('span[name="idproducto"]').text(idproducto);
+    $('span[name="nombre"]').text(nombre);
 
-    $('#bajaUsuario').modal('show');
-    $('#bajaUsuario .btn-danger').on('click', function () {
+    $('#bajaProducto').modal('show');
+    $('#bajaProducto .btn-danger').on('click', function () {
 
         // Construyo objeto para mandar a solicitud AJAX
         var formData = {
-            'idusuario': idusuario,
+            'idproducto': idproducto,
         };
 
+        console.log(formData)
+
         $.ajax({
-            url: "accion/bajaUsuario.php",
+            url: "accion/bajaProducto.php",
             type: "POST",
             dataType: "json",
             data: formData,
@@ -30,14 +30,14 @@ $(document).on('click', '.bajaUsuario', function () {
                 }).then(() => location.reload());
             },
             error: function (res, jqXHR, textStatus, errorThrown) {
-                // console.log("Error en la solicitud Ajax:", textStatus, errorThrown);
-                // console.log("Detalles del error:", jqXHR.responseText);
+                console.log("Error en la solicitud Ajax:", textStatus, errorThrown);
+                console.log("Detalles del error:", jqXHR.responseText);
                 Swal.fire({
                     title: res.mensaje,
                     icon: res.icono
                 }).then(() => location.reload());
             }
         });
-        $('#bajaUsuario').modal('hide');
+        $('#bajaProducto').modal('hide');
     });
 });

@@ -9,49 +9,26 @@ $datos = data_submitted();
 
 // Creo instancia del objeto AbmUsuario
 $objUsuario = new AbmUsuario();
-$idusuario = $datos['idusuario'];
 
-// Obtengo al usuario actual y sus datos actuales antes de modificarse
-$usuario = $objUsuario->buscar(['idusuario' => $idusuario]);
-$nombreActual = $usuario[0]->getUsNombre();
-$mailActual = $usuario[0]->getUsMail();
+// Compruebo si existe el usuario
+$existeMail = $objUsuario->existeMail($datos);
+$existeUsuario = $objUsuario->existeUsuario($datos);
 
-// Obtengo los datos recibidos del formulario
-$nombreForm = $datos['usnombre'];
-$mailForm = $datos['usmail'];
-
-// Obtengo todos los usuarios
-$colUsuarios = $objUsuario->buscar("");
-$nombreDuplicado = false;
-$mailDuplicado = false;
-$mismaPass = false;
-
-// Recorro todos los usuarios para ver si ya existen dichos datos
-foreach ($colUsuarios as $usuarioExistente) {
-    if ($usuarioExistente->getIdUsuario() != $idusuario) {
-        if ($usuarioExistente->getUsNombre() == $nombreForm) {
-            $nombreDuplicado = true;
-        }
-        if ($usuarioExistente->getUsMail() == $mailForm) {
-            $mailDuplicado = true;
-        }
-    }
+// Respuestas en caso de que existan los datos
+if ($existeUsuario) {
+    $response = ['mensaje' => 'Nombre de usuario existente', 'icono' => 'info'];
+} elseif ($existeMail) {
+    $response = ['mensaje' => 'Mail existente', 'icono' => 'info'];
 }
 
-// Verifico si es posible modificar
-if (!$nombreDuplicado && !$mailDuplicado) {
+// Modificación
+if (!$existeMail && !$existeUsuario) {
     if ($objUsuario->modificacion($datos)) {
-        $response = ['mensaje' => "Modificación exitosa", 'icono' => "success"];
+        $response = ['mensaje' => 'Modificación exitosa', 'icono' => 'success'];
     } else {
-        $response = ['mensaje' => "No se realizaron modificaciones", 'icono' => "info"];
-    }
-} else {
-    if ($nombreDuplicado) {
-        $response = ['mensaje' => 'Nombre de usuario existente', 'icono' => 'info'];
-    } elseif ($mailDuplicado) {
-        $response = ['mensaje' => 'Mail existente', 'icono' => 'info'];
+        $response = ['mensaje' => 'Falló la modificación', 'icono' => 'success'];
     }
 }
 
 echo json_encode($response);
-exit();
+exit;

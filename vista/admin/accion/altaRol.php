@@ -24,9 +24,9 @@ foreach ($colRoles as $rol) {
 if (!$existe) {
     // Realizo el alta de rol
     if ($objRol->alta($datos)) {
-        $response = ['mensaje' => "Rol creado exitosamente", 'icono' => "success"];
+        $response = ['mensaje' => "Alta exitosa", 'icono' => "success"];
     } else {
-        $response = ['mensaje' => "Creación de rol fallida", 'icono' => "error"];
+        $response = ['mensaje' => "Alta fallida", 'icono' => "error"];
     }
 }
 

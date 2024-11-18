@@ -1,6 +1,7 @@
 <?php
 
-class Producto {
+class Producto
+{
     private $idProducto;
     private $proNombre;
     private $proDetalle;
@@ -9,17 +10,19 @@ class Producto {
     private $proPrecio; // Agregamos atributo Precio
     private $mensajeOperacion;
 
-    public function __construct(){
+    public function __construct()
+    {
         $this->idProducto = 0;
-        $this->proNombre = ""; 
+        $this->proNombre = "";
         $this->proDetalle = "";
         $this->proCantStock = 0;
         $this->proImagen = "";
-        $this->proPrecio = 0.0; 
+        $this->proPrecio = 0.0;
         $this->mensajeOperacion = "";
     }
 
-    public function setear($idProducto, $proNombre, $proDetalle, $proCantStock, $proImagen, $proPrecio){
+    public function setear($idProducto, $proNombre, $proDetalle, $proCantStock, $proImagen, $proPrecio)
+    {
         $this->setIdProducto($idProducto);
         $this->setProNombre($proNombre);
         $this->setProDetalle($proDetalle);
@@ -29,59 +32,74 @@ class Producto {
     }
 
     // Métodos GET
-    public function getIdProducto(){
+    public function getIdProducto()
+    {
         return $this->idProducto;
     }
-    public function getProNombre(){
+    public function getProNombre()
+    {
         return $this->proNombre;
     }
-    public function getProDetalle(){
+    public function getProDetalle()
+    {
         return $this->proDetalle;
     }
-    public function getProCantStock(){
+    public function getProCantStock()
+    {
         return $this->proCantStock;
     }
-    public function getProImagen(){
+    public function getProImagen()
+    {
         return $this->proImagen;
     }
-    public function getProPrecio(){
+    public function getProPrecio()
+    {
         return $this->proPrecio;
     }
-    public function getMensajeOperacion(){
+    public function getMensajeOperacion()
+    {
         return $this->mensajeOperacion;
     }
 
     // Métodos SET
-    public function setIdProducto($idProducto){
+    public function setIdProducto($idProducto)
+    {
         $this->idProducto = $idProducto;
     }
-    public function setProNombre($proNombre){
+    public function setProNombre($proNombre)
+    {
         $this->proNombre = $proNombre;
     }
-    public function setProDetalle($proDetalle){
+    public function setProDetalle($proDetalle)
+    {
         $this->proDetalle = $proDetalle;
     }
-    public function setProCantStock($proCantStock){
+    public function setProCantStock($proCantStock)
+    {
         $this->proCantStock = $proCantStock;
     }
-    public function setProImagen($proImagen){
+    public function setProImagen($proImagen)
+    {
         $this->proImagen = $proImagen;
     }
-    public function setProPrecio($proPrecio){
+    public function setProPrecio($proPrecio)
+    {
         $this->proPrecio = $proPrecio;
     }
-    public function setMensajeOperacion($mensajeOperacion){
+    public function setMensajeOperacion($mensajeOperacion)
+    {
         $this->mensajeOperacion = $mensajeOperacion;
     }
 
-    public function cargar(){
+    public function cargar()
+    {
         $resp = false;
         $base = new BaseDatos();
         $sql = "SELECT * FROM producto WHERE idproducto = " . $this->getIdProducto();
         if ($base->Iniciar()) {
             $res = $base->Ejecutar($sql);
-            if($res > -1){
-                if($res > 0){
+            if ($res > -1) {
+                if ($res > 0) {
                     $row = $base->Registro();
                     $this->setear($row['idproducto'], $row['pronombre'], $row['prodetalle'], $row['procantstock'], $row['proimagen'], $row['proprecio']);
                     $resp = true;
@@ -93,14 +111,15 @@ class Producto {
         return $resp;
     }
 
-    public function insertar(){
+    public function insertar()
+    {
         $base = new BaseDatos();
         $id = false;
         $resp = false;
         $sql = "INSERT INTO producto(pronombre, prodetalle, procantstock, proimagen, proprecio) VALUES ('" . $this->getProNombre() . "', '" . $this->getProDetalle() . "', '" . $this->getProCantStock() . "', '" . $this->getProImagen() . "', '" . $this->getProPrecio() . "')";
-        if($base->Iniciar()){
+        if ($base->Iniciar()) {
             $id = $base->Ejecutar($sql);
-            if($id != null){
+            if ($id != null) {
                 $resp = true;
                 $this->setIdProducto($id);
             } else {
@@ -112,11 +131,12 @@ class Producto {
         return $id;
     }
 
-    public function modificar(){
+    public function modificar()
+    {
         $resp = false;
         $base = new BaseDatos();
         $sql = "UPDATE producto SET pronombre = '" . $this->getProNombre() . "', prodetalle = '" . $this->getProDetalle() . "', procantstock = '" . $this->getProCantStock() . "', proimagen = '" . $this->getProImagen() . "', proprecio = '" . $this->getProPrecio() . "' WHERE idproducto = " . $this->getIdProducto();
-    
+
         if ($base->Iniciar()) {
             if ($base->Ejecutar($sql)) {
                 $resp = true;
@@ -129,7 +149,8 @@ class Producto {
         return $resp;
     }
 
-    public function eliminar(){
+    public function eliminar()
+    {
         $resp = false;
         $base = new BaseDatos();
         $sql = "DELETE FROM producto WHERE idproducto = " . $this->getIdProducto();
@@ -145,7 +166,8 @@ class Producto {
         return $resp;
     }
 
-    public static function listar($parametro=""){
+    public static function listar($parametro = "")
+    {
         $arreglo = array();
         $base = new BaseDatos();
         $sql = "SELECT * FROM producto ";
@@ -153,9 +175,9 @@ class Producto {
             $sql .= 'WHERE ' . $parametro;
         }
         $res = $base->Ejecutar($sql);
-        if($res > -1){
-            if($res > 0){
-                while ($row = $base->Registro()){
+        if ($res > -1) {
+            if ($res > 0) {
+                while ($row = $base->Registro()) {
                     $obj = new Producto();
                     $obj->setear($row['idproducto'], $row['pronombre'], $row['prodetalle'], $row['procantstock'], $row['proimagen'], $row['proprecio']);
                     array_push($arreglo, $obj);
@@ -168,4 +190,3 @@ class Producto {
         return $arreglo;
     }
 }
-?>

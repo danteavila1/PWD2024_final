@@ -137,4 +137,22 @@ class AbmRol
         }
         return $objRoles;
     }
+
+    public function existeRol($param)
+    {
+        // Pongo colección de roles
+        $colRoles = $this->buscar("");
+
+        // Recorro todos los roles para verificar si existe en la base de datos
+        $existe = false;
+        $rolForm = $param['rodescripcion'];
+        foreach ($colRoles as $rol) {
+            $rolExistente = $rol->getRolDescripcion();
+            if ($rolExistente == $rolForm) {
+                $existe = true;
+            }
+        }
+
+        return $existe;
+    }
 }

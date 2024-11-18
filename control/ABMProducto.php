@@ -1,13 +1,15 @@
 <?php
 include_once '/xampp/htdocs/PWD2024_final/modelo/Producto.php';
 
-class AbmProducto {
+class AbmProducto
+{
 
-    private function cargarObjeto($param) {
+    private function cargarObjeto($param)
+    {
         $obj = null;
         if (array_key_exists('pronombre', $param)) {
             $obj = new Producto();
-            $idProducto = $param['idProducto'] ?? null;
+            $idProducto = $param['idproducto'] ?? null;
             $proNombre = $param['pronombre'];
             $proDetalle = $param['prodetalle'];
             $proCantStock = $param['procantstock'];
@@ -18,22 +20,29 @@ class AbmProducto {
         return $obj;
     }
 
-    private function cargarObjetoConClave($param) {
+    private function cargarObjetoConClave($param)
+    {
         $obj = null;
-        if (isset($param['idProducto'])) {
+        if (isset($param['idproducto'])) {
             $obj = new Producto();
-            $obj->setear($param['idProducto'], null, null, null, null, null);
+            $obj->setear($param['idproducto'], null, null, null, null, null);
         }
+
         return $obj;
     }
 
-    private function seteadosCamposClaves($param) {
-        return isset($param['idProducto']);
+    private function seteadosCamposClaves($param)
+    {
+        $resp = false;
+        if (isset($param['idproducto']))
+            $resp = true;
+        return $resp;
     }
 
-    public function alta($param) {
+    public function alta($param)
+    {
         $resp = false;
-        $param['idProducto'] = null;
+        $param['idproducto'] = null;
 
         // Creo el objeto producto y le doy valores
         $objProducto = $this->cargarObjeto($param);
@@ -43,10 +52,13 @@ class AbmProducto {
         return $resp;
     }
 
-    public function baja($param) {
+    public function baja($param)
+    {
         $resp = false;
         if ($this->seteadosCamposClaves($param)) {
             $objProducto = $this->cargarObjetoConClave($param);
+
+            // verEstructura($objProducto);
             if ($objProducto != null && $objProducto->eliminar()) {
                 $resp = true;
             }
@@ -54,7 +66,8 @@ class AbmProducto {
         return $resp;
     }
 
-    public function modificacion($param) {
+    public function modificacion($param)
+    {
         $resp = false;
 
         if ($this->seteadosCamposClaves($param)) {
@@ -66,10 +79,11 @@ class AbmProducto {
         return $resp;
     }
 
-    public function buscar($param) {
+    public function buscar($param)
+    {
         $where = " true ";
         if ($param <> NULL) {
-            if (isset($param['idProducto'])) $where .= " and idproducto = " . $param['idProducto'];
+            if (isset($param['idproducto'])) $where .= " and idproducto = " . $param['idproducto'];
             if (isset($param['pronombre'])) $where .= " and pronombre ='" . $param['pronombre'] . "'";
             if (isset($param['prodetalle'])) $where .= " and prodetalle ='" . $param['prodetalle'] . "'";
             if (isset($param['procantstock'])) $where .= " and procantstock =" . $param['procantstock'];
@@ -80,4 +94,3 @@ class AbmProducto {
         return Producto::listar($where);
     }
 }
-?>

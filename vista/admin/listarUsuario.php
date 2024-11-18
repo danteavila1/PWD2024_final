@@ -4,7 +4,6 @@ include_once(ROOT_PATH . "vista/estructura/header.php");
 $session = new Session();
 
 // Incluyo modales
-include_once('altaRol.php');
 include_once('modificarUsuario.php');
 include_once('bajaUsuario.php');
 include_once('altaUsuario.php');
@@ -23,24 +22,39 @@ if (count($colUsuarios) > 0) {
 ?>
 
 <h3> Iniciado como <?php echo $_SESSION['usnombre'] ?></h3>
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Administrar usuarios</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="listarRoles.php">Administrar roles</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="listarProductos.php">Administrar productos</a>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Administrar menús</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
 <div class="justify-content-md-center align-items-center mt-5">
     <div class="card shadow  mx-usuario">
         <div class="card-header">
             <h3>Listado de usuarios cargados en la base de datos</h3>
             <div class="d-flex">
-
-                <button class="altaUsuario btn btn-success" type="button"
+                <button class="altaUsuario btn btn-success me-2" type="button"
                     data-bs-toggle="modal"
                     data-bs-target="#altaUsuario">
                     Crear usuario
                 </button>
-
-                <button class="altaRol btn btn-success me-2" type="button"
-                    data-bs-toggle="modal"
-                    data-bs-target="#altaRol">
-                    Añadir rol
-                </button>
-
                 <a href="../login/accion/cerrarSesion.php">
                     <input type="submit" class="btn btn-secondary me-2" value="Cerrar sesión">
                 </a>
@@ -148,7 +162,6 @@ if (count($colUsuarios) > 0) {
 <script src="../js/md5.js"></script>
 <script src="../js/verPass.js"></script>
 <script src="../js/ajax/bajaUsuario.js"></script>
-<script src="../js/ajax/altaRol.js"></script>
 <script src="../js/ajax/modificarRoles.js"></script>
 <script src="../js/ajax/modificarUsuario.js"></script>
 <script src="../js/ajax/altaUsuario.js"></script>

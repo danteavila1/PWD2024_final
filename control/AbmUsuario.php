@@ -193,4 +193,60 @@ class AbmUsuario
         }
         return $colInfo;
     }
+
+    /**
+     * Esta función verifica si existe el nombre de usuario en la base de datos. Retorna booleano
+     * indicando existencia de dicho usuario.
+     * @param array $param
+     * @return boolean
+     */
+    public function existeUsuario($param)
+    {
+        // Pongo colección de usuarios
+        $colUsuarios = $this->buscar("");
+
+        // Datos recibidos del formulario
+        $idusuario = $param['idusuario'];
+        $usnombreForm = $param['usnombre'];
+
+        // Recorro todos los usuarios para verificar si existe nombre de usuario
+        $existe = false;
+        foreach ($colUsuarios as $usuario) {
+            if ($usuario->getIdUsuario() != $idusuario) {
+                if ($usuario->getUsNombre() == $usnombreForm) {
+                    $existe = true;
+                }
+            }
+        }
+
+        return $existe;
+    }
+
+    /**
+     * Esta función verifica si existe el mail en la base de datos. Retorna booleano
+     * indicando existencia de dicho mail.
+     * @param array $param
+     * @return boolean
+     */
+    public function existeMail($param)
+    {
+        // Pongo colección de usuarios
+        $colUsuarios = $this->buscar("");
+
+        // Datos recibidos del formulario
+        $idusuario = $param['idusuario'];
+        $usmailForm = $param['usmail'];
+
+        // Recorro todos los usuarios para verificar si existe nombre de usuario
+        $existe = false;
+        foreach ($colUsuarios as $usuario) {
+            if ($usuario->getIdUsuario() != $idusuario) {
+                if ($usuario->getUsMail() == $usmailForm) {
+                    $existe = true;
+                }
+            }
+        }
+
+        return $existe;
+    }
 }

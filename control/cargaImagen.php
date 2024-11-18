@@ -10,7 +10,7 @@ class CargaImagen
      */
     function controlarFormato($archivoCargado)
     {
-        $archivoCargado = strtolower($archivoCargado['archivo']['name']);
+        $archivoCargado = strtolower($archivoCargado['name']);
         $pudo = true;
 
         // Busco en el nombre si aparece alguna de las extensiones permitidas
@@ -42,7 +42,7 @@ class CargaImagen
         $pudo = true;
 
         // Reviso tamaño - 2MB son 2,000,000 de bytes
-        if ($archivoCargado['archivo']["size"] > 2000000) {
+        if ($archivoCargado["size"] > 2000000) {
             $pudo = false;
         }
         return $pudo;
@@ -61,8 +61,8 @@ class CargaImagen
 
         if ($formato) {
             if ($pesoArchivo) {
-                $rutaDestino = '../vista/images/' . $archivoCargado['archivo']['name'];
-                if (move_uploaded_file($archivoCargado['archivo']['tmp_name'], $rutaDestino)) {
+                $rutaDestino = '../vista/images/' . $archivoCargado['name'];
+                if (move_uploaded_file($archivoCargado['tmp_name'], $rutaDestino)) {
                     $mensaje = "La imagen se ha subido con éxito.";
                     $pudo = "si";
                 } else {
