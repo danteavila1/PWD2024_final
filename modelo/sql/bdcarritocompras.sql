@@ -137,14 +137,6 @@ INSERT INTO `usuariorol` (`idusuario`, `idrol`) VALUES
 (4, 3),
 (5, 3);
 
--- --------------------- Poblamiento tabla `menu`
-INSERT INTO `menu` (`idmenu`, `menombre`, `medescripcion`, `idpadre`, `medeshabilitado`) VALUES
-(7, 'nuevo', 'kkkkk', NULL, NULL),
-(8, 'nuevo', 'kkkkk', NULL, NULL),
-(9, 'nuevo', 'kkkkk', 7, NULL),
-(10, 'nuevo', 'kkkkk', NULL, NULL),
-(11, 'nuevo', 'kkkkk', NULL, NULL);
-
 -- --------------------- Poblamiento tabla `compraestadotipo`
 INSERT INTO `compraestadotipo` (`idcompraestadotipo`, `cetdescripcion`, `cetdetalle`) VALUES
 (1, 'iniciada', 'cuando el usuario : cliente inicia la compra de uno o mas productos del carrito'),
@@ -167,3 +159,15 @@ ADD COLUMN `proprecio` DECIMAL(10,2) NOT NULL AFTER `procantstock`;
 
 ALTER TABLE `menu`
 ADD COLUMN `melink` VARCHAR(50) NOT NULL AFTER `medeshabilitado`;
+
+
+-- --------------------- Poblamiento tabla `menu`
+INSERT INTO `menu` (`idmenu`, `menombre`, `medescripcion`, `idpadre`, `medeshabilitado`,`melink`) VALUES
+(1, 'Gestión de usuarios', 'Gestión de usuarios', NULL, NULL,'admin/listarusuario.php'),
+(2, 'Gestión de roles', 'Gestión de roles', NULL, NULL,'admin/listarroles.php'),
+(3, 'Gestión de productos', 'Gestión de productos', NULL, NULL,'admin/listarproductos.php'),
+(4, 'Productos', 'Productos', NULL, NULL,'deposito/productosdeposito.php');
+
+-- --------------------- Poblamiento tabla `menurol`
+INSERT INTO `menurol` (`idmenu`, `idrol`) VALUES
+(1, 1),(2, 1),(3, 1),(4, 2);
