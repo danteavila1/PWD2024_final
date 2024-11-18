@@ -9,9 +9,9 @@ class PDF extends FPDF {
     // Encabezado del PDF
     function Header() {
         // Configurar ancho de la tabla y calcular margen izquierdo
-        $tableWidth = 90 + 50; // Suma de los anchos de las columnas
-        $pageWidth = 210; // Ancho de la página A4 en mm
-        $marginLeft = ($pageWidth - $tableWidth) / 2; // Margen izquierdo dinámico
+        $tableWidth = 90 + 50; 
+        $pageWidth = 210; 
+        $marginLeft = ($pageWidth - $tableWidth) / 2; 
         // Fuente para el encabezado
         $this->SetFont('Arial', 'B', 14);
         // Título del reporte
@@ -45,23 +45,18 @@ $tableWidth = 90 + 50; // Suma de los anchos de las columnas
 $pageWidth = 210; // Ancho de la página A4 en mm
 $marginLeft = ($pageWidth - $tableWidth) / 2;
 
-// Simulación de datos (puedes reemplazar con datos de tu base de datos)
+
 $producto = new Producto();
 $productos = Producto::listar('procantstock > 0');
 
-//$productos = [
-   // ['nombre' => 'Producto A', 'cantidad' => 15],
-   // ['nombre' => 'Producto B', 'cantidad' => 30],
-   // ['nombre' => 'Producto C', 'cantidad' => 5],
-//];
 
 // Cargar datos en el PDF usando un foreach
 foreach ($productos as $product) {
-    $pdf->SetX($marginLeft); // Mover a la posición inicial
+    $pdf->SetX($marginLeft); 
     $pdf->Cell(90, 10, $product->getProNombre(), 1, 0, 'L');
     $pdf->Cell(50, 10, $product->getProCantStock(), 1, 1, 'C');
 }
 
 // Salida del PDF
-$pdf->Output('I', 'reporte_productos.pdf'); // Salida en el navegador
+$pdf->Output('I', 'reporte_productos.pdf');
 ?>
