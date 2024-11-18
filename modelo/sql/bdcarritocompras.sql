@@ -163,10 +163,10 @@ ADD COLUMN `melink` VARCHAR(50) NOT NULL AFTER `medeshabilitado`;
 
 -- --------------------- Poblamiento tabla `menu`
 INSERT INTO `menu` (`idmenu`, `menombre`, `medescripcion`, `idpadre`, `medeshabilitado`,`melink`) VALUES
-(1, 'Gestión de usuarios', 'Gestión de usuarios', NULL, NULL,'admin/listarusuario.php'),
-(2, 'Gestión de roles', 'Gestión de roles', NULL, NULL,'admin/listarroles.php'),
-(3, 'Gestión de productos', 'Gestión de productos', NULL, NULL,'admin/listarproductos.php'),
-(4, 'Productos', 'Productos', NULL, NULL,'deposito/productosdeposito.php');
+(1, 'Gestión de usuarios', 'Gestión de usuarios', NULL, NULL,'vista/admin/listarusuario.php'),
+(2, 'Gestión de roles', 'Gestión de roles', NULL, NULL,'vista/admin/listarroles.php'),
+(3, 'Gestión de productos', 'Gestión de productos', NULL, NULL,'vista/admin/listarproductos.php'),
+(4, 'Productos', 'Productos', NULL, NULL,'vista/deposito/productosdeposito.php');
 
 -- --------------------- Poblamiento tabla `menurol`
 INSERT INTO `menurol` (`idmenu`, `idrol`) VALUES

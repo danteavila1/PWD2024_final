@@ -58,7 +58,7 @@ $men = new Menu();
 foreach($arr as $menu){
     //A partir de los id, me traigo los objeto menu y armo el item de la lista.
     $men = $menu->getObjMenu();
-    echo '<li class="nav-item"><a class="nav-link" href="'.$men->getArchivoMenu().'">'.$men->getNombreMenu().'</a></li>';
+    echo '<li class="nav-item"><a class="nav-link" href="'.BASE_URL.$men->getArchivoMenu().'">'.$men->getNombreMenu().'</a></li>';
 }
 echo '<a href="'.BASE_URL.'vista/login/accion/cerrarSesion.php" class="btn btn-primary ms-3">Cerrar sesión</a>';
 echo '</ul>';
