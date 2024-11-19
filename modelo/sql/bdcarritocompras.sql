@@ -175,3 +175,30 @@ INSERT INTO `menu` (`idmenu`, `menombre`, `medescripcion`, `idpadre`, `medeshabi
 -- --------------------- Poblamiento tabla `menurol`
 INSERT INTO `menurol` (`idmenu`, `idrol`) VALUES
 (1, 1),(2, 1),(3, 1),(4, 2),(5, 3),(6, 3),(7, 3),(8, 3);
+
+-- --------------------- Poblamiento tabla `compra`
+INSERT INTO `compra` (`idcompra`, `cofecha`, `idusuario`) VALUES
+(1, '2024-11-01 14:30:00', 3), -- Compra realizada por el usuario 'cliente'
+(2, '2024-11-02 16:45:00', 4), -- Compra realizada por el usuario 'juan'
+(3, '2024-11-03 10:15:00', 5), -- Compra realizada por el usuario 'susana'
+(4, '2024-11-04 18:20:00', 3); -- Otra compra realizada por el usuario 'cliente'
+
+-- --------------------- Poblamiento tabla `compraestado`
+INSERT INTO `compraestado` (`idcompraestado`, `idcompra`, `idcompraestadotipo`, `cefechaini`, `cefechafin`) VALUES
+(1, 1, 1, '2024-11-01 14:30:00', NULL), -- Compra 1 iniciada
+(2, 2, 1, '2024-11-02 16:45:00', NULL), -- Compra 2 iniciada
+(3, 2, 1, '2024-11-02 17:30:00', NULL), -- Compra 2 iniciada
+(4, 3, 1, '2024-11-03 10:15:00', NULL), -- Compra 3 iniciada
+(5, 4, 1, '2024-11-04 18:20:00', NULL), -- Compra 4 iniciada
+(6, 4, 1, '2024-11-05 08:30:00', NULL); -- Compra 4 iniciada
+
+-- --------------------- Poblamiento tabla `compraitem`
+INSERT INTO `compraitem` (`idcompraitem`, `idproducto`, `idcompra`, `cicantidad`) VALUES
+(1, 1, 1, 2), -- Compra 1 incluye 2 unidades de "Llavero de conejito"
+(2, 3, 1, 1), -- Compra 1 incluye 1 unidad de "Kuromi Black"
+(3, 2, 2, 3), -- Compra 2 incluye 3 unidades de "Peluche conejo"
+(4, 4, 2, 2), -- Compra 2 incluye 2 unidades de "Kuromi Rosa"
+(5, 1, 3, 5), -- Compra 3 incluye 5 unidades de "Llavero de conejito"
+(6, 4, 3, 1), -- Compra 3 incluye 1 unidad de "Kuromi Rosa"
+(7, 3, 4, 2), -- Compra 4 incluye 2 unidades de "Kuromi Black"
+(8, 2, 4, 1); -- Compra 4 incluye 1 unidad de "Peluche conejo"
