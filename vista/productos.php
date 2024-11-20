@@ -71,6 +71,6 @@ $listaProductos = $productos->buscar(null);
     </div>
 </div>
 
-<?php include_once("../estructura/footer.php"); ?>
+<?php include_once("./estructura/footer.php"); ?>
 
 <script src="<?php echo BASE_URL ?>vista/js/productos.js"></script>
