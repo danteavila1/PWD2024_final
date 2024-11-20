@@ -187,10 +187,8 @@ INSERT INTO `compra` (`idcompra`, `cofecha`, `idusuario`) VALUES
 INSERT INTO `compraestado` (`idcompraestado`, `idcompra`, `idcompraestadotipo`, `cefechaini`, `cefechafin`) VALUES
 (1, 1, 1, '2024-11-01 14:30:00', NULL), -- Compra 1 iniciada
 (2, 2, 1, '2024-11-02 16:45:00', NULL), -- Compra 2 iniciada
-(3, 2, 1, '2024-11-02 17:30:00', NULL), -- Compra 2 iniciada
-(4, 3, 1, '2024-11-03 10:15:00', NULL), -- Compra 3 iniciada
-(5, 4, 1, '2024-11-04 18:20:00', NULL), -- Compra 4 iniciada
-(6, 4, 1, '2024-11-05 08:30:00', NULL); -- Compra 4 iniciada
+(3, 3, 1, '2024-11-03 10:15:00', NULL), -- Compra 3 iniciada
+(4, 4, 1, '2024-11-04 18:20:00', NULL); -- Compra 4 iniciada
 
 -- --------------------- Poblamiento tabla `compraitem`
 INSERT INTO `compraitem` (`idcompraitem`, `idproducto`, `idcompra`, `cicantidad`) VALUES
@@ -202,3 +200,13 @@ INSERT INTO `compraitem` (`idcompraitem`, `idproducto`, `idcompra`, `cicantidad`
 (6, 4, 3, 1), -- Compra 3 incluye 1 unidad de "Kuromi Rosa"
 (7, 3, 4, 2), -- Compra 4 incluye 2 unidades de "Kuromi Black"
 (8, 2, 4, 1); -- Compra 4 incluye 1 unidad de "Peluche conejo"
+
+-- --------------------- Poblamiento tabla `producto`
+UPDATE `producto` 
+SET `proprecio` = 
+    CASE `idproducto`
+        WHEN 1 THEN 150.00 -- Llavero de conejito
+        WHEN 2 THEN 300.00 -- Peluche conejo
+        WHEN 3 THEN 450.00 -- Kuromi Black
+        WHEN 4 THEN 400.00 -- Kuromi Rosa
+    END;

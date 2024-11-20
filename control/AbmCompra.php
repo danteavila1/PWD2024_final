@@ -2,9 +2,11 @@
 include_once '/xampp/htdocs/PWD2024_final/modelo/Compra.php';
 include_once 'AbmUsuario.php';
 
-class AbmCompra {
+class AbmCompra
+{
 
-    private function cargarObjeto($param) {
+    private function cargarObjeto($param)
+    {
         $obj = null;
         if (array_key_exists('idUsuario', $param)) {
             $obj = new Compra();
@@ -20,7 +22,8 @@ class AbmCompra {
         return $obj;
     }
 
-    private function cargarObjetoConClave($param) {
+    private function cargarObjetoConClave($param)
+    {
         $obj = null;
         if (isset($param['idCompra'])) {
             $obj = new Compra();
@@ -29,11 +32,13 @@ class AbmCompra {
         return $obj;
     }
 
-    private function seteadosCamposClaves($param) {
+    private function seteadosCamposClaves($param)
+    {
         return isset($param['idCompra']);
     }
 
-    public function alta($param) {
+    public function alta($param)
+    {
         $resp = false;
         $param['idCompra'] = null;
         $objCompra = $this->cargarObjeto($param);
@@ -43,7 +48,8 @@ class AbmCompra {
         return $resp;
     }
 
-    public function baja($param) {
+    public function baja($param)
+    {
         $resp = false;
         if ($this->seteadosCamposClaves($param)) {
             $objCompra = $this->cargarObjetoConClave($param);
@@ -54,7 +60,8 @@ class AbmCompra {
         return $resp;
     }
 
-    public function modificacion($param) {
+    public function modificacion($param)
+    {
         $resp = false;
         if ($this->seteadosCamposClaves($param)) {
             $objCompra = $this->cargarObjeto($param);
@@ -65,17 +72,15 @@ class AbmCompra {
         return $resp;
     }
 
-    public function buscar($param) {
+    public function buscar($param)
+    {
         $where = " true ";
         if ($param <> NULL) {
-            if (isset($param['idCompra'])) $where .= " and idcompra = " . $param['idCompra'];
-            if (isset($param['coFecha'])) $where .= " and cofecha ='" . $param['coFecha'] . "'";
-            if (isset($param['idUsuario'])) $where .= " and idusuario = " . $param['idUsuario'];
+            if (isset($param['idcompra'])) $where .= " and idcompra = " . $param['idcompra'];
+            if (isset($param['cofecha'])) $where .= " and cofecha ='" . $param['cofecha'] . "'";
+            if (isset($param['idusuario'])) $where .= " and idusuario = " . $param['idusuario'];
         }
 
         return Compra::listar($where);
     }
 }
-?>
-
-

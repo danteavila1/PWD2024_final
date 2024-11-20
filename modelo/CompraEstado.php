@@ -1,5 +1,6 @@
 <?php
-class CompraEstado{
+class CompraEstado
+{
     private $idcompraestado;
     private $objCompra;
     private $objCompraEstadoTipo;
@@ -8,7 +9,8 @@ class CompraEstado{
     private $mensajeOperacion;
 
 
-    public function __construct(){
+    public function __construct()
+    {
         $this->idcompraestado = '';
         $this->objCompra = '';
         $this->objCompraEstadoTipo = '';
@@ -17,7 +19,8 @@ class CompraEstado{
         $this->mensajeOperacion = '';
     }
 
-    public function setear($idcompraestadoSet, $objCompraSet, $objCompraEstadoTipoSet,$cefechaini,$cefechafin){
+    public function setear($idcompraestadoSet, $objCompraSet, $objCompraEstadoTipoSet, $cefechaini, $cefechafin)
+    {
         $this->idcompraestado = $idcompraestadoSet;
         $this->objCompra = $objCompraSet;
         $this->objCompraEstadoTipo = $objCompraEstadoTipoSet;
@@ -26,51 +29,62 @@ class CompraEstado{
         $this->mensajeOperacion = '';
     }
 
-    public function setIdCompraEstado($idcompraestadoNuevo){
+    public function setIdCompraEstado($idcompraestadoNuevo)
+    {
         $this->idcompraestado = $idcompraestadoNuevo;
     }
 
-    public function getIdCompraEstado(){
+    public function getIdCompraEstado()
+    {
         return $this->idcompraestado;
     }
 
-    public function setObjCompra($objCompraNuevo){
+    public function setObjCompra($objCompraNuevo)
+    {
         $this->objCompra = $objCompraNuevo;
     }
 
-    public function getObjCompra(){
+    public function getObjCompra()
+    {
         return $this->objCompra;
     }
 
-    public function setObjCompraEstadoTipo($objCompraEstadoTipoNuevo){
+    public function setObjCompraEstadoTipo($objCompraEstadoTipoNuevo)
+    {
         $this->objCompraEstadoTipo = $objCompraEstadoTipoNuevo;
     }
 
-    public function getObjCompraEstadoTipo(){
+    public function getObjCompraEstadoTipo()
+    {
         return $this->objCompraEstadoTipo;
     }
 
-    public function setCeFechaIni($cefechainiNuevo){
+    public function setCeFechaIni($cefechainiNuevo)
+    {
         $this->cefechaini = $cefechainiNuevo;
     }
 
-    public function getCeFechaIni(){
+    public function getCeFechaIni()
+    {
         return $this->cefechaini;
     }
 
-    public function setCeFechaFin($cefechafinNuevo){
+    public function setCeFechaFin($cefechafinNuevo)
+    {
         $this->cefechafin = $cefechafinNuevo;
     }
 
-    public function getCeFechaFin(){
+    public function getCeFechaFin()
+    {
         return $this->cefechafin;
     }
 
-    public function setMensajeOperacion($valor){
+    public function setMensajeOperacion($valor)
+    {
         $this->mensajeOperacion = $valor;
-        
     }
-    public function getMensajeOperacion(){
+    public function getMensajeOperacion()
+    {
         return $this->mensajeOperacion;
     }
 
@@ -78,14 +92,15 @@ class CompraEstado{
      *  MÉTODOS PARA LA CONEXIÓN CON LA BD
      *******************************/
 
-     public function cargar(){
+    public function cargar()
+    {
         $resp = false;
-        $base=new BaseDatos();
-        $sql="SELECT * FROM compraestado WHERE idcompraestado = ".$this->getIdCompraEstado();
+        $base = new BaseDatos();
+        $sql = "SELECT * FROM compraestado WHERE idcompraestado = " . $this->getIdCompraEstado();
         if ($base->Iniciar()) {
             $res = $base->Ejecutar($sql);
-            if($res>-1){
-                if($res>0){
+            if ($res > -1) {
+                if ($res > 0) {
                     $row = $base->Registro();
                     $objCompra = new Compra();
                     $objCompra->setIdCompra($row['idcompra']);
@@ -93,99 +108,112 @@ class CompraEstado{
                     $objCompraEstadoTipo = new CompraEstadoTipo();
                     $objCompraEstadoTipo->setIdCompraEstadoTipo($row['idcompraestadotipo']);
                     $objCompraEstadoTipo->cargar();
-                    $this->setear($row['idcompraestado'],$objCompra, $objCompraEstadoTipo,$row['cefechaini'], $row['cefechafin']);
+                    $this->setear($row['idcompraestado'], $objCompra, $objCompraEstadoTipo, $row['cefechaini'], $row['cefechafin']);
                     $resp = true;
                 }
             }
         } else {
-            $this->setMensajeOperacion("compraestado->cargar: ".$base->getError());
+            $this->setMensajeOperacion("compraestado->cargar: " . $base->getError());
         }
         return $resp;
     }
 
-    public function insertar(){
-		$base=new BaseDatos();
-		$resp= false;
-		$consultaInsertar="INSERT INTO compraestado(idcompra,idcompraestadotipo)
-				VALUES ('".$this->getObjCompra()->getIdCompra()."','".$this->getObjCompraEstadoTipo()->getIdCompraEstadoTipo()."')";
-		if($base->Iniciar()){
-            $id = $base->EjecutarInsert($consultaInsertar);
-			if($id != null){
-			    $resp=  true;
-				$this->setIdCompraEstado($id);
-			}else{
-				$this->setMensajeOperacion("compraestado->insertar: ".$base->getError());
-			}
-		} else {
-				$this->setMensajeOperacion("compraestado->insertar: ".$base->getError());
-		}
-		return $resp;
-	}
+    public function insertar()
+    {
+        $base = new BaseDatos();
+        $resp = false;
+        $idCompraEstado = $this->getObjCompraEstadoTipo()->getIdCompraEstadoTipo();
 
-    public function modificar(){
+        $sql = "INSERT INTO compraestado(idcompra,idcompraestadotipo)
+        VALUES ('" . $this->getObjCompra()->getIdCompra() . "','" . $this->getObjCompraEstadoTipo()->getIdCompraEstadoTipo() . "')";
+
+        // Si la compra está iniciada o cancelada, se agrega fechafin a la consulta
+        if ($idCompraEstado == 3 || $idCompraEstado == 4) {
+            $fechafin = date('Y-m-d H:i:s');
+            $sql = "INSERT INTO compraestado(idcompra, idcompraestadotipo, cefechafin)
+			VALUES ('" . $this->getObjCompra()->getIdCompra() . "','" . $this->getObjCompraEstadoTipo()->getIdCompraEstadoTipo() . "','" . $fechafin . "')";
+        }
+
+        if ($base->Iniciar()) {
+            $id = $base->Ejecutar($sql);
+            if ($id != null) {
+                $resp =  true;
+                $this->setIdCompraEstado($id);
+            } else {
+                $this->setMensajeOperacion("compraestado->insertar: " . $base->getError());
+            }
+        } else {
+            $this->setMensajeOperacion("compraestado->insertar: " . $base->getError());
+        }
+        return $resp;
+    }
+
+    public function modificar()
+    {
         $resp = false;
         $base = new BaseDatos();
         $sql = "UPDATE compraestado SET
-        idcompra = '" . $this->getObjCompra()->getIdCompra(). "',
-        idcompraestadotipo = '" . $this->getObjCompraEstadoTipo()->getIdCompraEstadoTipo(). "',
-        cefechafin = '" . $this->getCeFechaFin(). "',
+        idcompra = '" . $this->getObjCompra()->getIdCompra() . "',
+        idcompraestadotipo = '" . $this->getObjCompraEstadoTipo()->getIdCompraEstadoTipo() . "',
+        cefechafin = '" . $this->getCeFechaFin() . "'
         WHERE idcompraestado = '" . $this->getIdCompraEstado() . "'";
-    
+
         if ($base->Iniciar()) {
             if ($base->Ejecutar($sql)) {
                 $resp = true;
             } else {
-                $this->setMensajeOperacion("compraestado->modificar: ".$base->getError());
+                $this->setMensajeOperacion("compraestado->modificar: " . $base->getError());
             }
         } else {
-            $this->setMensajeOperacion("compraestado->modificar: ".$base->getError());
+            $this->setMensajeOperacion("compraestado->modificar: " . $base->getError());
         }
         return $resp;
     }
 
-    public function eliminar(){
+    public function eliminar()
+    {
         $resp = false;
-        $base=new BaseDatos();
-        $sql = "DELETE FROM compraestado WHERE idcompraestado = ".$this->getIdCompraEstado();
+        $base = new BaseDatos();
+        $sql = "DELETE FROM compraestado WHERE idcompraestado = " . $this->getIdCompraEstado();
         if ($base->Iniciar()) {
             if ($base->Ejecutar($sql)) {
                 $resp = true;
             } else {
-                $this->setMensajeOperacion("compraestado->eliminar: ".$base->getError());
+                $this->setMensajeOperacion("compraestado->eliminar: " . $base->getError());
             }
         } else {
-            $this->setMensajeOperacion("compraestado->eliminar: ".$base->getError());
+            $this->setMensajeOperacion("compraestado->eliminar: " . $base->getError());
         }
         return $resp;
     }
 
-    public static function listar($parametro=""){
+    public static function listar($parametro = "")
+    {
         $arreglo = array();
-        $base=new BaseDatos();
-        $sql="SELECT * FROM compraestado ";
-        if ($parametro!="") {
-            $sql.='WHERE '.$parametro;
+        $base = new BaseDatos();
+        $sql = "SELECT * FROM compraestado ";
+        if ($parametro != "") {
+            $sql .= 'WHERE ' . $parametro;
         }
         $res = $base->Ejecutar($sql);
-        if($res>-1){
-            if($res>0){
-                while ($row = $base->Registro()){
-                    $obj= new CompraEstado();
+        if ($res > -1) {
+            if ($res > 0) {
+                while ($row = $base->Registro()) {
+                    $obj = new CompraEstado();
                     $objCompra = new Compra();
                     $objCompra->setIdCompra($row['idcompra']);
                     $objCompra->cargar();
                     $objCompraEstadoTipo = new CompraEstadoTipo();
                     $objCompraEstadoTipo->setIdCompraEstadoTipo($row['idcompraestadotipo']);
                     $objCompraEstadoTipo->cargar();
-                    $obj->setear($row['idcompraestado'],$objCompra,$objCompraEstadoTipo,$row['cefechaini'], $row['cefechafin']);
+                    $obj->setear($row['idcompraestado'], $objCompra, $objCompraEstadoTipo, $row['cefechaini'], $row['cefechafin']);
                     array_push($arreglo, $obj);
                 }
             }
         } else {
-            $this->setMensajeOperacion("compraestado->listar: ".$base->getError());
+            // $this->setMensajeOperacion("compraestado->listar: " . $base->getError());
         }
+
         return $arreglo;
     }
-
 }
-?>
