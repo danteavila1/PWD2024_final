@@ -1,112 +1,11 @@
 <?php
 include_once("../configuracion.php");
-<<<<<<< HEAD
-
-$session = new Session();
-$productos = new AbmProducto();
-$dir = 'images/';
-$listaProductos = $productos->buscar(null);
-
-
-$user = $session->getUsuario();
-if ($user == null) {
-    include_once(ROOT_PATH."/vista/estructura/header.php");
-} else {
-    include_once(ROOT_PATH."/vista/estructura/headerInseguro.php");
-}
-
-
-
-
-
-
-
-
-
-
-if (count($listaProductos) > 0) {
-	?>
-
-	<div class="container mt-4" >
-		<h1 class="mb-4" style="margin-top:5%;">Nuestros Productos</h1>
-		<div class="row">
-
-			<?php
-			foreach ($listaProductos as $producto) {
-					?>
-				<div class="col-md-4 mb-4">
-					<div class="card " onclick="verDetalle(this)">
-						<div class="" data-bs-toggle="modal" href="#modalDetalle" role="button">
-						<img src="<?php echo $dir.$producto->getProimagen(); ?>" class="card-img-top object-fit-cover"  height="200" id= "fotoProducto" alt="">
-							<div class="card-body">
-								<h5 class="card-title" id= "nombreProducto"><?php echo $producto->getProNombre(); ?></h5>
-								<p class="card-text" id= "descripcionProducto"><?php echo $producto->getProDetalle(); ?></p>
-								<div class="row">
-									<p class="card-text col" id= "precioProducto">Precio: $<?php echo $producto->getProPrecio(); ?></p>
-									<p class="card-text col" id= "stock">Disponible: <?php echo $producto->getProCantStock(); ?></p>
-								</div>
-							</div>
-						</div>
-						<div class="card-footer z-3">
-							<form method="get" action="#">
-
-								<div class="row align-content-end">
-									<div class="input-group mb-3 col">
-										<!-- <span class="input-group-text" id="inputGroup-sizing-default">Cantidad:</span>
-										<input type="number" class="form-control " id= "cantidadProducto" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" placeholder="1"> -->
-										<input type="number" class="form-control d-none" id= "cantidadProducto" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" placeholder="1" value=1> 
-									</div>
-									<?php
-											if ($sesion->getRoles()!== null) {
-												if ($sesion->getRoles()[0]->getRolDescripcion() == "Cliente") {
-													?>
-													<div class="col-3">
-														<button tytpe="submit" class="btn btn-primary" id="sumarCarrito" data-id="<?php echo $producto->getIdproducto(); ?>" 
-														onclick = "agregarCarrito(<?php echo $producto->getIdproducto(); ?>,<?php echo $session->getIdUsuario(); ?>, 1)">
-														<i class="bi bi-cart-plus-fill"></i>
-													</button>
-												</div>
-												<?php
-												} 
-											}else {
-												?>
-												<div class="col-3">
-													<button class="btn btn-primary" tytpe="submit" id="sumarCarrito" data-id="<?php echo $producto->getIdproducto(); ?>" onclick = ""></i></button>
-												</div>
-												<?php
-											}
-											?>
-								</div>
-							</form>
-						</div>
-					</div>
-				</div>
-				<?php
-			}
-			?>
-
-		</div>
-	</div>
-	<?php
-} else { 
-	?>
-	<div class="container p-2">
-		<div class="alert alert-info" role="alert">
-				No hay productos cargados!
-		</div>
-	</div>
-        
-<?php
- }
- ?>
-=======
 include_once(ROOT_PATH."/vista/estructura/header.php");
 
 $sesion = new Session();
 $productos = new AbmProducto();
 $dir = 'images/';
 $listaProductos = $productos->buscar(null);
->>>>>>> a4492805b724f7b92be5414f6498d4ecf5845b13
 
 
 ?>
@@ -172,16 +71,6 @@ $listaProductos = $productos->buscar(null);
     </div>
 </div>
 
-<?php include_once("./estructura/footer.php"); ?>
+<?php include_once("../estructura/footer.php"); ?>
 
-<<<<<<< HEAD
-
-<script src="<?php echo BASE_URL ?>Vista/js/productoCliente.js"></script>
-
-<?php
-include_once(ROOT_PATH . "vista/estructura/footer.php");
-?>
-
-=======
 <script src="<?php echo BASE_URL ?>vista/js/productos.js"></script>
->>>>>>> a4492805b724f7b92be5414f6498d4ecf5845b13
