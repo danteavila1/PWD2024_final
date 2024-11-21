@@ -8,7 +8,7 @@
     <div class="collapse navbar-collapse" id="menu">
       <ul class="navbar-nav ms-auto">
         <li class="nav-item">
-          <a class="nav-link" href="#">Inicio</a>
+          <a class="nav-link" href="../vista/">Inicio</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="<?php echo BASE_URL; ?>vista/productos.php">Tienda</a>

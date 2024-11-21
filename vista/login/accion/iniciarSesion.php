@@ -40,7 +40,7 @@ if (!empty($colUsuarios)) {
                     header("Location: ../../productos.php");
                 } else {
                     // Si el rol no está definido, redirigir a una página genérica
-                    header("Location: ../../Home/index.php");
+                    header("Location: ../../index.php");
                 }
                 exit();
             } else {
