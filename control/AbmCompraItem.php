@@ -3,9 +3,11 @@ include_once '/xampp/htdocs/PWD2024_final/modelo/CompraItem.php';
 include_once 'AbmProducto.php';
 include_once 'AbmCompra.php';
 
-class AbmCompraItem {
+class AbmCompraItem
+{
 
-    private function cargarObjeto($param) {
+    private function cargarObjeto($param)
+    {
         $obj = null;
         if (array_key_exists('idProducto', $param) && array_key_exists('idCompra', $param)) {
             $obj = new CompraItem();
@@ -18,7 +20,8 @@ class AbmCompraItem {
         return $obj;
     }
 
-    private function cargarObjetoConClave($param) {
+    private function cargarObjetoConClave($param)
+    {
         $obj = null;
         if (isset($param['idCompraItem'])) {
             $obj = new CompraItem();
@@ -27,11 +30,13 @@ class AbmCompraItem {
         return $obj;
     }
 
-    private function seteadosCamposClaves($param) {
+    private function seteadosCamposClaves($param)
+    {
         return isset($param['idCompraItem']);
     }
 
-    public function alta($param) {
+    public function alta($param)
+    {
         $resp = false;
         $param['idCompraItem'] = null;
         $objCompraItem = $this->cargarObjeto($param);
@@ -41,7 +46,8 @@ class AbmCompraItem {
         return $resp;
     }
 
-    public function baja($param) {
+    public function baja($param)
+    {
         $resp = false;
         if ($this->seteadosCamposClaves($param)) {
             $objCompraItem = $this->cargarObjetoConClave($param);
@@ -52,7 +58,8 @@ class AbmCompraItem {
         return $resp;
     }
 
-    public function modificacion($param) {
+    public function modificacion($param)
+    {
         $resp = false;
         if ($this->seteadosCamposClaves($param)) {
             $objCompraItem = $this->cargarObjeto($param);
@@ -63,16 +70,16 @@ class AbmCompraItem {
         return $resp;
     }
 
-    public function buscar($param) {
+    public function buscar($param)
+    {
         $where = " true ";
         if ($param <> NULL) {
-            if (isset($param['idCompraItem'])) $where .= " and idcompraitem = " . $param['idCompraItem'];
-            if (isset($param['idProducto'])) $where .= " and idproducto = " . $param['idProducto'];
-            if (isset($param['idCompra'])) $where .= " and idcompra = " . $param['idCompra'];
-            if (isset($param['ciCantidad'])) $where .= " and cicantidad = " . $param['ciCantidad'];
+            if (isset($param['idcompraitem'])) $where .= " and idcompraitem = " . $param['idcompraitem'];
+            if (isset($param['idproducto'])) $where .= " and idproducto = " . $param['idproducto'];
+            if (isset($param['idcompra'])) $where .= " and idcompra = " . $param['idcompra'];
+            if (isset($param['cicantidad'])) $where .= " and cicantidad = " . $param['cicantidad'];
         }
 
         return CompraItem::listar($where);
     }
 }
-?>
