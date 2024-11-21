@@ -25,8 +25,31 @@ if (!empty($colUsuarios)) {
         // Inicio sesión -> session_start()
         $session = new Session();
         if ($session->iniciar($usnombre, $passEncriptada)) {
-            // REDIRECCIONAMIENTO TEMPORAL <<<<<<<<<<
-            header("Location: ../../admin/listarUsuario.php");
+            // Obtener roles del usuario
+            $roles = $session->getRoles();
+
+            if (!empty($roles)) {
+                $rolPrincipal = $roles[0]->getRolDescripcion(); // Supone que el primer rol es el principal
+
+                // Redirigir según el rol del usuario
+                if ($rolPrincipal === "admin") {
+                    header("Location: ../../admin/listarUsuario.php");
+                } elseif ($rolPrincipal === "deposito") {
+                    header("Location: ../../deposito/listarCompras.php");
+                } elseif ($rolPrincipal === "usuario") {
+                    header("Location: ../../productos.php");
+                } else {
+                    // Si el rol no está definido, redirigir a una página genérica
+                    header("Location: ../../Home/index.php");
+                }
+                exit();
+            } else {
+                // Si no tiene roles asignados
+                setcookie("mensaje", "No tiene roles asignados", time() + 60, "/");
+                setcookie("icono", "error", time() + 60, "/");
+                header("Location: ../formIniciarSesion.php");
+                exit();
+            }
         }
     } else {
         setcookie("mensaje", "La cuenta se encuentra deshabilitada", time() + 60, "/");
@@ -39,3 +62,4 @@ if (!empty($colUsuarios)) {
     header("Location: ../formIniciarSesion.php");
     exit();
 }
+
