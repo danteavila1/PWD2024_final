@@ -118,31 +118,41 @@ class Session
         }
     }
 
-    public function verificarPagSegura(){
-        if ($this->activa()){
-            $roles = $this->getRoles();
-            $usuario = $this->getUsuario();
-            $direccion = $_SERVER['PHP_SELF'];
-            $direccion2 = substr($direccion,strpos($direccion,'vista'),strlen($direccion));
-            $menu = new AbmMenu();
-            $param = ['melink'=>$direccion2];
-            $menues = $menu->buscar($param);
-            if (count($menues) == 1){
-                $menuRol = new AbmMenuRol();
-                foreach ($roles as $rol){
-                    $param = ['idmenu'=>$menues[0]->getIdMenu(), 'idrol'=>($rol->getIdRol())];
-                    $menuesRol = $menuRol->buscar($param);
-                    $puedePasar = !empty($menuesRol);
-                    if ($puedePasar){
-                        break;
-                    }
-                    
+    public function verificarPagSegura()
+{
+    $puedePasar = false; 
+
+    if ($this->activa()) { 
+        $roles = $this->getRoles(); 
+        $usuario = $this->getUsuario(); 
+
+        
+        $direccion = $_SERVER['PHP_SELF'];
+        $direccion2 = substr($direccion, strpos($direccion, 'vista'), strlen($direccion));
+
+        
+        $menu = new AbmMenu();
+        $param = ['melink' => $direccion2];
+        $menues = $menu->buscar($param);
+
+        
+        if (count($menues) == 1) {
+            $menuRol = new AbmMenuRol();
+
+            
+            foreach ($roles as $rol) {
+                $param = ['idmenu' => $menues[0]->getIdMenu(), 'idrol' => $rol->getIdRol()];
+                $menuesRol = $menuRol->buscar($param);
+
+                if (!empty($menuesRol)) {
+                    $puedePasar = true;
+                    break;
                 }
             }
-            
-        } else {
-
         }
-        return $puedePasar;
     }
+
+    return $puedePasar; 
+}
+
 }
