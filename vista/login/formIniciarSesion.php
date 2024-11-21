@@ -1,6 +1,6 @@
 <?php
 include_once("../../configuracion.php");
-include_once(ROOT_PATH . "vista/estructura/header.php");
+include_once(ROOT_PATH . "vista/estructura/headerInseguro.php");
 
 // Este paso es para mostrar notificación de SweetAlert en caso de haber realizado alguna acción
 if (isset($_COOKIE['mensaje'])) {

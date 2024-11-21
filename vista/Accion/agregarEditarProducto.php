@@ -5,28 +5,29 @@ include_once(ROOT_PATH . "vista/estructura/header.php");
 $abmProducto = new AbmProducto;
 $productos = array();
 $datos = data_submitted();
+$dir = '../images/';
 
-if ($_POST['idProducto']){
-    $indice['idProducto'] = $datos['idProducto'];
+if ($_POST['idproducto']){
+    $indice['idproducto'] = $datos['idproducto'];
     $producto = $abmProducto->buscar($indice);
     if($producto != []){
-        if($producto[0]->getProDeshabilitado() == null || $producto[0]->getProDeshabilitado() == '0000-00-00 00:00:00'){
-            $datos['proDeshabilitado'] = null;
+        
+
             if ($abmProducto->modificacion($datos)) {
-                unlink($dir . $datos['idProducto'] . '.png');
-                copy($_FILES["foto"]["tmp_name"], $dir . $datos['idProducto'] . '.png');
+                unlink($dir . $datos['proimagen']);
+                copy($_FILES["foto"]["tmp_name"], $dir . $datos['proimagen']);
 
             
                 ?>
                     <h2 style="text-align: center; color: green">Los datos fueron actualizados correctamente.</h2>
                 <?php
                 } else {
+                    echo $datos['proimagen'];
                 ?>
                     <h2 style='color: red; text-align: center; '>No se realizaron cambios debido a un error</h2>
-                
                 <?php
             }
-        } 
+        
     } else{
         ?>
                 <h2 style='color: red; text-align: center; '>El producto no se encontro</h2>
@@ -36,10 +37,10 @@ if ($_POST['idProducto']){
     
 
 } else {
-    $datos['proDeshabilitado'] = null;
+    
     $resp = $abmProducto->alta($datos);
     if($resp != false){
-        copy($_FILES["foto"]["tmp_name"], $dir . $resp . '.png');
+        copy($_FILES["foto"]["tmp_name"], $dir );
         ?>
             <h2 style="text-align: center; color: green">Se ha ingresado el producto correctamente.</h2>
         <?php

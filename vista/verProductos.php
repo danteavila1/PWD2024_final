@@ -17,7 +17,7 @@ include_once(ROOT_PATH . "/vista/accion/accionProductos.php");
                     <div class="card">
                         <!-- imagen del producto-->
                         <img src="<?php echo BASE_URL . 'vista/images/' . $producto->getProImagen(); ?>" class="card-img-top" alt="<?php echo $producto->getProNombre(); ?>">
-
+                        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Optio dolore provident in? Deleniti magnam harum culpa animi, recusandae totam veritatis commodi quisquam maiores eligendi sapiente neque dolorem sed odit quibusdam.</p>
                         <div class="card-body">
                             <h5 class="card-title"><?php echo $producto->getProNombre(); ?></h5>
                             <p class="card-text"><?php echo $producto->getProDetalle(); ?></p>

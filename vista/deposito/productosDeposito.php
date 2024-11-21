@@ -17,8 +17,8 @@ $datos = data_submitted();
                 if (count($productos) > 0) {
                     foreach ($productos as $producto) {
                             echo "<div onclick='rellenar(" . $producto->getIdProducto() . ", `" . $producto->getProNombre() . "`, `" . 
-                            $producto->getProImagen() . "`, " . $producto->getProCantStock() . ", " . $producto->getProPrecio() . 
-                            ")' class='producto'>";
+                            $producto->getProDetalle() . "`, " . $producto->getProCantStock() . ", " . $producto->getProPrecio() . 
+                            ", `" . $producto->getProImagen() . "`)' class='producto'>";
                             echo "<p>" . $producto->getProNombre() . "</p>";
                             echo "<img width='250' height='150' src='../images/" . $producto->getProImagen() . "' />";
                             echo '<br/>';
@@ -41,31 +41,31 @@ $datos = data_submitted();
                     <div class="mb-1">
                         <label class="form-label" for="idProducto">Id para editar:</label>
                         <br/>
-                        <input class="form-control" type="text" id="idProducto" name="idProducto"/>
+                        <input class="form-control" type="text" id="idProducto" name="idproducto"/>
                         <br/>
                     </div>
                     <div class="mb-1">
                         <label class="form-label" for="proNombre">Nombre:</label>
                         <br/>
-                        <input class="form-control" required type="text" id="proNombre" name="proNombre"/>
+                        <input class="form-control" required type="text" id="proNombre" name="pronombre"/>
                         <br/>
                     </div>
                     <div class="mb-1">
-                        <label class="form-label" for="proDetalle">detalle:</label>
+                        <label class="form-label" for="proDetalle">Detalle:</label>
                         <br/>
-                        <input class="form-control" required type="text" id="proDetalle" name="proDetalle"/>
+                        <input class="form-control" required type="text" id="proDetalle" name="prodetalle"/>
                         <br/>
                     </div>
                     <div class="mb-1">
                         <label class="form-label" for="proCantStock">Stock:</label>
                         <br/>
-                        <input class="form-control" required type="number" id="proCantStock" name="proCantStock"/>
+                        <input class="form-control" required type="number" id="proCantStock" name="procantstock"/>
                         <br/>
                     </div>
                     <div class="mb-1">
                         <label class="form-label" for="proPrecio">Precio:</label>
                         <br/>
-                        <input step="0.01" class="form-control" required type="number" id="proPrecio" name="proPrecio"/>
+                        <input step="0.01" class="form-control" required type="number" id="proPrecio" name="proprecio"/>
                         <br/>
                     </div>
                     <div class="mb-1">
@@ -73,6 +73,8 @@ $datos = data_submitted();
                         <br/>
                         <input class="form-control" id="foto" name="foto" required type="file" accept="image/png"/>
                         <br/>
+                        <!-- Contenedor para la imagen actual -->
+                        <img id="fotoPreview" name="proimagen" src="" alt="Imagen del producto" style="display: none; max-width: 200px; max-height: 150px;"/>
                     </div>
                     <input type="submit" class="btn btn-primary" value="enviar"/>
                 </form>
@@ -91,5 +93,31 @@ $datos = data_submitted();
             </form>
         </div>
     </div>
-        
+    
+    <script>
+
+        function rellenar(id, nombre, detalle, stock, precio, imagen) {
+            // Elementos del formulario
+            let idProducto = document.getElementById('idProducto');
+            let proNombre = document.getElementById('proNombre');
+            let proDetalle = document.getElementById('proDetalle');
+            let proCantStock = document.getElementById('proCantStock');
+            let proPrecio = document.getElementById('proPrecio');
+            let fotoPreview = document.getElementById('fotoPreview'); // Contenedor para mostrar la imagen
+
+            // Rellenar valores
+            idProducto.value = id;
+            proNombre.value = nombre;
+            proDetalle.value = detalle;
+            proCantStock.value = stock;
+            proPrecio.value = precio;
+
+            // Mostrar la imagen actual del producto
+            if (fotoPreview) {
+                fotoPreview.src = '../images/' + imagen; // Ruta relativa a la imagen
+                fotoPreview.style.display = 'block'; // Asegurar que se vea
+            }
+        }
+    
+    </script>
 </section>

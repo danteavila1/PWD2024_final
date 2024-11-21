@@ -1,10 +1,28 @@
 <?php
 include_once("../configuracion.php");
-include_once(ROOT_PATH."/vista/estructura/header.php");
-$sesion = new Session();
+
+$session = new Session();
 $productos = new AbmProducto();
 $dir = 'images/';
 $listaProductos = $productos->buscar(null);
+
+
+$user = $session->getUsuario();
+if ($user == null) {
+    include_once(ROOT_PATH."/vista/estructura/header.php");
+} else {
+    include_once(ROOT_PATH."/vista/estructura/headerInseguro.php");
+}
+
+
+
+
+
+
+
+
+
+
 if (count($listaProductos) > 0) {
 	?>
 
@@ -129,8 +147,9 @@ if (count($listaProductos) > 0) {
 <!-- MODAL CARRITO -->
 
 
+<script src="<?php echo BASE_URL ?>Vista/js/productoCliente.js"></script>
 
 <?php
-include_once("../estructura/footer.php");
+include_once(ROOT_PATH . "vista/estructura/footer.php");
 ?>
-<script src="<?php echo BASE_URL ?>Vista/js/productoCliente.js"></script>
+

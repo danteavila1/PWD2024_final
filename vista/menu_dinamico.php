@@ -14,24 +14,29 @@ if (!$sesion->activa()) {
 // Obtenemos al usuario logueado
 $usuario = $sesion->getUsuario();
 if (!$usuario) {
-    //echo "<div class='alert alert-danger'>Error: No se encontró el usuario autenticado.</div>"
-    echo '<ul class="navbar-nav ms-auto">
-        <li class="nav-item">
-          <a class="nav-link" href="#">Inicio</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="'.BASE_URL.'vista/productos.php">Tienda</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Novedades</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Contacto</a>
-        </li>
-      </ul>
-      <a href="'.BASE_URL.'vista/login/formIniciarSesion.php" class="btn btn-primary ms-3">Iniciar sesión</a>';
-    exit;
+  //echo "<div class='alert alert-danger'>Error: No se encontró el usuario autenticado.</div>";
+  echo '<ul class="navbar-nav ms-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="#">Inicio</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="' . BASE_URL . 'vista/productos.php">Tienda</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Novedades</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Contacto</a>
+      </li>
+    </ul>
+    <a href="' . BASE_URL . 'vista/login/formIniciarSesion.php" class="btn btn-primary ms-3">Iniciar sesión</a>
+    <a href="../cliente/carrito.php" class="ms-3">
+      <img src="' . BASE_URL . 'vista/images/carrito.png" alt="Carrito" class="imgCart me-2" style="height: 2em;">
+      <span>' . (isset($_SESSION['numero']) ? $_SESSION['numero'] : 0) . '</span>
+    </a>';
+  exit;
 }
+
 
 // Obtenemos información del usuario
 $roles = $sesion->getRoles();

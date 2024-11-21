@@ -21,6 +21,14 @@
         </li>
       </ul>
       <a href="<?php echo BASE_URL; ?>vista/login/formIniciarSesion.php" class="btn btn-primary ms-3">Iniciar sesión</a>
+
+      <a href="../cliente/carrito.php" class="ms-3">
+        <img src="<?php echo BASE_URL; ?>vista/images/carrito.png" alt="Carrito" class="imgCart me-2" style="height: 2em;">
+        <span>
+        <?php echo isset($_SESSION['numero']) ? $_SESSION['numero'] : 0; ?>
+        </span>
+      </a>
+
     </div>
   </div>
 </nav>
