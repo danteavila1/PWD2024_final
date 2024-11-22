@@ -49,7 +49,7 @@ class AbmCompra
         $compra = new Compra();
         $usuario = new Usuario();
         $usuario->setIdusuario($param['idusuario']);
-        $compra->setear($param['idcompra'], $param['cofecha'], $usuario);
+        $compra->setear($param['idcompra'], $param['cofecha'], $param['idusuario'] );
         if ($compra->insertar()) {
             $resp = true;
         }

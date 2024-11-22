@@ -47,7 +47,7 @@ if($carritoActivo === null){
     $paramCompra = [
         'idcompra' => null,
         'cofecha' => $fechaCompra,
-        'idUsuario' => $idUsuario
+        'idusuario' => $idUsuario
     ];
 
     //Inserta la compra a la tabla
