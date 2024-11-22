@@ -22,30 +22,45 @@ if (isset($_COOKIE['mensaje'])) {
         });
     </script>
 <?php endif; ?>
-<form id="form" name="form" method="post" onsubmit="encriptar()" action="accion/crearCuenta.php">
-    <h3>Crear cuenta</h3>
-    <label for="usnombre">Nombre usuario</label>
-    <input type="text" class="form-control" id="usnombre" name="usnombre">
+<div class="container d-flex justify-content-center align-items-center min-vh-100">
+    <div class="card shadow-lg p-4" style="max-width: 600px; width: 100%;">
+        <form id="form" name="form" method="post" onsubmit="encriptar()" action="accion/crearCuenta.php">
+            <h3 class="text-center mb-4">Crear cuenta</h3>
 
-    <label for="usmail">Email</label>
-    <input type="text" class="form-control" id="usmail" name="usmail">
+            <div class="mb-3">
+                <label for="usnombre" class="form-label">Nombre usuario</label>
+                <input type="text" class="form-control" id="usnombre" name="usnombre">
+            </div>
 
-    <label for="uspass">Contraseña</label>
-    <div class="input-group">
-        <input type="password" class="form-control" id="uspass" name="uspass">
-        <button type="button" class="btn btn-secondary"
-            onmousedown="mostrarPass(true)"
-            onmouseup="mostrarPass(false)"
-            onmouseleave="mostrarPass(false)">
-            <i id="toggleIcon" class="bi bi-eye-slash"></i>
-        </button>
+            <div class="mb-3">
+                <label for="usmail" class="form-label">Email</label>
+                <input type="email" class="form-control" id="usmail" name="usmail">
+            </div>
+
+            <div class="mb-3">
+                <label for="uspass" class="form-label">Contraseña</label>
+                <div class="input-group">
+                    <input type="password" class="form-control" id="uspass" name="uspass">
+                    <button type="button" class="btn btn-outline-secondary"
+                        onmousedown="mostrarPass(true)"
+                        onmouseup="mostrarPass(false)"
+                        onmouseleave="mostrarPass(false)">
+                        <i id="toggleIcon" class="bi bi-eye-slash"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="d-grid mb-2">
+                <input type="submit" class="btn btn-success" value="Confirmar">
+            </div>
+
+            <div class="d-grid">
+                <a href="formIniciarSesion.php" class="btn btn-secondary text-center">Volver</a>
+            </div>
+        </form>
     </div>
+</div>
 
-    <input type="submit" class="btn btn-success" value="Confirmar">
-    <a href="formIniciarSesion.php">
-        <input type="button" class="btn btn-secondary" value="Volver">
-    </a>
-</form>
 
 <script src="../js/md5.js"></script>
 <script src="../js/verPass.js"></script>
