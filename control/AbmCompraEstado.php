@@ -325,4 +325,41 @@ class AbmCompraEstado
 
         return $pudo;
     }
+    public function buscarArray($param) {
+        $arreglo = [];
+        if (is_object($param)) {
+            $arreglo = dismount($param);
+        } else {
+            $arreglo = convert_array($this->buscar($param));
+        }
+        return $arreglo;
+    }
+    public function buscarCarroActivo($idusuario) {
+        $abmCompra = new AbmCompra();
+        //busca todas las compras por el id de usario
+        $compras = $abmCompra->buscarPorUsuario($idusuario);
+
+        // arreglo para almacenar las compras con estado Iniciado
+        $compraEstadoIniciado = [];
+
+        foreach ($compras as $compra) {
+            if (count($compras) > 0) {
+                // de cada compra específica, obtengo su compraEstado específico
+                $compraEstado = $this->buscarArray(['idcompra' => $compra->getIdcompra()]);
+                if (count($compraEstado) > 0) {
+
+                    // si el 'idcompraestadotipo' de este compraEstado es 1, significa que la compra fue iniciada. Por lo que la almacenamos
+                    if($compraEstado[0]['objCompraEstadoTipo']->getIdcompraestadotipo() === 1 &&  $compraEstado[0]['cefechafin'] === '0000-00-00 00:00:00'){
+                        $compraEstadoIniciado[] = $compra; 
+                    }
+                }
+            }
+        } 
+
+        if(count($compraEstadoIniciado) === 0){
+            $compraEstadoIniciado = null;
+        }
+
+        return $compraEstadoIniciado;
+    }
 }

@@ -4,6 +4,7 @@ include_once(ROOT_PATH."/vista/estructura/header.php");
 
 $sesion = new Session();
 $productos = new AbmProducto();
+
 $dir = 'images/';
 $listaProductos = $productos->buscar(null);
 
@@ -31,8 +32,11 @@ $listaProductos = $productos->buscar(null);
                         </div>
                         <div class="card-footer">
                             <button class="btn btn-primary ver-detalle">Ver Detalle</button>
-                            <?php if ($listaProductos): ?>
-                                <button class="btn btn-success agregar-carrito">Agregar al carrito</button>
+                            <?php
+                            $user = $sesion->getUsuario();
+                            $idUsuario = $user->getIdUsuario();
+                             if ($listaProductos): ?>
+                                <button class="btn btn-success agregar-carrito" onclick="agregarCarrito(<?php echo $producto->getIdproducto(); ?>, <?php echo $idUsuario; ?>)">Agregar al carrito</button>
                             <?php endif; ?>
                         </div>
                     </div>
@@ -71,6 +75,4 @@ $listaProductos = $productos->buscar(null);
     </div>
 </div>
 
-<?php include_once("../estructura/footer.php"); ?>
-
-<script src="<?php echo BASE_URL ?>vista/js/productos.js"></script>
+<?php include_once(ROOT_PATH."/vista/estructura/footer.php"); ?>

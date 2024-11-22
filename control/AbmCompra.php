@@ -37,6 +37,13 @@ class AbmCompra
         return isset($param['idCompra']);
     }
 
+    public function buscarPorUsuario($idusuario) {
+        $where = "idusuario = $idusuario";
+        $compra = new Compra();
+        $arreglo = $compra->listar($where);
+        return $arreglo;
+    }
+
     public function alta($param)
     {
         $resp = false;
@@ -81,6 +88,8 @@ class AbmCompra
             if (isset($param['idusuario'])) $where .= " and idusuario = " . $param['idusuario'];
         }
 
-        return Compra::listar($where);
+        $compra = new Compra();
+        $arreglo = $compra->listar($where);
+        return $arreglo;
     }
 }

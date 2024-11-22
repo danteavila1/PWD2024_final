@@ -25,8 +25,45 @@ function verDetalleProducto(idProducto) {
     });
 }
 
+function agregarCarrito(idProducto, idUsuario){
+    console.log("entra a agregarCarrito");
+    console.log(idProducto);
+    console.log(idUsuario);
+    // Crear un objeto con los datos necesarios
+    let datosProducto = {
+        idproducto: idProducto,
+        idusuario: idUsuario,
+        cantidad: 1 // Por ahora, agregamos una cantidad fija de 1, se puede mejorar
+    };
+
+    // Enviar los datos al servidor usando Fetch API
+    fetch('../vista/Accion/accionCarrito.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(datosProducto)
+    })
+    .then(response => {
+        // Verifica que la respuesta HTTP sea exitosa
+        if (!response.ok) {
+            throw new Error('Error en la solicitud: ' + response.status);
+        }
+        // Convierte la respuesta a JSON
+        return response.json();
+    })
+    .then(data => {
+        console.log('Respuesta del servidor:', data); // Procesa el JSON devuelto por el servidor
+    })
+    .catch(error => {
+        console.error('Error:', error); // Manejo de errores
+    });
+
+}
+
+
 // Función para agregar un producto al carrito
-function agregarCarrito(idProducto, idUsuario, cantidad) {
+function agregarCarrito1(idProducto, idUsuario, cantidad) {
     $.ajax({
         url: '../vista/accion/accionProductos.php',
         type: 'POST',
