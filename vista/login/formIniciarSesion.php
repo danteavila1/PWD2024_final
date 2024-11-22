@@ -22,25 +22,39 @@ if (isset($_COOKIE['mensaje'])) {
         });
     </script>
 <?php endif; ?>
-<form id="form" name="form" method="post" onsubmit="encriptar()" action="./accion/iniciarSesion.php">
-    <h3>Iniciar sesión</h3>
-    <label class for="usnombre">Nombre de usuario</label>
-    <input type="text" class="form-control" id="usnombre" name="usnombre">
+<div class="container d-flex justify-content-center align-items-center min-vh-100">
+    <div class="card shadow-lg p-4" style="max-width: 600px; width: 100%;">
+        <form id="form" name="form" method="post" onsubmit="encriptar()" action="./accion/iniciarSesion.php">
+            <h3 class="text-center mb-4">Iniciar sesión</h3>
 
-    <label for="uspass">Contraseña</label>
-    <div class="input-group">
-        <input type="password" class="form-control" id="uspass" name="uspass">
-        <button type="button" class="btn btn-secondary"
-            onmousedown="mostrarPass(true)"
-            onmouseup="mostrarPass(false)"
-            onmouseleave="mostrarPass(false)">
-            <i id="toggleIcon" class="bi bi-eye-slash"></i>
-        </button>
+            <div class="mb-3">
+                <label for="usnombre" class="form-label">Nombre de usuario</label>
+                <input type="text" class="form-control" id="usnombre" name="usnombre">
+            </div>
+
+            <div class="mb-3">
+                <label for="uspass" class="form-label">Contraseña</label>
+                <div class="input-group">
+                    <input type="password" class="form-control" id="uspass" name="uspass">
+                    <button type="button" class="btn btn-outline-secondary"
+                        onmousedown="mostrarPass(true)"
+                        onmouseup="mostrarPass(false)"
+                        onmouseleave="mostrarPass(false)">
+                        <i id="toggleIcon" class="bi bi-eye-slash"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="d-grid">
+                <input type="submit" class="btn btn-success" value="Enviar">
+            </div>
+        </form>
+        <p class="text-center mt-3">¿No estás registrado?
+            <a href="formCrearCuenta.php" class="text-decoration-none">Crear cuenta</a>
+        </p>
     </div>
+</div>
 
-    <input type="submit" class="btn btn-success" value="Enviar">
-</form>
-<p>¿No estás registrado? <a href="formCrearCuenta.php">Crear cuenta</a></p>
 
 <script src="../js/md5.js"></script>
 <script src="../js/verPass.js"></script>

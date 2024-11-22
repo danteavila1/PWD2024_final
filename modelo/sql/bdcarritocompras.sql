@@ -119,7 +119,7 @@ CREATE TABLE `menurol` (
 INSERT INTO `usuario` (`idusuario`, `usnombre`, `uspass`, `usmail`, `usdeshabilitado`) VALUES
 (1, 'admin', '0192023a7bbd73250516f069df18b500', 'admin@gmail.com', '0000-00-00 00:00:00'), -- admin admin123
 (2, 'deposito', '58c583ac2d31e73486f26dccdf560cea', 'deposito@gmail.com', '0000-00-00 00:00:00'), -- deposito deposito123
-(3, 'cliente', '401cec94d3ed586d8cb895c10c0f7db6', 'cliente@gmail.com', '0000-00-00 00:00:00'), -- cliente cliente123
+(3, 'cliente', '7159bbe0c8ca2a67230a26b72dea7557', 'cliente@gmail.com', '0000-00-00 00:00:00'), -- cliente cliente123
 (4, 'juan', 'f5737d25829e95b9c234b7fa06af8736', 'juan@gmail.com', '0000-00-00 00:00:00'), -- juan juan123
 (5, 'susana', '842c9034eeeb472b0bc93f3979a0cb42', 'susana@gmail.com', '0000-00-00 00:00:00'); -- susana susana123
 
@@ -146,11 +146,17 @@ INSERT INTO `compraestadotipo` (`idcompraestadotipo`, `cetdescripcion`, `cetdeta
 
 -- --------------------- Poblamiento tabla `producto`
 INSERT INTO `producto` (`pronombre`, `prodetalle`, `proimagen`, `procantstock`) VALUES
-('Llavero de conejito', 'Un llavero de conejito. Unico color', 'conejito.jpeg', 15),
-('Peluche conejo', 'Sin patitas', 'conejoSinPatas.jpg', 10),
-('Kuromi Black', 'Peluche Kuromi en color negro. Edición limitada', 'kuromiBlack.jpg', 20),
-('Kuromi Rosa', 'Peluche Kuromi. Color rosa', 'kuromiPi.jpeg', 25);
-
+('Té de conejito', 'Un tecito calentito y dulce', 'conejoTesito.jpg', 10),
+('Peluche conejo', 'Perfecto para acurrucarse', 'conejo.png', 10),
+('Gatito con sombrero', 'El gatito más coqueto', 'gatitoGorro.jpg', 20),
+('Gatito con pijama', 'Para dormir como un angelito', 'gatoPijama.jpg', 25),
+('Kit peluche + hebillas', 'Estilo y ternura en el mismo lugar', 'kitOsito.jpg', 15),
+('Oso con listón', 'Suave y esponjoso', 'osoCinta.jpg', 10),
+('Oso rosa', 'Tan rosado que empalaga', 'osoRosa.jpg', 15),
+('Oveja con tulipán', 'Flores y ternura, juntas', 'ovejaTulipan.png', 20),
+('Pollito', 'El pollito que emana amor', 'pollito.jpg', 25),
+('Vaquita frutilla', 'La vaquita más dulce', 'vacaFrutilla.jpg', 10),
+('Osita con vestido', 'La osita más coqueta', 'osoConVestido.jpg', 15);
 
 -- -----------------------------------------【 ALTERACIONES 】-----------------------------------------
 
@@ -205,8 +211,15 @@ INSERT INTO `compraitem` (`idcompraitem`, `idproducto`, `idcompra`, `cicantidad`
 UPDATE `producto` 
 SET `proprecio` = 
     CASE `idproducto`
-        WHEN 1 THEN 150.00 -- Llavero de conejito
-        WHEN 2 THEN 300.00 -- Peluche conejo
-        WHEN 3 THEN 450.00 -- Kuromi Black
-        WHEN 4 THEN 400.00 -- Kuromi Rosa
+        WHEN 1 THEN 150.00 
+        WHEN 2 THEN 300.00
+        WHEN 3 THEN 450.00
+        WHEN 4 THEN 400.00
+        WHEN 5 THEN 250.00 
+        WHEN 6 THEN 200.00
+        WHEN 7 THEN 320.00
+        WHEN 8 THEN 190.00
+        WHEN 9 THEN 200.00 
+        WHEN 10 THEN 300.00
+        WHEN 11 THEN 250.00 
     END;

@@ -1,8 +1,6 @@
 <?php  
 // accion/accionCarrito.php
 
-file_put_contents("error.log", json_encode($_POST), FILE_APPEND);
-
 //codigo para ver error en consola en detalle
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);

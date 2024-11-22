@@ -119,6 +119,8 @@ class AbmMenu
                 $where .= " and idmenu =" . $param['idmenu'];
             if (isset($param['menombre']))
                 $where .= " and menombre ='" . $param['menombre'] . "'";
+                if (isset($param['melink']))
+                $where .= " and melink ='" . $param['melink'] . "'";
         }
         $obj = new Menu();
 

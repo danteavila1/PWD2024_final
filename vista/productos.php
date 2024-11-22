@@ -1,33 +1,33 @@
 <?php
 include_once("../configuracion.php");
-include_once(ROOT_PATH."/vista/estructura/header.php");
+include_once(ROOT_PATH . "/vista/estructura/header.php");
 
 $sesion = new Session();
 $productos = new AbmProducto();
 
 $dir = 'images/';
 $listaProductos = $productos->buscar(null);
-
-
 ?>
 
-
-<div class="container mt-4">
-    <h1 class="mb-4" style="margin-top:5%;">Nuestros Productos</h1>
-    <div class="row">
-    
-        <?php
-        if (count($listaProductos) > 0): ?>
+<div class="container p-3 mb-5">
+    <h1 class="mb-4 text-center">Nuestros productos</h1>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        <?php if (count($listaProductos) > 0): ?>
             <?php foreach ($listaProductos as $producto): ?>
-                <div class="col-md-4 mb-4">
-                    <div class="card" data-id="<?php echo $producto->getIdproducto(); ?>" data-nombre="<?php echo htmlspecialchars($producto->getProNombre()); ?>" data-detalle="<?php echo htmlspecialchars($producto->getProDetalle()); ?>" data-precio="<?php echo htmlspecialchars($producto->getProPrecio()); ?>" data-stock="<?php echo htmlspecialchars($producto->getProCantStock()); ?>" data-imagen="<?php echo $dir . $producto->getProimagen(); ?>">
-                        <img src="<?php echo $dir . $producto->getProimagen(); ?>" class="card-img-top object-fit-cover" height="200" alt="Imagen de producto">
-                        <div class="card-body">
+                <div class="col">
+                    <div class="card shadow-sm h-100">
+                        <!-- Imagen más grande y responsiva -->
+                        <img src="<?php echo $dir . $producto->getProimagen(); ?>" class="card-img-top img-fluid" alt="Imagen de producto" style="height: 300px; object-fit: cover;">
+                        <div class="card-body d-flex flex-column">
                             <h5 class="card-title"><?php echo htmlspecialchars($producto->getProNombre()); ?></h5>
-                            <p class="card-text"><?php echo htmlspecialchars($producto->getProDetalle()); ?></p>
-                            <div class="row">
-                                <p class="card-text col">Precio: $<?php echo htmlspecialchars($producto->getProPrecio()); ?></p>
-                                <p class="card-text col">Disponible: <?php echo htmlspecialchars($producto->getProCantStock()); ?></p>
+                            <p class="card-text text-muted"><?php echo htmlspecialchars($producto->getProDetalle()); ?></p>
+                            <div class="row g-0">
+                                <div class="col-6">
+                                    <p class="card-text"><strong>Precio:</strong> $<?php echo htmlspecialchars($producto->getProPrecio()); ?></p>
+                                </div>
+                                <div class="col-6">
+                                    <p class="card-text text-end"><strong>Disponible:</strong> <?php echo htmlspecialchars($producto->getProCantStock()); ?></p>
+                                </div>
                             </div>
                         </div>
                         <div class="card-footer">
@@ -65,6 +65,10 @@ $listaProductos = $productos->buscar(null);
                 <p id="modalPrecio"></p>
                 <p id="modalStock"></p>
             </div>
+
+            <!-- !!!!!!!!!!!!!!!!!!!!! -->
+            <!-- !!!!!!!!!!!!!!!!!!!!! -->
+            <!-- Esta parte anda mal, en el código de fuente de la página se ve el error. No se ve el footer -->
             <div class="modal-footer">
                 <?php if ($sesion->getRoles() !== null && $sesion->getRoles()[0]->getRolDescripcion() === "Cliente"): ?>
                     <button class="btn btn-success" id="agregarCarritoModal">Agregar al carrito</button>
