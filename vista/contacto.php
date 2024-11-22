@@ -4,7 +4,7 @@ include_once(ROOT_PATH . "vista/estructura/header.php");
 ?>
 <div class="container mt-5">
     <div class="card shadow mx-auto" style="max-width: 600px;">
-        <div class="card-header text-center bg-pink text-white">
+        <div class="card-header text-center bg-pink">
             <h3 class="fw-bold">Contacto - Kawaii Store</h3>
         </div>
         <div class="card-body text-center">
@@ -22,7 +22,7 @@ include_once(ROOT_PATH . "vista/estructura/header.php");
             <hr>
             <p class="fw-bold">💖 Porque el mundo necesita más cosas adorables y esponjosas 💖</p>
         </div>
-        <div class="card-footer text-center bg-pink text-white">
+        <div class="card-footer text-center bg-pink">
             <small class="fst-italic">Gracias por ser tan especial como un panda con moño en un día soleado 🐼🎀</small>
         </div>
     </div>

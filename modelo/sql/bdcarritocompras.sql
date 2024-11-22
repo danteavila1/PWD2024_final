@@ -146,14 +146,14 @@ INSERT INTO `compraestadotipo` (`idcompraestadotipo`, `cetdescripcion`, `cetdeta
 
 -- --------------------- Poblamiento tabla `producto`
 INSERT INTO `producto` (`pronombre`, `prodetalle`, `proimagen`, `procantstock`) VALUES
-('Té de conejito', 'Un tecito calentito y dulce', 'conejoTesito.jpg', 10),
+('Te de conejito', 'Un tecito calentito y dulce', 'conejoTesito.jpg', 10),
 ('Peluche conejo', 'Perfecto para acurrucarse', 'conejo.png', 10),
 ('Gatito con sombrero', 'El gatito más coqueto', 'gatitoGorro.jpg', 20),
 ('Gatito con pijama', 'Para dormir como un angelito', 'gatoPijama.jpg', 25),
 ('Kit peluche + hebillas', 'Estilo y ternura en el mismo lugar', 'kitOsito.jpg', 15),
-('Oso con listón', 'Suave y esponjoso', 'osoCinta.jpg', 10),
+('Oso con liston', 'Suave y esponjoso', 'osoCinta.jpg', 10),
 ('Oso rosa', 'Tan rosado que empalaga', 'osoRosa.jpg', 15),
-('Oveja con tulipán', 'Flores y ternura, juntas', 'ovejaTulipan.png', 20),
+('Oveja con tulipan', 'Flores y ternura, juntas', 'ovejaTulipan.png', 20),
 ('Pollito', 'El pollito que emana amor', 'pollito.jpg', 25),
 ('Vaquita frutilla', 'La vaquita más dulce', 'vacaFrutilla.jpg', 10),
 ('Osita con vestido', 'La osita más coqueta', 'osoConVestido.jpg', 15);
@@ -175,12 +175,13 @@ INSERT INTO `menu` (`idmenu`, `menombre`, `medescripcion`, `idpadre`, `medeshabi
 (4, 'Productos', 'Productos', NULL, NULL,'vista/deposito/productosdeposito.php'),
 (5, 'Inicio', 'Inicio', NULL, NULL,'vista/productos.php'),
 (6, 'Tienda', 'Tienda', NULL, NULL,'vista/productos.php'),
-(7, 'Novedades', 'Novedades', NULL, NULL,'vista/productos.php'),
-(8, 'Contacto', 'Contacto', NULL, NULL,'vista/productos.php');
+(7, 'Contacto', 'Contacto', NULL, NULL,'vista/contacto.php'),
+(8, 'Gestión de compras', 'Gestión de compras', NULL, NULL,'vista/deposito/listarCompras.php'),
+(9, 'Historial de compras', 'Historial de compras', NULL, NULL,'vista/cliente/historialCompras.php');
 
 -- --------------------- Poblamiento tabla `menurol`
 INSERT INTO `menurol` (`idmenu`, `idrol`) VALUES
-(1, 1),(2, 1),(3, 1),(4, 2),(5, 3),(6, 3),(7, 3),(8, 3);
+(1, 1),(2, 1),(3, 1),(4, 2),(5, 3),(6, 3),(7, 3),(8, 2),(9, 3);
 
 -- --------------------- Poblamiento tabla `compra`
 INSERT INTO `compra` (`idcompra`, `cofecha`, `idusuario`) VALUES
@@ -198,14 +199,14 @@ INSERT INTO `compraestado` (`idcompraestado`, `idcompra`, `idcompraestadotipo`, 
 
 -- --------------------- Poblamiento tabla `compraitem`
 INSERT INTO `compraitem` (`idcompraitem`, `idproducto`, `idcompra`, `cicantidad`) VALUES
-(1, 1, 1, 2), -- Compra 1 incluye 2 unidades de "Llavero de conejito"
-(2, 3, 1, 1), -- Compra 1 incluye 1 unidad de "Kuromi Black"
-(3, 2, 2, 3), -- Compra 2 incluye 3 unidades de "Peluche conejo"
-(4, 4, 2, 2), -- Compra 2 incluye 2 unidades de "Kuromi Rosa"
-(5, 1, 3, 5), -- Compra 3 incluye 5 unidades de "Llavero de conejito"
-(6, 4, 3, 1), -- Compra 3 incluye 1 unidad de "Kuromi Rosa"
-(7, 3, 4, 2), -- Compra 4 incluye 2 unidades de "Kuromi Black"
-(8, 2, 4, 1); -- Compra 4 incluye 1 unidad de "Peluche conejo"
+(1, 1, 1, 2),
+(2, 3, 1, 1),
+(3, 2, 2, 3),
+(4, 4, 2, 2),
+(5, 1, 3, 5),
+(6, 4, 3, 1),
+(7, 3, 4, 2),
+(8, 2, 4, 1);
 
 -- --------------------- Poblamiento tabla `producto`
 UPDATE `producto` 
