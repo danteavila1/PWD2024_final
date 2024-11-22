@@ -9,12 +9,12 @@ class AbmCompraItem
     private function cargarObjeto($param)
     {
         $obj = null;
-        if (array_key_exists('idProducto', $param) && array_key_exists('idCompra', $param)) {
+        if (array_key_exists('idproducto', $param) && array_key_exists('idcompra', $param)) {
             $obj = new CompraItem();
-            $idCompraItem = $param['idCompraItem'] ?? null;
-            $idProducto = $param['idProducto'];
-            $idCompra = $param['idCompra'];
-            $ciCantidad = $param['ciCantidad'];
+            $idCompraItem = $param['idcompraitem'] ?? null;
+            $idProducto = $param['idproducto'];
+            $idCompra = $param['idcompra'];
+            $ciCantidad = $param['cicantidad'];
             $obj->setear($idCompraItem, $idProducto, $idCompra, $ciCantidad);
         }
         return $obj;
@@ -38,7 +38,7 @@ class AbmCompraItem
     public function alta($param)
     {
         $resp = false;
-        $param['idCompraItem'] = null;
+        $param['idcompraitem'] = null;
         $objCompraItem = $this->cargarObjeto($param);
         if ($objCompraItem != null && $objCompraItem->insertar()) {
             $resp = true;
