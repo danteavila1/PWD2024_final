@@ -119,7 +119,7 @@ CREATE TABLE `menurol` (
 INSERT INTO `usuario` (`idusuario`, `usnombre`, `uspass`, `usmail`, `usdeshabilitado`) VALUES
 (1, 'admin', '0192023a7bbd73250516f069df18b500', 'admin@gmail.com', '0000-00-00 00:00:00'), -- admin admin123
 (2, 'deposito', '58c583ac2d31e73486f26dccdf560cea', 'deposito@gmail.com', '0000-00-00 00:00:00'), -- deposito deposito123
-(3, 'cliente', '401cec94d3ed586d8cb895c10c0f7db6', 'cliente@gmail.com', '0000-00-00 00:00:00'), -- cliente cliente123
+(3, 'cliente', '7159bbe0c8ca2a67230a26b72dea7557', 'cliente@gmail.com', '0000-00-00 00:00:00'), -- cliente cliente123
 (4, 'juan', 'f5737d25829e95b9c234b7fa06af8736', 'juan@gmail.com', '0000-00-00 00:00:00'), -- juan juan123
 (5, 'susana', '842c9034eeeb472b0bc93f3979a0cb42', 'susana@gmail.com', '0000-00-00 00:00:00'); -- susana susana123
 

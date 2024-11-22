@@ -1,4 +1,6 @@
 <?php
+include_once('Mail.php');
+
 class AbmCompraEstado
 {
     //Espera como parametro un arreglo asociativo donde las claves coinciden con los nombres de las variables instancias del objeto
@@ -239,6 +241,7 @@ class AbmCompraEstado
                 $compraAceptada->alta($param);
 
                 $pudo = ['exito' => true, 'msj' => 'Compra aceptada'];
+                $this->informarCambioEstado($param['idcompra']);
             }
         }
 
@@ -281,13 +284,25 @@ class AbmCompraEstado
             $compraEnviada->alta($param);
 
             $pudo = ['exito' => true, 'msj' => 'Compra enviada'];
+            $this->informarCambioEstado($param['idcompra']);
         }
 
         return $pudo;
     }
 
     /**
-     * Envía una compra, actualiza fecha fin de la compra
+     * Manda mail al cliente informando el cambio de estado de su compra
+     * @param array $idcompra
+     */
+    public static function informarCambioEstado($idcompra)
+    {
+        $objMail = new Mail();
+        $objMail->enviarMail($idcompra);
+    }
+
+    /**
+     * Cancela una compra, actualiza fecha fin de la compra
+     * De ser necesario, también devuelve stock de una compra aceptada
      */
     public function cancelarCompra($datos)
     {
@@ -300,8 +315,45 @@ class AbmCompraEstado
         $objCompraEstado = new AbmCompraEstado();
         $compra = $objCompraEstado->buscar($param);
 
+
         // Si la compra existe, realizo la cancelación de la misma
         if (isset($compra)) {
+
+            // Itero sobre sus tipos de estado para conseguir el último
+            foreach ($compra as $idEstado) {
+                $ultimoEstado = $idEstado->getObjCompraEstadoTipo()->getIdCompraEstadoTipo();
+            }
+
+            // Condición por si la compra está 'aceptada' y debo devolver stock
+            if ($ultimoEstado == 2) {
+
+                // Busco los productos de la compra
+                $objCompraItem = new AbmCompraItem();
+                $itemsComprados = $objCompraItem->buscar($datos);
+
+                // Itero sobre los productos para devolver el stock
+                foreach ($itemsComprados as $itemComprado) {
+
+                    // Creo instancia AbmProducto y obtengo los datos para modificarlos
+                    $objProducto = new AbmProducto();
+                    $idproducto['idproducto'] = $itemComprado->getIdProducto();
+                    $producto = $objProducto->buscar($idproducto);
+
+                    $datosProducto['idproducto'] = $producto[0]->getIdProducto();
+                    $datosProducto['pronombre'] = $producto[0]->getProNombre();
+                    $datosProducto['prodetalle'] = $producto[0]->getProDetalle();
+                    $datosProducto['proimagen'] = $producto[0]->getProImagen();
+                    $datosProducto['proprecio'] = $producto[0]->getProPrecio();
+
+                    // Sumo la cantidad comprada al stock actual
+                    $cantStockActual = $producto[0]->getProCantStock();
+                    $cantStockComprado = $itemComprado->getCiCantidad();
+                    $datosProducto['procantstock'] = $cantStockActual + $cantStockComprado;
+
+                    // Realizo la suma de stock del producto comprado
+                    $pudo = $objProducto->modificacion($datosProducto);
+                }
+            }
 
             // Modifico estado actual de la compra dándole fecha de fin
             $param['idcompraestado'] = $compra[0]->getIdCompraEstado();
@@ -321,6 +373,7 @@ class AbmCompraEstado
             $compraEnviada->alta($param);
 
             $pudo = ['exito' => true, 'msj' => 'Compra cancelada'];
+            $this->informarCambioEstado($param['idcompra']);
         }
 
         return $pudo;
