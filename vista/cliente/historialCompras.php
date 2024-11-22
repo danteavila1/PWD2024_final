@@ -19,11 +19,10 @@ if (count($colCompras) > 0) {
 
 ?>
 
-<h3> Iniciado como <?php echo $_SESSION['usnombre'] ?></h3>
-<div class="justify-content-md-center align-items-center mt-5">
-    <div class="card shadow  mx-usuario">
-        <div class="card-header">
-            <h3>Mis compras</h3>
+<div class="container mt-5 mb-5">
+    <div class="card shadow-lg">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h3 class="mb-0">Mis compras</h3>
         </div>
         <div class="card-body">
             <?php if ($hayCompras): ?>
@@ -102,11 +101,11 @@ if (count($colCompras) > 0) {
                     ?>
                         <tbody>
                             <tr>
-                                <th scope="col"><?php echo $idcompra ?></th>
+                                <th scope="row"><?php echo $idcompra ?></th>
                                 <td><?php echo $cofecha ?></td>
                                 <td><?php echo $totalItemsCompra ?></td>
                                 <td><?php echo "$" . $monto ?></td>
-                                <td><?php echo $compraEstado ?>
+                                <td><?php echo $compraEstado ?></td>
                                 <td><?php echo $fechaInicio ?></td>
                                 <td><?php echo $fechaFin ?></td>
                                 <td>
@@ -116,18 +115,18 @@ if (count($colCompras) > 0) {
                                         case 'enviada':
                                             $mensaje = "Compra finalizada ";
                                             $color = 'success';
-                                            $icono = '<i class="bi bi-shield-fill-check">';
+                                            $icono = '<i class="bi bi-shield-fill-check"></i>';
                                             break;
                                         case 'cancelada':
                                             $mensaje = "Compra cancelada ";
                                             $color = 'danger';
-                                            $icono = '<i class="bi bi-x-square-fill">';
+                                            $icono = '<i class="bi bi-x-square-fill"></i>';
                                             break;
                                     }
                                     ?>
                                     <!-- Genero botones de acción y textos -->
                                     <?php if ($compraEstado == 'enviada' || $compraEstado == 'cancelada') : ?>
-                                        <p class="text-<?php echo $color ?> fw-bold"><?php echo $mensaje . $icono ?></i></i></p>
+                                        <p class="text-<?php echo $color ?> fw-bold"><?php echo $mensaje . $icono ?></p>
                                     <?php else : ?>
                                         <div class="d-flex">
                                             <button

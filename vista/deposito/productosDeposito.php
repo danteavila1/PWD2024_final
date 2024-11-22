@@ -1,126 +1,103 @@
-<?php 
+<?php
 include_once("../../configuracion.php");
 include_once(ROOT_PATH . "vista/estructura/header.php");
+$session = new Session();
 
-$abmProducto = new AbmProducto;
-$productos = array();
-$productos = $abmProducto->buscar(null);
+// Incluyo modales
+include_once('../admin/altaProducto.php');
+include_once('../admin/bajaProducto.php');
+include_once('../admin/modificarProducto.php');
 
-$datos = data_submitted();
+// Creo instancia del objeto AbmProducto y listo todos los productos
+$objProducto = new AbmProducto();
+$colProductos = $objProducto->buscar("");
+
+// Verifico que hayan usuarios en la base de datos
+$hayProductos = false;
+if (count($colProductos) > 0) {
+    $hayProductos = true;
+}
 ?>
 
-        
-<section>
-        <h2> Productos </h2>
-        <div>
-            <button class="btn btn-primary"><a href="realizaReporte.php">Reporte PDF</a></button>
-        </div>
-            <?php
-
-                if (count($productos) > 0) {
-                    foreach ($productos as $producto) {
-                            echo "<div onclick='rellenar(" . $producto->getIdProducto() . ", `" . $producto->getProNombre() . "`, `" . 
-                            $producto->getProDetalle() . "`, " . $producto->getProCantStock() . ", " . $producto->getProPrecio() . 
-                            ", `" . $producto->getProImagen() . "`)' class='producto'>";
-                            echo "<p>" . $producto->getProNombre() . "</p>";
-                            echo "<img width='250' height='150' src='../images/" . $producto->getProImagen() . "' />";
-                            echo '<br/>';
-                            echo "$" . $producto->getProPrecio();
-                            echo "<br/>";
-                            echo "<p>" . $producto->getProCantStock() . " unidades <br/>";
-                            echo "id: " . $producto->getIdProducto() . "</P>";
-                            echo "</div>";
-                        }
-                    }
-                 else{
-                    echo "<h4>No hay productos cargados</h4>";
-                }
-            ?>
-
-    <div class="agregarEditarProducto">
-        <div class="col-md-6">
-            <h2 class="mb-4">Agregar/Editar producto</h2>
-                <form method="post" action="../accion/agregarEditarProducto.php" enctype="multipart/form-data">
-                    <div class="mb-1">
-                        <label class="form-label" for="idProducto">Id para editar:</label>
-                        <br/>
-                        <input class="form-control" type="text" id="idProducto" name="idproducto"/>
-                        <br/>
-                    </div>
-                    <div class="mb-1">
-                        <label class="form-label" for="proNombre">Nombre:</label>
-                        <br/>
-                        <input class="form-control" required type="text" id="proNombre" name="pronombre"/>
-                        <br/>
-                    </div>
-                    <div class="mb-1">
-                        <label class="form-label" for="proDetalle">Detalle:</label>
-                        <br/>
-                        <input class="form-control" required type="text" id="proDetalle" name="prodetalle"/>
-                        <br/>
-                    </div>
-                    <div class="mb-1">
-                        <label class="form-label" for="proCantStock">Stock:</label>
-                        <br/>
-                        <input class="form-control" required type="number" id="proCantStock" name="procantstock"/>
-                        <br/>
-                    </div>
-                    <div class="mb-1">
-                        <label class="form-label" for="proPrecio">Precio:</label>
-                        <br/>
-                        <input step="0.01" class="form-control" required type="number" id="proPrecio" name="proprecio"/>
-                        <br/>
-                    </div>
-                    <div class="mb-1">
-                        <label class="form-label" for="foto">Foto:</label>
-                        <br/>
-                        <input class="form-control" id="foto" name="foto" required type="file" accept="image/png"/>
-                        <br/>
-                        <!-- Contenedor para la imagen actual -->
-                        <img id="fotoPreview" name="proimagen" src="" alt="Imagen del producto" style="display: none; max-width: 200px; max-height: 150px;"/>
-                    </div>
-                    <input type="submit" class="btn btn-primary" value="enviar"/>
-                </form>
+<div class="container mt-5 mb-5">
+    <div class="card shadow-lg">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h3 class="mb-0">Listado de productos cargados en la base de datos</h3>
+            <div>
+                <button class="altaProducto btn btn-success me-2" type="button" data-bs-toggle="modal" data-bs-target="#altaProducto">
+                    Crear producto
+                </button>
+                <button class="btn btn-primary">
+                    <a href="realizaReporte.php" class="text-white text-decoration-none">Reporte PDF</a>
+                </button>
             </div>
-    </div>
-    <br/>
-    <div class="eliminarProductos">
-        <div class="col-md-6">
-            <h2 class="mb-4">Eliminar producto</h2>
-            <form method="get" action="../accion/eliminarProducto.php">
-                <label class="form-label" for="idProducto">Id del producto:</label>
-                <br/>
-                <input required class="form-control" type="number" id="idProducto" name="idProducto"/>
-                <br/>
-                <input type="submit" class="btn btn-primary" value="enviar"/>
-            </form>
+        </div>
+        <div class="card-body">
+            <?php if ($hayProductos): ?>
+                <table class="table">
+                    <thead class="table">
+                        <tr>
+                            <th scope="col">ID producto</th>
+                            <th scope="col">Imagen</th>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Detalle</th>
+                            <th scope="col">Cantidad stock</th>
+                            <th scope="col">Precio</th>
+                            <th scope="col">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php for ($i = 0; $i < count($colProductos); $i++):
+                            $idproducto = $colProductos[$i]->getIdProducto();
+                            $nombre = $colProductos[$i]->getProNombre();
+                            $detalle = $colProductos[$i]->getProDetalle();
+                            $cantStock = $colProductos[$i]->getProCantStock();
+                            $precio = $colProductos[$i]->getProPrecio();
+                            $imagen = $colProductos[$i]->getProImagen();
+                        ?>
+                            <tr>
+                                <th scope="row"><?php echo $idproducto ?></th>
+                                <td>
+                                    <img src="../images/<?php echo $imagen ?>" alt="Producto" class="img-thumbnail" style="max-width: 50px;">
+                                </td>
+                                <td><?php echo $nombre ?></td>
+                                <td><?php echo $detalle ?></td>
+                                <td><?php echo $cantStock ?></td>
+                                <td><?php echo $precio ?></td>
+                                <td>
+                                    <button class="modificarProducto btn btn-primary me-2" type="button"
+                                        data-idproducto="<?php echo $idproducto; ?>"
+                                        data-nombre="<?php echo $nombre; ?>"
+                                        data-detalle="<?php echo $detalle; ?>"
+                                        data-cantstock="<?php echo $cantStock; ?>"
+                                        data-precio="<?php echo $precio; ?>"
+                                        data-imagen="<?php echo $imagen; ?>"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#modificarProducto">
+                                        Modificar
+                                    </button>
+                                    <button class="bajaProducto btn btn-danger" type="button"
+                                        data-idproducto="<?php echo $idproducto; ?>"
+                                        data-nombre="<?php echo $nombre; ?>"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#bajaProducto">
+                                        Eliminar
+                                    </button>
+                                </td>
+                            </tr>
+                        <?php endfor; ?>
+                    </tbody>
+                </table>
+            <?php else: ?>
+                <p class="text-center">No hay productos cargados en la base de datos.</p>
+            <?php endif; ?>
         </div>
     </div>
-    
-    <script>
+</div>
 
-        function rellenar(id, nombre, detalle, stock, precio, imagen) {
-            // Elementos del formulario
-            let idProducto = document.getElementById('idProducto');
-            let proNombre = document.getElementById('proNombre');
-            let proDetalle = document.getElementById('proDetalle');
-            let proCantStock = document.getElementById('proCantStock');
-            let proPrecio = document.getElementById('proPrecio');
-            let fotoPreview = document.getElementById('fotoPreview'); // Contenedor para mostrar la imagen
+<script src="../js/ajax/altaProducto.js"></script>
+<script src="../js/ajax/bajaProducto.js"></script>
+<script src="../js/ajax/modificarProducto.js"></script>
 
-            // Rellenar valores
-            idProducto.value = id;
-            proNombre.value = nombre;
-            proDetalle.value = detalle;
-            proCantStock.value = stock;
-            proPrecio.value = precio;
-
-            // Mostrar la imagen actual del producto
-            if (fotoPreview) {
-                fotoPreview.src = '../images/' + imagen; // Ruta relativa a la imagen
-                fotoPreview.style.display = 'block'; // Asegurar que se vea
-            }
-        }
-    
-    </script>
-</section>
+<?php
+include_once(ROOT_PATH . "vista/estructura/footer.php");

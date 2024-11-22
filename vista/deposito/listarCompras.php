@@ -18,12 +18,10 @@ if (count($colCompras) > 0) {
 
 ?>
 
-<h3> Iniciado como <?php echo $_SESSION['usnombre'] ?></h3>
-
-<div class="justify-content-md-center align-items-center mt-5">
-    <div class="card shadow  mx-usuario">
-        <div class="card-header">
-            <h3>Gestionar compras</h3>
+<div class="container mt-5 mb-5">
+    <div class="card shadow-lg">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h3 class="mb-0">Gestionar compras</h3>
         </div>
         <div class="card-body">
             <?php if ($hayCompras): ?>
@@ -80,7 +78,7 @@ if (count($colCompras) > 0) {
                             }
                         }
 
-                        // Separamos con una "coma" en >> caso de que el cliente tenga más de un producto <<
+                        // Separamos con una "coma" en >> caso de que el cliente tenga más de un producto << 
                         $totalItemsCompra = implode(", ", $items);
 
                         // Obtengo las fechas de inicio y fin de la compra
@@ -106,7 +104,7 @@ if (count($colCompras) > 0) {
                                 <td><?php echo $cofecha ?></td>
                                 <td><?php echo $totalItemsCompra ?></td>
                                 <td><?php echo "$" . $monto ?></td>
-                                <td><?php echo $compraEstado ?>
+                                <td><?php echo $compraEstado ?></td>
                                 <td><?php echo $fechaInicio ?></td>
                                 <td><?php echo $fechaFin ?></td>
                                 <td>
@@ -115,7 +113,7 @@ if (count($colCompras) > 0) {
                                     switch ($compraEstado) {
                                         case 'iniciada':
                                             $accion = "Aceptar";
-                                            $color = "info";
+                                            $color = "primary";
                                             break;
                                         case 'aceptada':
                                             $accion = "Enviar";
