@@ -173,7 +173,7 @@ INSERT INTO `menu` (`idmenu`, `menombre`, `medescripcion`, `idpadre`, `medeshabi
 (2, 'Gestión de roles', 'Gestión de roles', NULL, NULL,'vista/admin/listarroles.php'),
 (3, 'Gestión de productos', 'Gestión de productos', NULL, NULL,'vista/admin/listarproductos.php'),
 (4, 'Productos', 'Productos', NULL, NULL,'vista/deposito/productosdeposito.php'),
-(5, 'Inicio', 'Inicio', NULL, NULL,NULL),
+(5, 'Inicio', 'Inicio', NULL, NULL,'vista/productos.php'),
 (6, 'Tienda', 'Tienda', NULL, NULL,'vista/productos.php'),
 (7, 'Contacto', 'Contacto', NULL, NULL,'vista/contacto.php'),
 (8, 'Gestión de compras', 'Gestión de compras', NULL, NULL,'vista/deposito/listarCompras.php'),
