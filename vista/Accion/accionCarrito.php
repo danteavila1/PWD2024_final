@@ -50,7 +50,6 @@ if($carritoActivo === null){
         'idUsuario' => $idUsuario
     ];
 
-
     //Inserta la compra a la tabla
     if($abmCompra->alta($paramCompra)){
         // Obtener el ID de la compra recien creada

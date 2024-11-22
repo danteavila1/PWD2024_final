@@ -44,16 +44,28 @@ class AbmCompra
         return $arreglo;
     }
 
-    public function alta($param)
-    {
+    public function alta($param) {
         $resp = false;
-        $param['idCompra'] = null;
-        $objCompra = $this->cargarObjeto($param);
-        if ($objCompra != null && $objCompra->insertar()) {
+        $compra = new Compra();
+        $usuario = new Usuario();
+        $usuario->setIdusuario($param['idusuario']);
+        $compra->setear($param['idcompra'], $param['cofecha'], $usuario);
+        if ($compra->insertar()) {
             $resp = true;
         }
         return $resp;
     }
+
+    // public function alta($param)
+    // {
+    //     $resp = false;
+    //     $param['idCompra'] = null;
+    //     $objCompra = $this->cargarObjeto($param);
+    //     if ($objCompra != null && $objCompra->insertar()) {
+    //         $resp = true;
+    //     }
+    //     return $resp;
+    // }
 
     public function baja($param)
     {
