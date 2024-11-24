@@ -65,10 +65,10 @@ foreach($arr as $menu){
     $men = $menu->getObjMenu();
     echo '<li class="nav-item"><a class="nav-link" href="'.BASE_URL.$men->getArchivoMenu().'">'.$men->getNombreMenu().'</a></li>';
 }
-echo '<a href="../cliente/carrito.php" class="ms-3">
-<img src="' . BASE_URL . 'vista/images/carrito.png" alt="Carrito" class="imgCart me-2" style="height: 2em;">
-<span>' . (isset($_SESSION['numero']) ? $_SESSION['numero'] : 0) . '</span>
-</a>';
+// echo '<a href="../cliente/carrito.php" class="ms-3">
+// <img src="' . BASE_URL . 'vista/images/carrito.png" alt="Carrito" class="imgCart me-2" style="height: 2em;">
+// <span>' . (isset($_SESSION['numero']) ? $_SESSION['numero'] : 0) . '</span>
+// </a>';
 echo '<a href="'.BASE_URL.'vista/login/accion/cerrarSesion.php" class="btn btn-primary ms-3">Cerrar sesión</a>';
 echo '</ul>';
 

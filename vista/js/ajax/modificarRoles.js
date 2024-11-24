@@ -35,7 +35,7 @@ $(document).on('click', '.modificarRoles', function () {
         };
 
         $.ajax({
-            url: "accion/modificarRoles.php",
+            url: "../../GestionRoles/modificarRoles.php",
             type: "POST",
             dataType: "json",
             data: formData,

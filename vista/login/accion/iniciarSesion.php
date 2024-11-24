@@ -33,9 +33,9 @@ if (!empty($colUsuarios)) {
 
                 // Redirigir según el rol del usuario
                 if ($rolPrincipal === "admin") {
-                    header("Location: ../../admin/listarUsuario.php");
+                    header("Location: ../../GestionUsuarios/listarUsuario.php");
                 } elseif ($rolPrincipal === "deposito") {
-                    header("Location: ../../deposito/listarCompras.php");
+                    header("Location: ../../GestionCompras/listarCompras.php");
                 } elseif ($rolPrincipal === "usuario") {
                     header("Location: ../../productos.php");
                 } else {

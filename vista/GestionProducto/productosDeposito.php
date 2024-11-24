@@ -4,9 +4,9 @@ include_once(ROOT_PATH . "vista/estructura/header.php");
 $session = new Session();
 
 // Incluyo modales
-include_once('../admin/altaProducto.php');
-include_once('../admin/bajaProducto.php');
-include_once('../admin/modificarProducto.php');
+include_once('../GestionProducto/altaProducto.php');
+include_once('../GestionProducto/bajaProducto.php');
+include_once('../GestionProducto/modificarProducto.php');
 
 // Creo instancia del objeto AbmProducto y listo todos los productos
 $objProducto = new AbmProducto();

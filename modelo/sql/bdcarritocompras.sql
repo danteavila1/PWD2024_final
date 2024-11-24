@@ -224,3 +224,33 @@ SET `proprecio` =
         WHEN 10 THEN 300.00
         WHEN 11 THEN 250.00 
     END;
+
+-- --------------------
+
+UPDATE menu
+SET melink = 'vista/GestionUsuarios/listarUsuario.php'
+WHERE idmenu = 1;
+
+UPDATE menu
+SET melink = 'vista/GestionRoles/listarRoles.php'
+WHERE idmenu = 2;
+
+UPDATE menu
+SET melink = 'vista/GestionProducto/listarProductos.php'
+WHERE idmenu = 3;
+
+UPDATE menu
+SET melink = 'vista/GestionProducto/productosDeposito.php'
+WHERE idmenu = 4;
+UPDATE menu
+SET melink = 'vista/index.php'
+WHERE idmenu = 5;UPDATE menu
+
+SET melink = 'vista/novedades.php'
+WHERE idmenu = 7;
+
+UPDATE menu
+SET melink = 'vista/contacto.php'
+WHERE idmenu = 8;
+
+

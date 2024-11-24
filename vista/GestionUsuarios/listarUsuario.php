@@ -4,10 +4,10 @@ include_once(ROOT_PATH . "vista/estructura/header.php");
 $session = new Session();
 
 // Incluyo modales
-include_once('modificarUsuario.php');
-include_once('bajaUsuario.php');
-include_once('altaUsuario.php');
-include_once('modificarRoles.php');
+include_once('./modificarUsuario.php');
+include_once('./bajaUsuario.php');
+include_once('./altaUsuario.php');
+include_once('../GestionRoles/modificarRoles.php');
 
 // Creo instancia del objeto AbmUsuario y accedo al método correspondiente
 $objUsuario = new AbmUsuario();

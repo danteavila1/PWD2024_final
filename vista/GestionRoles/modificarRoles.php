@@ -6,7 +6,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form name="form" method="post" action="accion/modificarRoles.php" onsubmit="encriptar()">
+                <form name="form" method="post" action="./accionRol/modificarRoles.php" onsubmit="encriptar()">
                     <table class="table">
                         <thead>
                             <tr>
@@ -21,7 +21,6 @@
                                 <td><span name="usnombre"></span></td>
                                 <td><span name="roles"></span></td>
                             </tr>
-
                         </tbody>
                     </table>
 
