@@ -172,6 +172,16 @@ class AbmCompraEstado
     }
 
     /**
+     * Manda mail al cliente informando el cambio de estado de su compra
+     * @param array $idcompra
+     */
+    public static function informarCambioEstado($idcompra)
+    {
+        $objMail = new Mail();
+        $objMail->enviarMail($idcompra);
+    }
+
+    /**
      * Acepta una compra, actualiza stock de los productos comprados
      */
     public function aceptarCompra($datos)
@@ -290,15 +300,6 @@ class AbmCompraEstado
         return $pudo;
     }
 
-    /**
-     * Manda mail al cliente informando el cambio de estado de su compra
-     * @param array $idcompra
-     */
-    public static function informarCambioEstado($idcompra)
-    {
-        $objMail = new Mail();
-        $objMail->enviarMail($idcompra);
-    }
 
     /**
      * Cancela una compra, actualiza fecha fin de la compra
@@ -315,8 +316,7 @@ class AbmCompraEstado
         $objCompraEstado = new AbmCompraEstado();
         $compra = $objCompraEstado->buscar($param);
 
-
-        // Si la compra existe, realizo la cancelación de la misma
+        // Verifico que la compra exista
         if (isset($compra)) {
 
             // Itero sobre sus tipos de estado para conseguir el último
@@ -358,7 +358,7 @@ class AbmCompraEstado
             // Modifico estado actual de la compra dándole fecha de fin
             $param['idcompraestado'] = $compra[0]->getIdCompraEstado();
             $param['idcompra'] = $compra[0]->getObjCompra()->getIdCompra();
-            $param['idcompraestadotipo'] = $compra[0]->getObjCompraEstadoTipo()->getIdCompraEstadoTipo();
+            $param['idcompraestadotipo'] = $ultimoEstado;
             $param['cefechaini'] = $compra[0]->getCeFechaIni();
             $param['cefechafin'] = date('Y-m-d H:i:s');
             $objCompraEstado->modificacion($param);
@@ -378,7 +378,10 @@ class AbmCompraEstado
 
         return $pudo;
     }
-    public function buscarArray($param) {
+
+
+    public function buscarArray($param)
+    {
         $arreglo = [];
         if (is_object($param)) {
             $arreglo = dismount($param);
@@ -387,7 +390,10 @@ class AbmCompraEstado
         }
         return $arreglo;
     }
-    public function buscarCarroActivo($idusuario) {
+
+
+    public function buscarCarroActivo($idusuario)
+    {
         $abmCompra = new AbmCompra();
         //busca todas las compras por el id de usario
         $compras = $abmCompra->buscarPorUsuario($idusuario);
@@ -402,14 +408,14 @@ class AbmCompraEstado
                 if (count($compraEstado) > 0) {
 
                     // si el 'idcompraestadotipo' de este compraEstado es 1, significa que la compra fue iniciada. Por lo que la almacenamos
-                    if($compraEstado[0]['objCompraEstadoTipo']->getIdcompraestadotipo() === 1 &&  $compraEstado[0]['cefechafin'] === '0000-00-00 00:00:00'){
-                        $compraEstadoIniciado[] = $compra; 
+                    if ($compraEstado[0]['objCompraEstadoTipo']->getIdcompraestadotipo() === 1 &&  $compraEstado[0]['cefechafin'] === '0000-00-00 00:00:00') {
+                        $compraEstadoIniciado[] = $compra;
                     }
                 }
             }
-        } 
+        }
 
-        if(count($compraEstadoIniciado) === 0){
+        if (count($compraEstadoIniciado) === 0) {
             $compraEstadoIniciado = null;
         }
 

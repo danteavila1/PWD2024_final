@@ -128,7 +128,7 @@ class CompraEstado
         VALUES ('" . $this->getObjCompra()->getIdCompra() . "','" . $this->getObjCompraEstadoTipo()->getIdCompraEstadoTipo() . "')";
 
         // Si la compra está iniciada o cancelada, se agrega fechafin a la consulta
-        if ($idCompraEstado == 3 || $idCompraEstado == 4) {
+        if ($idCompraEstado == 4) {
             $fechafin = date('Y-m-d H:i:s');
             $sql = "INSERT INTO compraestado(idcompra, idcompraestadotipo, cefechafin)
 			VALUES ('" . $this->getObjCompra()->getIdCompra() . "','" . $this->getObjCompraEstadoTipo()->getIdCompraEstadoTipo() . "','" . $fechafin . "')";
@@ -152,9 +152,11 @@ class CompraEstado
     {
         $resp = false;
         $base = new BaseDatos();
+
         $sql = "UPDATE compraestado SET
         idcompra = '" . $this->getObjCompra()->getIdCompra() . "',
         idcompraestadotipo = '" . $this->getObjCompraEstadoTipo()->getIdCompraEstadoTipo() . "',
+        cefechaini = '" . $this->getCeFechaIni() . "',
         cefechafin = '" . $this->getCeFechaFin() . "'
         WHERE idcompraestado = '" . $this->getIdCompraEstado() . "'";
 

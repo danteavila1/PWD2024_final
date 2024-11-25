@@ -4,10 +4,10 @@ include_once(ROOT_PATH . "vista/estructura/header.php");
 $session = new Session();
 
 // Incluyo modales
-include_once('./modificarUsuario.php');
-include_once('./bajaUsuario.php');
 include_once('./altaUsuario.php');
-include_once('../GestionRoles/modificarRoles.php');
+include_once('./bajaUsuario.php');
+include_once('./modificarUsuario.php');
+include_once('./modificarRoles.php');
 
 // Creo instancia del objeto AbmUsuario y accedo al método correspondiente
 $objUsuario = new AbmUsuario();
@@ -118,10 +118,11 @@ if (count($colUsuarios) > 0) {
 
 <script src="../js/md5.js"></script>
 <script src="../js/verPass.js"></script>
+
+<script src="../js/ajax/altaUsuario.js"></script>
 <script src="../js/ajax/bajaUsuario.js"></script>
 <script src="../js/ajax/modificarRoles.js"></script>
 <script src="../js/ajax/modificarUsuario.js"></script>
-<script src="../js/ajax/altaUsuario.js"></script>
 
 <?php
 include_once(ROOT_PATH . "vista/estructura/footer.php");

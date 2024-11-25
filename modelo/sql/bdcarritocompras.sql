@@ -80,6 +80,7 @@ CREATE TABLE `producto` (
   `prodetalle` varchar(512) NOT NULL,
   `proimagen` varchar(200) NOT NULL,
   `procantstock` int(11) NOT NULL,
+  `proprecio` int(11) NOT NULL,
   PRIMARY KEY (`idproducto`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
@@ -101,6 +102,7 @@ CREATE TABLE `menu` (
   `medescripcion` varchar(124) NOT NULL COMMENT 'Descripcion mas detallada del item del menu',
   `idpadre` bigint(20) DEFAULT NULL COMMENT 'Referencia al id del menu que es subitem',
   `medeshabilitado` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Fecha en la que el menu fue deshabilitado por ultima vez',
+  `melink` varchar(50),
   PRIMARY KEY (`idmenu`),
   FOREIGN KEY (idpadre) REFERENCES menu(idmenu) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
@@ -145,43 +147,51 @@ INSERT INTO `compraestadotipo` (`idcompraestadotipo`, `cetdescripcion`, `cetdeta
 (4, 'cancelada', 'un usuario administrador podra cancelar una compra en cualquier estado y un usuario cliente solo en estado=1 ');
 
 -- --------------------- Poblamiento tabla `producto`
-INSERT INTO `producto` (`pronombre`, `prodetalle`, `proimagen`, `procantstock`) VALUES
-('Te de conejito', 'Un tecito calentito y dulce', 'conejoTesito.jpg', 10),
-('Peluche conejo', 'Perfecto para acurrucarse', 'conejo.png', 10),
-('Gatito con sombrero', 'El gatito más coqueto', 'gatitoGorro.jpg', 20),
-('Gatito con pijama', 'Para dormir como un angelito', 'gatoPijama.jpg', 25),
-('Kit peluche + hebillas', 'Estilo y ternura en el mismo lugar', 'kitOsito.jpg', 15),
-('Oso con liston', 'Suave y esponjoso', 'osoCinta.jpg', 10),
-('Oso rosa', 'Tan rosado que empalaga', 'osoRosa.jpg', 15),
-('Oveja con tulipan', 'Flores y ternura, juntas', 'ovejaTulipan.png', 20),
-('Pollito', 'El pollito que emana amor', 'pollito.jpg', 25),
-('Vaquita frutilla', 'La vaquita más dulce', 'vacaFrutilla.jpg', 10),
-('Osita con vestido', 'La osita más coqueta', 'osoConVestido.jpg', 15);
-
--- -----------------------------------------【 ALTERACIONES 】-----------------------------------------
-
-ALTER TABLE `producto`
-ADD COLUMN `proprecio` DECIMAL(10,2) NOT NULL AFTER `procantstock`;
-
-ALTER TABLE `menu`
-ADD COLUMN `melink` VARCHAR(50) AFTER `medeshabilitado`;
-
+INSERT INTO `producto` (`pronombre`, `prodetalle`, `proimagen`, `procantstock`, `proprecio`) VALUES
+('Te de conejito', 'Un tecito calentito y dulce', 'conejoTesito.jpg', 10, 150.00),
+('Peluche conejo', 'Perfecto para acurrucarse', 'conejo.png', 10, 300.00),
+('Gatito con sombrero', 'El gatito más coqueto', 'gatitoGorro.jpg', 20, 450.00),
+('Gatito con pijama', 'Para dormir como un angelito', 'gatoPijama.jpg', 25, 250.00),
+('Kit peluche + hebillas', 'Estilo y ternura en el mismo lugar', 'kitOsito.jpg', 10, 450.00),
+('Oso con liston', 'Suave y esponjoso', 'osoCinta.jpg', 10, 200.00),
+('Oso rosa', 'Tan rosado que empalaga', 'osoRosa.jpg', 15, 320.00),
+('Oveja con tulipan', 'Flores y ternura, juntas', 'ovejaTulipan.png', 20, 190.00),
+('Pollito', 'El pollito que emana amor', 'pollito.jpg', 25, 190.00),
+('Vaquita frutilla', 'La vaquita más dulce', 'vacaFrutilla.jpg', 10, 300.00),
+('Osita con vestido', 'Suave como algodón de azúcar', 'osoConVestido.jpg', 15, 250.00);
 
 -- --------------------- Poblamiento tabla `menu`
 INSERT INTO `menu` (`idmenu`, `menombre`, `medescripcion`, `idpadre`, `medeshabilitado`,`melink`) VALUES
-(1, 'Gestión de usuarios', 'Gestión de usuarios', NULL, NULL,'vista/admin/listarusuario.php'),
-(2, 'Gestión de roles', 'Gestión de roles', NULL, NULL,'vista/admin/listarroles.php'),
-(3, 'Gestión de productos', 'Gestión de productos', NULL, NULL,'vista/admin/listarproductos.php'),
-(4, 'Productos', 'Productos', NULL, NULL,'vista/deposito/productosdeposito.php'),
-(5, 'Inicio', 'Inicio', NULL, NULL,'vista/productos.php'),
-(6, 'Tienda', 'Tienda', NULL, NULL,'vista/productos.php'),
-(7, 'Contacto', 'Contacto', NULL, NULL,'vista/contacto.php'),
-(8, 'Gestión de compras', 'Gestión de compras', NULL, NULL,'vista/deposito/listarCompras.php'),
-(9, 'Historial de compras', 'Historial de compras', NULL, NULL,'vista/cliente/historialCompras.php');
+(1, 'Inicio', 'Inicio', NULL, NULL,'vista/inicio.php'),
+(2, 'Tienda', 'Tienda', NULL, NULL,'vista/productos.php'),
+(3, 'Contacto', 'Contacto', NULL, NULL,'vista/contacto.php'),
+(4, 'Mis compras', 'Compras del cliente', NULL, NULL,'vista/GestionCompras/historialCompras.php'),
+
+(5, 'Gestión de usuarios', 'Gestión de usuarios', NULL, NULL,'vista/GestionUsuarios/listarUsuario.php'),
+(6, 'Gestión de roles', 'Gestión de roles', NULL, NULL,'vista/GestionRoles/listarRoles.php'),
+(7, 'Gestión de productos', 'Gestión de productos', NULL, NULL,'vista/GestionProducto/listarProductos.php'),
+(8, 'Gestión de menús', 'Gestión de menús', NULL, NULL,'vista/GestionProducto/listarMenus.php'),
+(9, 'Gestión de compras', 'Gestión de compras', NULL, NULL,'vista/GestionCompras/listarCompras.php');
 
 -- --------------------- Poblamiento tabla `menurol`
 INSERT INTO `menurol` (`idmenu`, `idrol`) VALUES
-(1, 1),(2, 1),(3, 1),(4, 2),(5, 3),(6, 3),(7, 3),(8, 2),(9, 3);
+-- Permisos de cliente
+(1, 3), -- inicio
+(2, 3), -- tienda
+(3, 3), -- contacto
+(4, 3), -- mis compras
+
+-- Permisos de admin
+(1, 1), -- inicio
+(5, 1), -- gestión usuarios
+(6, 1), -- gestión roles
+(7, 1), -- gestión productos
+(8, 1), -- gestión menús
+
+-- Permisos de depósito
+(1, 2), -- inicio
+(7, 2), -- gestión productos
+(9, 2); -- gestión compras
 
 -- --------------------- Poblamiento tabla `compra`
 INSERT INTO `compra` (`idcompra`, `cofecha`, `idusuario`) VALUES
@@ -207,50 +217,3 @@ INSERT INTO `compraitem` (`idcompraitem`, `idproducto`, `idcompra`, `cicantidad`
 (6, 4, 3, 1),
 (7, 3, 4, 2),
 (8, 2, 4, 1);
-
--- --------------------- Poblamiento tabla `producto`
-UPDATE `producto` 
-SET `proprecio` = 
-    CASE `idproducto`
-        WHEN 1 THEN 150.00 
-        WHEN 2 THEN 300.00
-        WHEN 3 THEN 450.00
-        WHEN 4 THEN 400.00
-        WHEN 5 THEN 250.00 
-        WHEN 6 THEN 200.00
-        WHEN 7 THEN 320.00
-        WHEN 8 THEN 190.00
-        WHEN 9 THEN 200.00 
-        WHEN 10 THEN 300.00
-        WHEN 11 THEN 250.00 
-    END;
-
--- --------------------
-
-UPDATE menu
-SET melink = 'vista/GestionUsuarios/listarUsuario.php'
-WHERE idmenu = 1;
-
-UPDATE menu
-SET melink = 'vista/GestionRoles/listarRoles.php'
-WHERE idmenu = 2;
-
-UPDATE menu
-SET melink = 'vista/GestionProducto/listarProductos.php'
-WHERE idmenu = 3;
-
-UPDATE menu
-SET melink = 'vista/GestionProducto/productosDeposito.php'
-WHERE idmenu = 4;
-UPDATE menu
-SET melink = 'vista/index.php'
-WHERE idmenu = 5;UPDATE menu
-
-SET melink = 'vista/novedades.php'
-WHERE idmenu = 7;
-
-UPDATE menu
-SET melink = 'vista/contacto.php'
-WHERE idmenu = 8;
-
-

@@ -27,6 +27,9 @@ if (count($colProductos) > 0) {
                 <button class="altaProducto btn btn-success me-2" type="button" data-bs-toggle="modal" data-bs-target="#altaProducto">
                     Crear producto
                 </button>
+                <button class="btn btn-primary">
+                    <a href="realizaReporte.php" class="text-white text-decoration-none">Reporte PDF</a>
+                </button>
             </div>
         </div>
         <div class="card-body">

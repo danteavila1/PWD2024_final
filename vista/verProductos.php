@@ -12,7 +12,7 @@ include_once(ROOT_PATH . "/vista/accion/accionProductos.php");
         <?php
         if (!empty($productos)) {
             foreach ($productos as $producto) {
-                ?>
+        ?>
                 <div class="col-md-4 mb-4">
                     <div class="card">
                         <!-- imagen del producto-->
@@ -32,7 +32,7 @@ include_once(ROOT_PATH . "/vista/accion/accionProductos.php");
                         </div>
                     </div>
                 </div>
-                <?php
+            <?php
             }
         } else {
             ?>
@@ -41,7 +41,7 @@ include_once(ROOT_PATH . "/vista/accion/accionProductos.php");
                     No hay productos cargados!
                 </div>
             </div>
-            <?php
+        <?php
         }
         ?>
     </div>

@@ -26,7 +26,7 @@ if (!$existeMail && !$existeUsuario) {
     if ($objUsuario->modificacion($datos)) {
         $response = ['mensaje' => 'Modificación exitosa', 'icono' => 'success'];
     } else {
-        $response = ['mensaje' => 'Falló la modificación', 'icono' => 'success'];
+        $response = ['mensaje' => 'No se modificó nada', 'icono' => 'info'];
     }
 }
 

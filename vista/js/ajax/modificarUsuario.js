@@ -57,7 +57,7 @@ $(document).on('click', '.modificarUsuario', function () {
                     $('#modificarUsuario').modal('hide');
                 }
             },
-            error: function (res, jqXHR, textStatus, errorThrown) {
+            error: function (jqXHR, textStatus, errorThrown) {
                 // console.log("Error en la solicitud Ajax:", textStatus, errorThrown);
                 // console.log("Detalles del error:", jqXHR.responseText);
                 Swal.fire({
