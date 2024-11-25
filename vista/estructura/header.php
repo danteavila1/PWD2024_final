@@ -4,7 +4,7 @@
 $sesion = new Session();
 
 // Definir páginas públicas que no requieren control de acceso
-$publicas = ['inicio.php','index.php','login.php', 'productos.php'];
+$publicas = ['inicio.php','index.php','login.php', 'productos.php','contacto.php','formCrearCuenta.php'];
 
 // Verificar si la página actual requiere autenticación
 if (!in_array(basename($_SERVER['PHP_SELF']), $publicas)) {
