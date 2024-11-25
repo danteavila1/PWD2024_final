@@ -23,14 +23,10 @@ if (!$usuario) {
         <a class="nav-link" href="' . BASE_URL . 'vista/productos.php">Tienda</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Contacto</a>
+        <a class="nav-link" href="' . BASE_URL . 'vista/contacto.php">Contacto</a>
       </li>
     </ul>
-    <a href="' . BASE_URL . 'vista/login/formIniciarSesion.php" class="btn btn-primary ms-3">Iniciar sesión</a>
-    <a href="../cliente/carrito.php" class="ms-3">
-      <img src="' . BASE_URL . 'vista/images/carrito.png" alt="Carrito" class="imgCart me-2" style="height: 2em;">
-      <span>' . (isset($_SESSION['numero']) ? $_SESSION['numero'] : 0) . '</span>
-    </a>';
+    <a href="' . BASE_URL . 'vista/login/formIniciarSesion.php" class="btn btn-primary ms-3">Iniciar sesión</a>';
   exit;
 }
 
