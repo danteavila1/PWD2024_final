@@ -6,7 +6,7 @@ if ($sesion->activa() && $sesion->getUsuario()) {
     // Usuario autenticado: mostrar menú dinámico
     echo '<nav class="navbar navbar-expand-lg">';
     echo '<div class="container">';
-    echo '<a class="navbar-brand" href="' . BASE_URL . 'vista">Kawaii Store</a>';
+    echo '<a class="navbar-brand" href="' . BASE_URL . 'vista/inicio.php">Kawaii Store</a>';
     echo '<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">';
     echo '<span class="navbar-toggler-icon"></span>';
     echo '</button>';

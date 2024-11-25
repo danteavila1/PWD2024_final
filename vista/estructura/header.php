@@ -10,7 +10,7 @@ $publicas = ['inicio.php','index.php','login.php', 'productos.php'];
 if (!in_array(basename($_SERVER['PHP_SELF']), $publicas)) {
   // Si no tiene permisos para acceder, redirige al usuario
   if (!$sesion->verificarPagSegura()) {
-    header('Location: ' . BASE_URL . './vista/login/formIniciarSesion.php'); // lo mandamos al login
+    header('Location: ' . BASE_URL . './vista/inicio.php'); // lo mandamos al login
     exit();
   }
 }

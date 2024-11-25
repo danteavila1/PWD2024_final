@@ -68,14 +68,3 @@ foreach ($arr as $menu) {
 // </a>';
 echo '<a href="' . BASE_URL . 'vista/login/accion/cerrarSesion.php" class="btn btn-primary ms-3">Cerrar sesión</a>';
 echo '</ul>';
-
-/**if ($rolDescripcion === 'admin') {
-    echo '<li class="list-group-item"><a class="text-decoration-none" href="./admin/listarUsuario.php">Gestión de Usuarios</a></li>';
-    echo '<li class="list-group-item"><a class="text-decoration-none" href="./admin/listarRoles.php">Gestión de Roles</a></li>';
-    echo '<li class="list-group-item"><a class="text-decoration-none" href="./admin/listarProductos.php">Gestión de Productos</a></li>';
-    echo '<li class="list-group-item"><a class="text-decoration-none" href="configuracionGeneral.php">Configuración General</a></li>';
-} elseif ($rolDescripcion === 'deposito') {
-    echo '<li class="list-group-item"><a class="text-decoration-none" href="./admin/listarProductos.php">Gestión de Productos</a></li>';
-} else {
-    echo '<li class="list-group-item"><a class="text-decoration-none" href="carrito.php">Mi Carrito</a></li>';
-}*/
