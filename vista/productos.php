@@ -33,11 +33,16 @@ $listaProductos = $productos->buscar(null);
                         <div class="card-footer">
                             <button class="btn btn-primary ver-detalle">Ver Detalle</button>
                             <?php
+                            
                             $user = $sesion->getUsuario();
+                            if (!empty($user)){
                             $idUsuario = $user->getIdUsuario();
-                             if ($listaProductos): ?>
-                                <button class="btn btn-success agregar-carrito" onclick="agregarCarrito(<?php echo $producto->getIdproducto(); ?>, <?php echo $idUsuario; ?>)">Agregar al carrito</button>
-                            <?php endif; ?>
+                             if ($listaProductos){
+                                $boton = '<button class="btn btn-success agregar-carrito" onclick="agregarCarrito('.$producto->getIdproducto().','.$idUsuario.')">Agregar al carrito</button>';
+                             }
+                            } else {
+                                $boton = '<button class="btn btn-success agregar-carrito" onclick="redirigir()">Agregar al carrito</button>';}
+                                echo $boton; ?>
                         </div>
                     </div>
                 </div>

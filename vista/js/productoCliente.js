@@ -87,6 +87,10 @@ function agregarCarrito1(idProducto, idUsuario, cantidad) {
     });
 }
 
+function redirigir(){
+    location.href="../vista/login/formIniciarSesion.php";
+}
+
 // Función para editar un producto
 $('.editarProducto').on('click', function() {
     const idProducto = $(this).data('id');
