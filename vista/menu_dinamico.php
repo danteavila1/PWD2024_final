@@ -41,16 +41,32 @@ if (empty($roles)) {
 $rolDescripcion = $roles[0]->getRolDescripcion(); // Consideramos el primer rol del usuario
 
 // Generamos el contenido del menú dinámico
+
 echo '<ul class="navbar-nav ms-auto">';
 $arrMenu = [];
 $arr = [];
 $menues = new AbmMenuRol();
-foreach ($roles as $rol) {
-  //De los roles, me traigo los ID de los menu que puede ver
-  $param = ['idrol' => $rol->getIdRol()];
+if (count($roles) > 1){
+  echo '<li class="nav-item" style="margin-top:5px !important;"><span class="text-white">Seleccionar rol: </span>';
+  echo '<select id="roles" onchange="cambiaSel()">';
+  foreach ($roles as $rol) {
+    echo '<option value="'.$rol->getIdRol().'">'.$rol->getRolDescripcion().'</option>';
+  }
+  echo '</select>';
+  echo '</li>';
+  $datos =  data_submitted();
+  $param = ['idrol' => $datos['rol']];
   $arr = $menues->buscar($param);
   array_push($arrMenu, $arr);
+} else {
+  foreach ($roles as $rol) {
+    $param = ['idrol' => $rol->getIdRol()];
+    $arr = $menues->buscar($param);
+    array_push($arrMenu, $arr);
+  }
 }
+
+
 
 $men = new Menu();
 foreach ($arr as $menu) {
@@ -64,3 +80,6 @@ foreach ($arr as $menu) {
 // </a>';
 echo '<a href="' . BASE_URL . 'vista/login/accion/cerrarSesion.php" class="btn btn-primary ms-3">Cerrar sesión</a>';
 echo '</ul>';
+echo '</div>';
+echo '</div>';
+echo '</nav>';
