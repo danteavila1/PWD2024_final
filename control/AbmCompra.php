@@ -38,9 +38,8 @@ class AbmCompra
     }
 
     public function buscarPorUsuario($idusuario) {
-        $where = "idusuario = $idusuario";
-        $compra = new Compra();
-        $arreglo = $compra->listar($where);
+        $where = "idusuario = ".$idusuario;
+        $arreglo = Compra::listar($where);
         return $arreglo;
     }
 

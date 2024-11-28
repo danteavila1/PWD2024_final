@@ -404,11 +404,12 @@ class AbmCompraEstado
         foreach ($compras as $compra) {
             if (count($compras) > 0) {
                 // de cada compra específica, obtengo su compraEstado específico
-                $compraEstado = $this->buscarArray(['idcompra' => $compra->getIdcompra()]);
+                $param = ['idcompra' => $compra->getIdcompra(),'cefechafin' => 'is null'];
+                $compraEstado = $this->buscar($param);
                 if (count($compraEstado) > 0) {
 
                     // si el 'idcompraestadotipo' de este compraEstado es 1, significa que la compra fue iniciada. Por lo que la almacenamos
-                    if ($compraEstado[0]['objCompraEstadoTipo']->getIdcompraestadotipo() === 1 &&  $compraEstado[0]['cefechafin'] === '0000-00-00 00:00:00') {
+                    if ($compraEstado->getIdcompraestadotipo() === 5) {
                         $compraEstadoIniciado[] = $compra;
                     }
                 }
