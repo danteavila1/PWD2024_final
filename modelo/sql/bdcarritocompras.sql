@@ -99,10 +99,12 @@ CREATE TABLE `compraitem` (
 CREATE TABLE `menu` (
   `idmenu` bigint(20) NOT NULL AUTO_INCREMENT,
   `menombre` varchar(50) NOT NULL COMMENT 'Nombre del item del menu',
-  `medescripcion` varchar(124) NOT NULL COMMENT 'Descripción más detallada del item del menu',
-  `melink` varchar(50), 
-  `medeshabilitado` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`idmenu`)
+  `medescripcion` varchar(124) NOT NULL COMMENT 'Descripcion mas detallada del item del menu',
+  `idpadre` bigint(20) DEFAULT NULL COMMENT 'Referencia al id del menu que es subitem',
+  `medeshabilitado` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Fecha en la que el menu fue deshabilitado por ultima vez',
+  `melink` varchar(50),
+  PRIMARY KEY (`idmenu`),
+  FOREIGN KEY (idpadre) REFERENCES menu(idmenu) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------- Estructura tabla `menurol`
@@ -139,10 +141,11 @@ INSERT INTO `usuariorol` (`idusuario`, `idrol`) VALUES
 
 -- --------------------- Poblamiento tabla `compraestadotipo`
 INSERT INTO `compraestadotipo` (`idcompraestadotipo`, `cetdescripcion`, `cetdetalle`) VALUES
-(1, 'iniciada', 'cuando el usuario : cliente inicia la compra de uno o mas productos del carrito'),
+(1, 'iniciada', 'cuando el usuario : cliente inicia la compra de uno o mas productos del carrito en estado = 5'),
 (2, 'aceptada', 'cuando el usuario administrador da ingreso a uno de las compras en estado = 1 '),
 (3, 'enviada', 'cuando el usuario administrador envia a uno de las compras en estado =2 '),
-(4, 'cancelada', 'un usuario administrador podra cancelar una compra en cualquier estado y un usuario cliente solo en estado=1 ');
+(4, 'cancelada', 'un usuario administrador podra cancelar una compra en cualquier estado y un usuario cliente solo en estado=1 '),
+(5, 'carrito', 'cuando el usuario agrega un producto al carrito');
 
 -- --------------------- Poblamiento tabla `producto`
 INSERT INTO `producto` (`pronombre`, `prodetalle`, `proimagen`, `procantstock`, `proprecio`) VALUES
@@ -159,18 +162,18 @@ INSERT INTO `producto` (`pronombre`, `prodetalle`, `proimagen`, `procantstock`, 
 ('Osita con vestido', 'Suave como algodón de azúcar', 'osoConVestido.jpg', 15, 250.00);
 
 -- --------------------- Poblamiento tabla `menu`
-INSERT INTO `menu` (`idmenu`, `menombre`, `medescripcion`, `melink`, `medeshabilitado`) VALUES
-(1, 'Inicio', 'Inicio', 'vista/inicio.php', '0000-00-00 00:00:00'),
-(2, 'Tienda', 'Tienda', 'vista/productos.php', '0000-00-00 00:00:00'),
-(3, 'Contacto', 'Contacto', 'vista/contacto.php', '0000-00-00 00:00:00'),
-(4, 'Mis compras', 'Compras del cliente', 'vista/GestionCompras/historialCompras.php', '0000-00-00 00:00:00'),
+INSERT INTO `menu` (`idmenu`, `menombre`, `medescripcion`, `idpadre`, `medeshabilitado`,`melink`) VALUES
+(1, 'Inicio', 'Inicio', NULL, NULL,'vista/inicio.php'),
+(2, 'Tienda', 'Tienda', NULL, NULL,'vista/productos.php'),
+(3, 'Contacto', 'Contacto', NULL, NULL,'vista/contacto.php'),
+(4, 'Mis compras', 'Compras del cliente', NULL, NULL,'vista/GestionCompras/historialCompras.php'),
 
-(5, 'Gestión de usuarios', 'Gestión de usuarios', 'vista/GestionUsuarios/listarUsuario.php', '0000-00-00 00:00:00'),
-(6, 'Gestión de roles', 'Gestión de roles', 'vista/GestionRoles/listarRoles.php', '0000-00-00 00:00:00'),
-(7, 'Gestión de productos', 'Gestión de productos', 'vista/GestionProducto/listarProductos.php', '0000-00-00 00:00:00'),
-(8, 'Gestión de menús', 'Gestión de menús', 'vista/GestionMenus/listarMenus.php', '0000-00-00 00:00:00'),
-(9, 'Gestión de compras', 'Gestión de compras', 'vista/GestionCompras/listarCompras.php', '0000-00-00 00:00:00'),
-(10, 'Histórico de compras', 'Compras hechas por los usuarios', 'vista/GestionCompras/verHistorico.php', '0000-00-00 00:00:00');
+(5, 'Gestión de usuarios', 'Gestión de usuarios', NULL, NULL,'vista/GestionUsuarios/listarUsuario.php'),
+(6, 'Gestión de roles', 'Gestión de roles', NULL, NULL,'vista/GestionRoles/listarRoles.php'),
+(7, 'Gestión de productos', 'Gestión de productos', NULL, NULL,'vista/GestionProducto/listarProductos.php'),
+(8, 'Gestión de menús', 'Gestión de menús', NULL, NULL,'vista/GestionProducto/listarMenus.php'),
+(9, 'Gestión de compras', 'Gestión de compras', NULL, NULL,'vista/GestionCompras/listarCompras.php'),
+(10, 'Carrito', 'Carrito', NULL, NULL,'vista/carrito.php');
 
 -- --------------------- Poblamiento tabla `menurol`
 INSERT INTO `menurol` (`idmenu`, `idrol`) VALUES
@@ -186,12 +189,12 @@ INSERT INTO `menurol` (`idmenu`, `idrol`) VALUES
 (6, 1), -- gestión roles
 (7, 1), -- gestión productos
 (8, 1), -- gestión menús
-(10, 1), -- histórico de compras
 
 -- Permisos de depósito
 (1, 2), -- inicio
 (7, 2), -- gestión productos
-(9, 2); -- gestión compras
+(9, 2),
+(10, 3); -- carrito; -- gestión compras
 
 -- --------------------- Poblamiento tabla `compra`
 INSERT INTO `compra` (`idcompra`, `cofecha`, `idusuario`) VALUES
