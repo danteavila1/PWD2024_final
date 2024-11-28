@@ -39,79 +39,82 @@ if (count($colCompras) > 0) {
                             <th scope="col">Acciones</th>
                         </tr>
                     </thead>
-                    <?php
-                    // Colección de estados de compra
-                    $objCompraEstado = new AbmCompraEstado();
-                    $colCompraEstado = $objCompraEstado->buscar("");
-
-                    // Itero sobre todas las compras
-                    foreach ($colCompras as $compra):
-
-                        // Ids de compra
-                        $idcompra = $compra->getIdCompra();
-                        $compra = ['idcompra' => $idcompra];
-
-                        // Fecha que se inició la compra por parte del cliente
-                        $compraFecha = $objCompra->buscar($compra);
-                        $cofecha = $compraFecha[0]->getCoFecha();
-
-                        // Colección de ítems de cada compra
-                        $objCompraItem = new AbmCompraItem();
-                        $colItemsCompra = $objCompraItem->buscar($compra);
-
-                        $objProducto = new AbmProducto();
-                        $items = [];
-                        $monto = 0;
-
-                        // Itero los ítems de cada compra
-                        foreach ($colItemsCompra as $itemCompra) {
-                            $idproducto = $itemCompra->getIdProducto();
-                            $cantProducto = $itemCompra->getCiCantidad();
-
-                            $producto = ['idproducto' => $idproducto];
-                            $colProductos = $objProducto->buscar($producto);
-
-                            // Voy guardando datos de productos comprados y el monto total de la compra
-                            foreach ($colProductos as $producto) {
-                                $nombreProducto = $producto->getProNombre();
-                                $items[] = $cantProducto . " " . $nombreProducto;
-                                $monto += $producto->getProPrecio();
-                            }
-                        }
-
-                        // Separamos con una "coma" en >> caso de que el cliente tenga más de un producto <<
-                        $totalItemsCompra = implode(", ", $items);
-
-                        // Obtengo las fechas de inicio y fin de la compra
+                    <tbody>
+                        <?php
+                        // Colección de estados de compra
                         $objCompraEstado = new AbmCompraEstado();
-                        $compraEstado = $objCompraEstado->buscar($compra);
 
-                        // Guardo el último estado de la compra y las fechas
-                        foreach ($compraEstado as $estado) {
-                            $compraEstado = $estado->getObjCompraEstadoTipo()->getCetDescripcion();
-                            $fechaInicio = $estado->getCeFechaIni();
+                        // Itero sobre todas las compras
+                        foreach ($colCompras as $compra):
 
-                            // Establezco fecha fin en caso de estar enviada o cancelada
-                            if ($compraEstado === "enviada" || $compraEstado === "cancelada") {
-                                $fechaFin = $estado->getCeFechaFin();
-                            } else {
-                                $fechaFin = "-";
+                            // Ids de compra
+                            $idcompra = $compra->getIdCompra();
+                            $compra = ['idcompra' => $idcompra];
+
+                            // Fecha que se inició la compra por parte del cliente
+                            $compraFecha = $objCompra->buscar($compra);
+                            $cofecha = $compraFecha[0]->getCoFecha();
+
+                            // Colección de ítems de cada compra
+                            $objCompraItem = new AbmCompraItem();
+                            $colItemsCompra = $objCompraItem->buscar($compra);
+
+                            $objProducto = new AbmProducto();
+                            $items = [];
+                            $monto = 0;
+
+                            // Itero los ítems de cada compra
+                            foreach ($colItemsCompra as $itemCompra) {
+                                $idproducto = $itemCompra->getIdProducto();
+                                $cantProducto = $itemCompra->getCiCantidad();
+
+                                $producto = ['idproducto' => $idproducto];
+                                $colProductos = $objProducto->buscar($producto);
+
+                                // Voy guardando datos de productos comprados y el monto total de la compra
+                                foreach ($colProductos as $producto) {
+                                    $nombreProducto = $producto->getProNombre();
+                                    $items[] = $cantProducto . " " . $nombreProducto;
+                                    $monto += $producto->getProPrecio();
+                                }
                             }
-                        }
-                    ?>
-                        <tbody>
+
+                            // Separamos con una "coma" en caso de que el cliente tenga más de un producto
+                            $totalItemsCompra = implode(", ", $items);
+
+                            // Obtengo las fechas de inicio y fin de la compra
+                            $compraEstado = $objCompraEstado->buscar($compra);
+
+                            // Guardo el último estado de la compra y las fechas
+                            foreach ($compraEstado as $estado) {
+                                $estadoDescripcion = $estado->getObjCompraEstadoTipo()->getCetDescripcion();
+                                $fechaInicio = $estado->getCeFechaIni();
+
+                                // Establezco fecha fin en caso de estar enviada o cancelada
+                                if ($estadoDescripcion === "enviada" || $estadoDescripcion === "cancelada") {
+                                    $fechaFin = $estado->getCeFechaFin();
+                                } else {
+                                    $fechaFin = "-";
+                                }
+                            }
+
+                            // Excluir compras con estado "carrito"
+                            if ($estadoDescripcion === "carrito") {
+                                continue;
+                            }
+                        ?>
                             <tr>
                                 <th scope="row"><?php echo $idcompra ?></th>
                                 <td><?php echo $cofecha ?></td>
                                 <td><?php echo $totalItemsCompra ?></td>
                                 <td><?php echo "$" . $monto ?></td>
-                                <td><?php echo $compraEstado ?></td>
+                                <td><?php echo $estadoDescripcion ?></td>
                                 <td><?php echo $fechaInicio ?></td>
                                 <td><?php echo $fechaFin ?></td>
                                 <td>
                                     <?php
                                     // Genero botones para cambiar estado de compra
-                                    switch ($compraEstado) {
+                                    switch ($estadoDescripcion) {
                                         case 'enviada':
                                             $mensaje = "Compra finalizada ";
                                             $color = 'success';
@@ -125,7 +128,7 @@ if (count($colCompras) > 0) {
                                     }
                                     ?>
                                     <!-- Genero botones de acción y textos -->
-                                    <?php if ($compraEstado == 'enviada' || $compraEstado == 'cancelada') : ?>
+                                    <?php if ($estadoDescripcion == 'enviada' || $estadoDescripcion == 'cancelada') : ?>
                                         <p class="text-<?php echo $color ?> fw-bold"><?php echo $mensaje . $icono ?></p>
                                     <?php else : ?>
                                         <div class="d-flex">
@@ -141,8 +144,8 @@ if (count($colCompras) > 0) {
                                     <?php endif; ?>
                                 </td>
                             </tr>
-                        </tbody>
-                    <?php endforeach; ?>
+                        <?php endforeach; ?>
+                    </tbody>
                 </table>
             <?php else: ?>
                 <p><?php echo "Historial de compras vacío."; ?></p>
@@ -154,3 +157,5 @@ if (count($colCompras) > 0) {
 <script src="../js/ajax/cambiarEstadoCompra.js"></script>
 <?php
 include_once(ROOT_PATH . "vista/estructura/footer.php");
+?>
+

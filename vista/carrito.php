@@ -20,7 +20,7 @@ if (count($colCompras) > 0) {
 <div class="container mt-5 mb-5">
     <div class="card shadow-lg">
         <div class="card-header d-flex justify-content-between align-items-center">
-            <h3 class="mb-0">Mis compras</h3>
+            <h3 class="mb-0">Carrito</h3>
         </div>
         <div class="card-body">
             <?php if ($hayCompras): ?>
