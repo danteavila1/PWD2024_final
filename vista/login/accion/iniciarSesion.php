@@ -36,7 +36,7 @@ if (!empty($colUsuarios)) {
                     header("Location: ../../GestionUsuarios/listarUsuario.php");
                 } elseif ($rolPrincipal === "deposito") {
                     header("Location: ../../GestionCompras/listarCompras.php");
-                } elseif ($rolPrincipal === "usuario") {
+                } elseif ($rolPrincipal === "cliente") {
                     header("Location: ../../productos.php");
                 } else {
                     // Si el rol no está definido, redirigir a una página genérica

@@ -141,10 +141,11 @@ INSERT INTO `usuariorol` (`idusuario`, `idrol`) VALUES
 
 -- --------------------- Poblamiento tabla `compraestadotipo`
 INSERT INTO `compraestadotipo` (`idcompraestadotipo`, `cetdescripcion`, `cetdetalle`) VALUES
-(1, 'iniciada', 'cuando el usuario : cliente inicia la compra de uno o mas productos del carrito'),
+(1, 'iniciada', 'cuando el usuario : cliente inicia la compra de uno o mas productos del carrito en estado = 5'),
 (2, 'aceptada', 'cuando el usuario administrador da ingreso a uno de las compras en estado = 1 '),
 (3, 'enviada', 'cuando el usuario administrador envia a uno de las compras en estado =2 '),
-(4, 'cancelada', 'un usuario administrador podra cancelar una compra en cualquier estado y un usuario cliente solo en estado=1 ');
+(4, 'cancelada', 'un usuario administrador podra cancelar una compra en cualquier estado y un usuario cliente solo en estado=1 '),
+(5, 'carrito', 'cuando el usuario agrega un producto al carrito');
 
 -- --------------------- Poblamiento tabla `producto`
 INSERT INTO `producto` (`pronombre`, `prodetalle`, `proimagen`, `procantstock`, `proprecio`) VALUES
@@ -171,7 +172,8 @@ INSERT INTO `menu` (`idmenu`, `menombre`, `medescripcion`, `idpadre`, `medeshabi
 (6, 'Gestión de roles', 'Gestión de roles', NULL, NULL,'vista/GestionRoles/listarRoles.php'),
 (7, 'Gestión de productos', 'Gestión de productos', NULL, NULL,'vista/GestionProducto/listarProductos.php'),
 (8, 'Gestión de menús', 'Gestión de menús', NULL, NULL,'vista/GestionProducto/listarMenus.php'),
-(9, 'Gestión de compras', 'Gestión de compras', NULL, NULL,'vista/GestionCompras/listarCompras.php');
+(9, 'Gestión de compras', 'Gestión de compras', NULL, NULL,'vista/GestionCompras/listarCompras.php'),
+(10, 'Carrito', 'Carrito', NULL, NULL,'vista/carrito.php');
 
 -- --------------------- Poblamiento tabla `menurol`
 INSERT INTO `menurol` (`idmenu`, `idrol`) VALUES
@@ -191,7 +193,8 @@ INSERT INTO `menurol` (`idmenu`, `idrol`) VALUES
 -- Permisos de depósito
 (1, 2), -- inicio
 (7, 2), -- gestión productos
-(9, 2); -- gestión compras
+(9, 2),
+(10, 3); -- carrito; -- gestión compras
 
 -- --------------------- Poblamiento tabla `compra`
 INSERT INTO `compra` (`idcompra`, `cofecha`, `idusuario`) VALUES

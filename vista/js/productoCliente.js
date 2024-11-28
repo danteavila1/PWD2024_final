@@ -25,64 +25,35 @@ function verDetalleProducto(idProducto) {
     });
 }
 
-function agregarCarrito(idProducto, idUsuario){
+function agregarCarrito(idProducto, idUsuario) {
     console.log("entra a agregarCarrito");
     console.log(idProducto);
     console.log(idUsuario);
+
     // Crear un objeto con los datos necesarios
     let datosProducto = {
         idproducto: idProducto,
         idusuario: idUsuario,
-        cantidad: 1 // Por ahora, agregamos una cantidad fija de 1, se puede mejorar
+        cantidad: 1 // Por ahora, agregamos una cantidad fija de 1
     };
 
-    // Enviar los datos al servidor usando Fetch API
-    fetch('../vista/Accion/accionCarrito.php', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(datosProducto)
-    })
-    .then(response => {
-        // Verifica que la respuesta HTTP sea exitosa
-        if (!response.ok) {
-            throw new Error('Error en la solicitud: ' + response.status);
-        }
-        // Convierte la respuesta a JSON
-        return response.json();
-    })
-    .then(data => {
-        console.log('Respuesta del servidor:', data); // Procesa el JSON devuelto por el servidor
-    })
-    .catch(error => {
-        console.error('Error:', error); // Manejo de errores
-    });
-
-}
-
-
-// Función para agregar un producto al carrito
-function agregarCarrito1(idProducto, idUsuario, cantidad) {
+    // Enviar los datos al servidor usando AJAX
     $.ajax({
-        url: '../vista/accion/accionProductos.php',
+        url: '../vista/GestionCompras/accion/accionCarrito.php',
         type: 'POST',
-        data: {
-            accion: 'agregarCarrito',
-            idProducto: idProducto,
-            idUsuario: idUsuario,
-            cantidad: cantidad
-        },
+        contentType: 'application/json',
+        data: JSON.stringify(datosProducto),
         success: function(response) {
-            const resultado = JSON.parse(response);
-            if (resultado.exito) {
-                alert('Producto agregado al carrito.');
-            } else {
-                alert('No se pudo agregar el producto al carrito.');
+            // Suponiendo que el servidor devuelve una respuesta en formato JSON
+            try {
+                const data = JSON.parse(response);
+                console.log('Respuesta del servidor:', data); // Procesa el JSON devuelto por el servidor
+            } catch (e) {
+                console.error('Error al parsear la respuesta del servidor:', e);
             }
         },
-        error: function() {
-            alert('Error al agregar el producto al carrito.');
+        error: function(xhr, status, error) {
+            console.error('Error en la solicitud:', error); // Manejo de errores
         }
     });
 }
