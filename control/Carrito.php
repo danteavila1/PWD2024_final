@@ -15,11 +15,12 @@ class Carrito {
     }
 
     public function agregarProducto($datos) {
-        $idUsuario = $this->session->getUsuario()->getIdusuario();
+        $idUsuario= $datos['idusuario'];
+        //$idUsuario = $this->session->getUsuario()->getIdusuario();
         $fechaCompra = date('Y-m-d H:i:s');
         $carritoActivo = $this->abmCompraEstado->buscarCarroActivo($idUsuario);
 
-        if ($carritoActivo === null) {
+        if ($carritoActivo == null) {
             return $this->crearNuevoCarrito($idUsuario, $fechaCompra, $datos);
         } else {
             return $this->actualizarCarritoExistente($carritoActivo, $datos);

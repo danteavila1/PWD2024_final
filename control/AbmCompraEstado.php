@@ -399,24 +399,24 @@ class AbmCompraEstado
         $compras = $abmCompra->buscarPorUsuario($idusuario);
 
         // arreglo para almacenar las compras con estado Iniciado
-        $compraEstadoIniciado = [];
+        $compraEstadoIniciado = array();
 
         foreach ($compras as $compra) {
             if (count($compras) > 0) {
                 // de cada compra específica, obtengo su compraEstado específico
-                $param = ['idcompra' => $compra->getIdcompra(),'cefechafin' => 'is null'];
-                $compraEstado = $this->buscar($param);
+                //$param = ['idcompra' => $compra->getIdCompra(),'cefechafin' => 'is null'];
+                $compraEstado = CompraEstado::listar('idcompra ='.$compra->getIdCompra().' and cefechafin is null');
                 if (count($compraEstado) > 0) {
-
+                    $objcompraEstado = $compraEstado[0];
                     // si el 'idcompraestadotipo' de este compraEstado es 1, significa que la compra fue iniciada. Por lo que la almacenamos
-                    if ($compraEstado->getIdcompraestadotipo() === 5) {
-                        $compraEstadoIniciado[] = $compra;
+                    if ($objcompraEstado->getObjCompraEstadoTipo()->getIdCompraEstadoTipo() == 5) {
+                        array_push($compraEstadoIniciado, $compra);
                     }
                 }
             }
         }
 
-        if (count($compraEstadoIniciado) === 0) {
+        if (count($compraEstadoIniciado) == 0) {
             $compraEstadoIniciado = null;
         }
 
