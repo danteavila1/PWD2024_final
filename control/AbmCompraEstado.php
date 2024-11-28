@@ -422,4 +422,39 @@ class AbmCompraEstado
 
         return $compraEstadoIniciado;
     }
+
+    public function cambiarCarritoAIniciado($data){
+
+        if (isset($data['idCompras'])) {
+            $idCompras = $data['idCompras'];
+            $objCompraEstado = new AbmCompraEstado();
+            $compraEstado = [];
+            $compraEstado = CompraEstado::listar('idcompra ='.$idCompras[0].' and cefechafin is null');
+            $estadoAnterior = $compraEstado[0];
+            $estadoAnterior->setCeFechaFin(date("Y-m-d H:i:s"));
+            $estadoAnterior->modificar();
+
+            foreach ($idCompras as $idcompra) {
+                // Paso 1: Finalizar el estado actual ("carrito")
+                $paramBuscar = ['idcompra' => $idcompra, 'idcompraestadotipo' => 5]; // 5 = "carrito"
+                $colEstados = $objCompraEstado->buscar($paramBuscar);
+
+                foreach ($colEstados as $estado) {
+                    $estado->setCeFechaFin(date("Y-m-d H:i:s")); // Establecer fecha de fin
+                }
+
+                // Paso 2: Crear un nuevo estado ("iniciada")
+                $nuevoEstado = [
+                    'idcompra' => $idcompra,
+                    'idcompraestadotipo' => 1, // 2 = "iniciada"
+                    'cefechaini' => date("Y-m-d H:i:s")
+                ];
+               $respuesta = $objCompraEstado->alta($nuevoEstado); // Crear el nuevo estado
+            }
+        } else {
+            $respuesta = false;
+        }
+        return $respuesta;
+    }
+
 }
