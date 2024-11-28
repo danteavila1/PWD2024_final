@@ -27,12 +27,12 @@ $(document).on('click', '.bajaRol', function () {
                     icon: res.icono
                 }).then(() => location.reload());
             },
-            error: function (res, jqXHR, textStatus, errorThrown) {
+            error: function (jqXHR, textStatus, errorThrown) {
                 // console.log("Error en la solicitud Ajax:", textStatus, errorThrown);
                 // console.log("Detalles del error:", jqXHR.responseText);
                 Swal.fire({
-                    title: res.mensaje,
-                    icon: res.icono
+                    title: 'Error en el servidor',
+                    icon: 'error'
                 }).then(() => location.reload());
             }
         });

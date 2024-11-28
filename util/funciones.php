@@ -7,7 +7,9 @@ function data_submitted()
     else
             if (!empty($_GET)) {
         $_AAux = $_GET;
-    }
+    } else
+            if (!empty($_FILES))
+        $_AAux = $_FILES;
     if (count($_AAux)) {
         foreach ($_AAux as $indice => $valor) {
             if ($valor == "")
@@ -22,7 +24,8 @@ function data_submitted()
  * @param object $object
  * @return array  
  */
-function dismount($object) {
+function dismount($object)
+{
     // con get_class obtenemos el nombre de la clase y reflectionClass obtenemos y manipulamos información sobre el $object
     $reflectionClass = new ReflectionClass(get_class($object));
     $array = array();
@@ -42,13 +45,14 @@ function dismount($object) {
  * Recibe un arreglo de objetos y devuelve un arreglo con arreglos asociativos.
  * @param array
  */
-function convert_array($param) {
-    $_AAux= array();
+function convert_array($param)
+{
+    $_AAux = array();
     if (!empty($param)) {
-        if (count($param)){
-            foreach($param as $obj) {
+        if (count($param)) {
+            foreach ($param as $obj) {
                 // itera sobre el arreglo de objetos y los convierte a arreglos asociativos
-                array_push($_AAux,dismount($obj));    
+                array_push($_AAux, dismount($obj));
             }
         }
     }

@@ -6,26 +6,37 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form name="form" method="post" onsubmit="encriptar()" action="accion/modificarUsuario.php">
+                <form id="form" name="form" method="post" onsubmit="encriptar()" action="accion/modificarUsuario.php">
 
-                    <label for="idusuario">ID usuario</label>
-                    <input type="text" class="form-control" id="idusuarioModif" name="idusuarioModif" readonly>
+                    <div class="mb-1">
+                        <label for="idusuario">ID usuario</label>
+                        <input type="text" class="form-control" id="idusuarioModif" name="idusuarioModif" readonly>
+                        <div class="mensaje-error"></div>
+                    </div>
 
-                    <label for="usnombre">Nombre usuario</label>
-                    <input type="text" class="form-control" id="usnombreModif" name="usnombreModif">
+                    <div class="mb-1">
+                        <label for="usnombre">Nombre usuario</label>
+                        <input type="text" class="form-control" id="usnombreModif" name="usnombreModif">
+                        <div class="mensaje-error"></div>
+                    </div>
 
-                    <label for="usmail">Mail</label>
-                    <input type="text" class="form-control" id="usmailModif" name="usmailModif">
+                    <div class="mb-1">
+                        <label for="usmail">Mail</label>
+                        <input type="text" class="form-control" id="usmailModif" name="usmailModif">
+                        <div class="mensaje-error"></div>
+                    </div>
 
-                    <label for="uspass">Contraseña</label>
-                    <div class="input-group">
-                        <input type="password" class="form-control" id="uspass" name="uspass" placeholder="Opcional">
-                        <button type="button" class="btn btn-secondary"
-                            onmousedown="mostrarPass(true)"
-                            onmouseup="mostrarPass(false)"
-                            onmouseleave="mostrarPass(false)">
-                            <i id="toggleIcon" class="bi bi-eye-slash"></i>
-                        </button>
+                    <div class="mb-1">
+                        <label for="uspass">Contraseña</label>
+                        <div class="input-group">
+                            <input type="password" class="form-control" id="uspass" name="uspass" placeholder="Opcional">
+                            <button type="button" class="btn btn-secondary"
+                                onmousedown="mostrarPass(true)"
+                                onmouseup="mostrarPass(false)"
+                                onmouseleave="mostrarPass(false)">
+                                <i id="toggleIcon" class="bi bi-eye-slash"></i>
+                            </button>
+                        </div>
                     </div>
                 </form>
             </div>

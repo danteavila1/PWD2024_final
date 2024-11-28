@@ -7,6 +7,7 @@ class AbmProducto
     private function cargarObjeto($param)
     {
         $obj = null;
+
         if (array_key_exists('pronombre', $param)) {
             $obj = new Producto();
             $idProducto = $param['idproducto'] ?? null;
@@ -33,6 +34,7 @@ class AbmProducto
 
     private function seteadosCamposClaves($param)
     {
+
         $resp = false;
         if (isset($param['idproducto']))
             $resp = true;
@@ -93,4 +95,94 @@ class AbmProducto
         return Producto::listar($where);
     }
 
+    /**
+     * Se encarga de guardar la imagen en la carpeta 'images'
+     * Retorna 3 posibles respuestas en forma de array. (1- misma imagen o ninguna. 2- imagen guardada. 3- no se guardó imagen)
+     * @return array $response
+     */
+    public function guardarImagen()
+    {
+        // Si ingresa la misma imagen o si no hay ninguna
+        $response = ['mensaje' => 1];
+
+        if (isset($_FILES['proimagen']) && $_FILES['proimagen']['error'] == UPLOAD_ERR_OK) {
+            $nombreImagen = $_FILES['proimagen']['name'];
+            $rutaTemporal = $_FILES['proimagen']['tmp_name'];
+
+            // Defino la ruta de la imagen
+            define('BASE_PATH', realpath(dirname(__FILE__) . '/../vista/images/') . '/');
+            $destino = BASE_PATH . $nombreImagen;
+
+            // Lo muevo a la carpeta /images
+            if (move_uploaded_file($rutaTemporal, $destino)) {
+                $response = ['mensaje' => 2, 'proimagen' => $nombreImagen];
+            } else {
+                $response = ['mensaje' => 3];
+            }
+        }
+
+        return $response;
+    }
+
+    /**
+     * Recibe como parámetro un array con los datos modificados de un producto.
+     * Se encarga de verificar si hay alguna imagen para procesar y modoficiar el producto.
+     * Retorna array con respuesta.
+     * @param array $param
+     * @return array $response
+     */
+    public function modificarProducto($param)
+    {
+        // Procesa la imagen nueva (si existe)
+        $response = $this->guardarImagen();
+        $msj = $response['mensaje'];
+
+        // Evalúo respuestas
+        if ($msj == 2) {
+            $param['proimagen'] = $response['proimagen'];
+            if ($this->modificacion($param)) {
+                $response = ['mensaje' => 'Modificación exitosa', 'icono' => 'success'];
+            } else {
+                $response = ['mensaje' => 'Modificación fallida', 'icono' => 'error'];
+            }
+        } elseif ($msj == 1) {
+            if ($this->modificacion($param)) {
+                $response = ['mensaje' => 'Modificación exitosa', 'icono' => 'success'];
+            } else {
+                $response = ['mensaje' => 'Modificación fallida', 'icono' => 'error'];
+            }
+        } else {
+            $response = ['mensaje' => 'Subida de imagen fallida', 'icono' => 'error'];
+        }
+
+        return $response;
+    }
+
+    /**
+     * Recibe como parámetro un array con los datos de un producto.
+     * Se encarga de verificar si hay alguna imagen para procesar y dar de alta el producto.
+     * Retorna array con respuesta.
+     * @param array $param
+     * @return array $response
+     */
+    public function crearProducto($param)
+    {
+        // Proceso imagen y guardo respuesta
+        $response = $this->guardarImagen();
+        $msj = $response['mensaje'];
+
+        // Evalúo respuestas
+        if ($msj == 2) {
+            $param['proimagen'] = $response['proimagen'];
+            if ($this->alta($param)) {
+                $response = ['mensaje' => 'Alta exitosa', 'icono' => 'success'];
+            } else {
+                $response = ['mensaje' => 'Alta fallida', 'icono' => 'error'];
+            }
+        } else {
+            $response = ['mensaje' => 'Subida de imagen fallida', 'icono' => 'error'];
+        }
+
+        return $response;
+    }
 }

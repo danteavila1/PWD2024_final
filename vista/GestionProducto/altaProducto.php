@@ -6,22 +6,37 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form name="form" method="post" action="accion/altaProducto.php" enctype="multipart/form-data">
+                <form id="formAlta" name="formAlta" method="post" action="accion/altaProducto.php" enctype="multipart/form-data">
 
-                    <label for="pronombre">Nombre producto</label>
-                    <input type="text" class="form-control" id="pronombre" name="pronombre">
+                    <div class="mb-1">
+                        <label for="nombreAlta">Nombre producto</label>
+                        <input type="text" class="form-control" id="nombreAlta" name="nombreAlta">
+                        <div class="mensaje-error"></div>
+                    </div>
 
-                    <label for="prodetalle">Detalle</label>
-                    <input type="text" class="form-control" id="prodetalle" name="prodetalle">
+                    <div class="mb-1">
+                        <label for="detalleAlta">Detalle</label>
+                        <input type="text" class="form-control" id="detalleAlta" name="detalleAlta">
+                        <div class="mensaje-error"></div>
+                    </div>
 
-                    <label for="procantstock">Cantidad de stock</label>
-                    <input type="text" class="form-control" id="procantstock" name="procantstock">
+                    <div class="mb-1">
+                        <label for="cantStockAlta">Cantidad de stock</label>
+                        <input type="text" class="form-control" id="cantStockAlta" name="cantStockAlta">
+                        <div class="mensaje-error"></div>
+                    </div>
 
-                    <label for="proprecio">Precio</label>
-                    <input type="text" class="form-control" id="proprecio" name="proprecio">
+                    <div class="mb-1">
+                        <label for="precioAlta">Precio</label>
+                        <input type="text" class="form-control" id="precioAlta" name="precioAlta">
+                        <div class="mensaje-error"></div>
+                    </div>
 
-                    <label for="nuevaImagen" class="form-label">Imagen del producto</label>
-                    <input type="file" class="form-control" id="proimagen" name="proimagen" accept="image/jpeg/png/jpeg">
+                    <div class="mb-1">
+                        <label for="nuevaImagen" class="form-label">Imagen del producto</label>
+                        <input type="file" class="form-control" id="proimagen" name="proimagen">
+                        <div class="mensaje-error"></div>
+                    </div>
 
                 </form>
             </div>

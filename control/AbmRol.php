@@ -84,7 +84,7 @@ class AbmRol
         $resp = false;
         if ($this->seteadosCamposClaves($param)) {
             $elObjtRol = $this->cargarObjetoConClave($param);
-            if ($elObjtRol != null and $elObjtRol->eliminar()) {
+            if ($elObjtRol != null && $elObjtRol->eliminar()) {
                 $resp = true;
             }
         }
@@ -138,6 +138,13 @@ class AbmRol
         return $objRoles;
     }
 
+    /**
+     * Recibe como parámetro una descripción de rol.
+     * Verifica si el rol existe en la base de datos.
+     * Retorna booleano indicando existencia.
+     * @param array $param
+     * @return boolean $existe
+     */
     public function existeRol($param)
     {
         // Pongo colección de roles
@@ -154,5 +161,82 @@ class AbmRol
         }
 
         return $existe;
+    }
+
+    /**
+     * Recibe como parámetro una descripción de rol.
+     * Verifica si existe en la base de datos. Si no existe, lo da de alta.
+     * Retorna array con respuesta.
+     * @param array $param
+     * @return array $response
+     */
+    public function crearRol($param)
+    {
+        $existe = false;
+        $existe = $this->existeRol($param);
+
+        if (!$existe) {
+            // Realizo el alta de rol
+            if ($this->alta($param)) {
+                $response = ['mensaje' => "Alta exitosa", 'icono' => "success"];
+            } else {
+            }
+        } else {
+            $response = ['mensaje' => "Rol existente", 'icono' => "info"];
+        }
+
+        return $response;
+    }
+
+    /**
+     * Recibe como parámetro un ID rol.
+     * Verifica que el ID recibido no sea uno de los principales. (1- admin, 2- deposito, 3- cliente).
+     * Procede a eliminar el rol elegido en caso de no ser un rol principal.
+     * Retorna array con respuesta.
+     * @param array $param
+     * @return array $response
+     */
+    public function eliminarRol($param)
+    {
+        $idRol = $param['idrol'];
+
+        // Verifico que el ID no sea de admin, depósito o cliente
+        if ($idRol != 1 && $idRol != 2 && $idRol != 3) {
+            if ($this->baja($param)) {
+                $response = ['mensaje' => "Baja exitosa", 'icono' => "success"];
+            } else {
+                $response = ['mensaje' => "Baja fallida", 'icono' => "error"];
+            }
+        } else {
+            $response = ['mensaje' => "No se pueden borrar roles principales", 'icono' => "info"];
+        }
+
+        return $response;
+    }
+
+    /**
+     * Recibe como parámetro una descripción de rol.
+     * Verifica que la descripción de rol no exista.
+     * Procede a modificar el rol si no está repetido.
+     * Retorna array con respuesta.
+     * @param array $param
+     * @return array $response
+     */
+    public function modificarRol($param)
+    {
+        $existe = $this->existeRol($param);
+
+        // Verifico si existe para poder realizar la modificación
+        if ($existe) {
+            $response = ['mensaje' => 'Rol existente', 'icono' => 'info'];
+        } else {
+            if ($this->modificacion($param)) {
+                $response = ['mensaje' => 'Modificación exitosa', 'icono' => 'success'];
+            } else {
+                $response = ['mensaje' => 'Falló la modificación', 'icono' => 'error'];
+            }
+        }
+
+        return $response;
     }
 }

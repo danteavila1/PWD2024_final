@@ -23,12 +23,16 @@ class UsuarioRol
     }
 
     // METODOS DE ACCESO GET
-
+    /**
+     * @return Usuario
+     */
     public function getObjUsuario()
     {
         return $this->objUsuario;
     }
-
+    /**
+     * @return Rol
+     */
     public function getObjRol()
     {
         return $this->objRol;
@@ -70,23 +74,19 @@ class UsuarioRol
 
             if ($res > -1) {
                 if ($res > 0) {
-                    $objRol = null;
-                    $objUsuario = null;
+                    /*Guardo en el arreglo $row el resultado del primer registro obtenido y seteo   
+                    esos valores al objeto actual*/
                     $row = $base->Registro();
 
-                    if ($row['idrol'] != null) {
-                        $objRol = new Rol();
-                        $objRol->setId($row['idrol']);
-                        $objRol->cargar();
-                    }
+                    $objUsuario = new Usuario();
+                    $objUsuario->setIdUsuario($row['idusuario']);
+                    $objUsuario->cargar();
 
-                    if ($row['idusuario'] != null) {
+                    $objRol = new Rol();
+                    $objRol->setIdRol($row['idrol']);
+                    $objRol->cargar();
 
-                        $objUsuario = new Usuario();
-                        $objUsuario->setId($row['idusuario']);
-                        $objUsuario->cargar();
-                    }
-                    $this->setear($objPersona, $objRol);
+                    $this->setear($objUsuario, $objRol);
                 }
             }
         } else {

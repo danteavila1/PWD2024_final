@@ -1,25 +1,37 @@
 $(document).on('click', '.modificarRoles', function () {
-
-    // Pongo en variables los datos que traje al apretar el botón
     var idusuario = $(this).data('idusuario');
-    var usnombre = $(this).data('usnombre');
-    var roles = $(this).data('roles');
+    var rolesActuales = $(this).data('roles');
+    var rolesExistentes = $(this).data('colroles');
 
-    // Preparo los valores para mostrarlos en el modal
-    $('span[name="idusuario"]').text(idusuario);
-    $('span[name="usnombre"]').text(usnombre);
-    $('span[name="roles"]').text(roles);
+    // Limpio y recreo los checkboxes de roles
+    var rolesContainer = $("#modificarRoles .modal-body .form-check").parent();
+    rolesContainer.empty(); // Elimina los checkboxes anteriores
+
+    rolesExistentes.forEach(function (rol) {
+        // Verifico si el rol actual está en los roles del usuario
+        var checked = rolesActuales.includes(rol.idrol) ? 'checked' : '';
+
+        // Creo el HTML para el checkbox
+        var checkboxHtml = `
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="idrol[]" value="${rol.idrol}" ${checked}>
+                <label class="form-check-label">${rol.rodescripcion}</label>
+            </div>`;
+
+        // Añado el checkbox al contenedor
+        rolesContainer.append(checkboxHtml);
+    });
 
     $('#modificarRoles').modal('show');
-    $('#modificarRoles .btn-success').on('click', function () {
-
-        // Acá pongo todos los roles elegidos del modal
-        var idrol = $("input[name='idrol[]']:checked").map(function () {
+    $('#modificarRoles .btn-success').off('click').on('click', function () {
+        // Obtengo los IDs de los roles seleccionados
+        var nuevosRoles = $("input[name='idrol[]']:checked").map(function () {
+            // Devuelvo solo los IDs
             return $(this).val();
         }).get();
 
-        // Verifico que se haya elegido al menos uno
-        if (idrol.length == 0) {
+        // Verifica si se seleccionó al menos un rol
+        if (nuevosRoles.length === 0) {
             Swal.fire({
                 title: "Error",
                 text: "Seleccione al menos un rol",
@@ -31,8 +43,8 @@ $(document).on('click', '.modificarRoles', function () {
         // Construyo objeto para mandar a solicitud AJAX
         var formData = {
             'idusuario': idusuario,
-            'idrol': idrol
-        };
+            'idrol': nuevosRoles
+        }
 
         $.ajax({
             url: "accion/modificarRoles.php",
@@ -45,16 +57,17 @@ $(document).on('click', '.modificarRoles', function () {
                     icon: res.icono
                 }).then(() => location.reload());
             },
-            error: function (res, jqXHR, textStatus, errorThrown) {
+            error: function (jqXHR, textStatus, errorThrown) {
                 // console.log("Error en la solicitud Ajax:", textStatus, errorThrown);
                 // console.log("Detalles del error:", jqXHR.responseText);
                 Swal.fire({
-                    title: res.mensaje,
-                    icon: res.icono
+                    title: 'Error en el servidor',
+                    icon: 'error'
                 }).then(() => location.reload());
             }
         });
 
+        // Cierra el modal
         $('#modificarRoles').modal('hide');
     });
 });

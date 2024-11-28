@@ -2,23 +2,29 @@
 class Menu
 {
     private $idmenu;
-    private $nombremenu;
-    private $archivomenu;
+    private $menombre;
+    private $medescripcion;
+    private $melink;
+    private $medeshabilitado;
     private $mensajeoperacion;
 
     public function __construct()
     {
         $this->idmenu = "";
-        $this->nombremenu = "";
-        $this->archivomenu = "";
+        $this->menombre = "";
+        $this->medescripcion = "";
+        $this->melink = "";
+        $this->medeshabilitado = "";
         $this->mensajeoperacion = "";
     }
 
-    public function setear($idmenu, $nombremenu, $archivomenu)
+    public function setear($idmenu, $menombre, $medescripcion, $melink, $medeshabilitado)
     {
         $this->setIdMenu($idmenu);
-        $this->setNombreMenu($nombremenu);
-        $this->setArchivoMenu($archivomenu);
+        $this->setNombreMenu($menombre);
+        $this->setMeDescripcion($medescripcion);
+        $this->setMeLink($melink);
+        $this->setMeDeshabilitado($medeshabilitado);
     }
 
     /* Medodos get y set para $idmenu*/
@@ -31,27 +37,47 @@ class Menu
         $this->idmenu = $idmenu;
     }
 
-    /* Medodos get y set para $nombremenu*/
-    public function getNombreMenu()
+    /* Medodos get y set para $menombre*/
+    public function getMeNombre()
     {
-        return $this->nombremenu;
+        return $this->menombre;
     }
-    public function setNombreMenu($nombremenu)
+    public function setNombreMenu($menombre)
     {
-        $this->nombremenu = $nombremenu;
-    }
-
-    /* Medodos get y set para $archivomenu*/
-    public function getArchivoMenu()
-    {
-        return $this->archivomenu;
-    }
-    public function setArchivoMenu($archivomenu)
-    {
-        $this->archivomenu = $archivomenu;
+        $this->menombre = $menombre;
     }
 
-    /* Medodos get y set para mensajeoperacion*/
+    /* Medodos get y set para $medescripcion*/
+    public function getMeDescripcion()
+    {
+        return $this->medescripcion;
+    }
+    public function setMeDescripcion($medescripcion)
+    {
+        $this->medescripcion = $medescripcion;
+    }
+
+    /* Medodos get y set para $melink*/
+    public function getMeLink()
+    {
+        return $this->melink;
+    }
+    public function setMeLink($melink)
+    {
+        $this->melink = $melink;
+    }
+
+    /* Medodos get y set para $medeshabilitado*/
+    public function getMeDeshabilitado()
+    {
+        return $this->medeshabilitado;
+    }
+    public function setMeDeshabilitado($medeshabilitado)
+    {
+        $this->medeshabilitado = $medeshabilitado;
+    }
+
+    /* Medodos get y set para $mensajeoperacion*/
     public function getMensajeOperacion()
     {
         return $this->mensajeoperacion;
@@ -71,18 +97,13 @@ class Menu
         $resp = false;
         $base = new BaseDatos();
         $sql = "SELECT * FROM menu WHERE idmenu = " . $this->getIdMenu();
+
         if ($base->Iniciar()) {
             $res = $base->Ejecutar($sql);
             if ($res > -1) {
                 if ($res > 0) {
                     $row = $base->Registro();
-                    //$objidusuariorol = null;
-                    /**if ($row['idusuariorol'] != null or $row['idusuariorol'] != '') {
-                        $objidusuariorol = new Menu();
-                        $objidusuariorol->setIdMenu($row['idusuariorol']);
-                        $objidusuariorol->cargar();
-                    }*/
-                    $this->setear($row['idmenu'], $row['menombre'], $row['melink']);
+                    $this->setear($row['idmenu'], $row['menombre'], $row['medescripcion'], $row['melink'], $row['medeshabilitado']);
                 }
             } else {
                 $this->setMensajeOperacion("Menu->listar: " . $base->getError());
@@ -104,18 +125,8 @@ class Menu
         $resp = false;
         $base = new BaseDatos();
 
-        // $idusuariorol[0] = ",";
-        // $idusuariorol[1] = ",";
-
-
-        // if ($this->getObjUsuarioRol() != null && $this->getObjUsuarioRol()->getIdRol() != "") {
-        //     $idusuariorol[0] = ",idusuariorol,";
-        //     $idusuariorol[1] = ",idusuariorol = '" . $this->getObjUsuarioRol()->getIdRol() . "',";
-        // }
-        //$idusuariorol = $this->getObjUsuarioRol()->getIdRol();
-
-        $sql = "INSERT INTO menu(menombre, melink)
-        VALUES ('" . $this->getNombreMenu() . "', '" . $this->getarchivomenu() . ")";
+        $sql = "INSERT INTO menu (menombre, medescripcion, melink, medeshabilitado)
+        VALUES ('" . $this->getMeNombre() . "', '" . $this->getMeDescripcion() . "', '" . $this->getMeLink() . "', '" . $this->getMeDeshabilitado() . "')";
 
         if ($base->Iniciar()) {
             if ($elid = $base->Ejecutar($sql)) {
@@ -142,7 +153,13 @@ class Menu
         $resp = false;
         $base = new BaseDatos();
 
-        $sql = "UPDATE menu SET menombre= '" . $this->getNombreMenu() . "', melink = '" . " WHERE idmenu = " . $this->getIdMenu() . "";
+        $sql = "UPDATE menu 
+        SET menombre = '" . $this->getMeNombre() . "', 
+            medescripcion = '" . $this->getMeDescripcion() . "', 
+            melink = '" . $this->getMeLink() . "',
+            medeshabilitado = '" . $this->getMeDeshabilitado() . "'  
+        WHERE idmenu = " . $this->getIdMenu();
+
         if ($base->Iniciar()) {
             if ($base->Ejecutar($sql)) {
                 $resp = true;
@@ -207,61 +224,11 @@ class Menu
 
                 while ($row = $base->Registro()) {
                     $obj = new Menu();
-                    //$objidusuariorol = null;
-                    //if ($row['idusuariorol'] != null) {
-                        //$objidusuariorol = new Menu();
-                        //$objidusuariorol->setIdMenu($row['idusuariorol']);
-                        //$objidusuariorol->cargar();
-                    //}
-                    $obj->setear($row['idmenu'], $row['menombre'], $row['melink']);
+                    $obj->setear($row['idmenu'], $row['menombre'], $row['medescripcion'], $row['melink'], $row['medeshabilitado']);
                     array_push($arreglo, $obj);
                 }
             }
         }
         return $arreglo;
     }
-
-    // /**
-    //  * Funcion desabilitar
-    //  * Esta función Actualiza el valor de medeshabilitado por un string fecha actual
-    //  *
-    //  **/
-    // public function deshabilitar()
-    // {
-    //     $resp = false;
-    //     $base = new BaseDatos();
-
-    //     $fechaBaja = date('Y-m-d H:i:s');
-
-    //     // Actualiza el valor de usdeshabilitado
-    //     $sql = "UPDATE menu SET medeshabilitado = '" . $fechaBaja . "' WHERE idmenu = " . $this->getIdMenu();
-
-    //     if ($base->Iniciar()) {
-    //         if ($base->Ejecutar($sql)) {
-    //             return true;
-    //         } else {
-    //             $this->setMensajeOperacion("menu->deshabilitar: " . $base->getError());
-    //         }
-    //     } else {
-    //         $this->setMensajeOperacion("menu->deshabilitar: " . $base->getError());
-    //     }
-
-    //     return $resp;
-    // }
-
-    // /**
-    //  * Esta función lee todos los valores de todos los atributos del objeto y los devuelve
-    //  * en un arreglo asociativo
-    //  * 
-    //  * @return array
-    //  */
-    // public function obtenerInfo()
-    // {
-    //     $info = [];
-    //     $info['idmenu'] = $this->getObjUsuarioRol()->getIdRol();
-    //     $info['nombremenu'] = $this->getNombreMenu();
-    //     $info['archivomenu'] = $this->getarchivomenu();
-    //     $info['medeshabilitado'] = $this->getMeDeshabilitado();
-    //     return $info;
-    // }
 }

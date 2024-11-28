@@ -1,4 +1,3 @@
-<script src=<?php echo BASE_URL . "vista/js/bootstrap.bundle.min.js" ?>></script>
 <script src=<?php echo BASE_URL . "vista/js/menu.js" ?>></script>
 
 <footer class="footer-kawaii text-center py-4">

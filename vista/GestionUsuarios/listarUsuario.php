@@ -55,10 +55,19 @@ if (count($colUsuarios) > 0) {
                             $colUsuarioRol = $objUsuarioRol->buscar($usuario);
                             $cantRoles = count($colUsuarioRol);
 
+                            $objRol = new AbmRol();
+                            $colRolesExistentes = $objRol->buscar("");
+                            $colRolesBD = [];
+                            foreach ($colRolesExistentes as $rolExistente) {
+                                $colRolesBD[] = ['idrol' => $rolExistente->getIdRol(), 'rodescripcion' => $rolExistente->getRolDescripcion()];
+                            }
+
                             $colRoles = [];
+                            $idRoles = [];
                             if ($cantRoles >= 1) {
                                 foreach ($colUsuarioRol as $rol) {
                                     $roldescripcion = $rol->getObjRol()->getRolDescripcion();
+                                    $idRoles[] = $rol->getObjRol()->getIdRol();
                                     $colRoles[] = $roldescripcion;
                                 }
                                 $roles = implode(", ", $colRoles);
@@ -81,11 +90,12 @@ if (count($colUsuarios) > 0) {
                                             <button class="modificarRoles btn btn-primary me-2" type="button"
                                                 data-idusuario="<?php echo $idusuario; ?>"
                                                 data-usnombre="<?php echo $usnombre; ?>"
-                                                data-roles="<?php echo $roles; ?>"
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#modificarRoles">
+                                                data-roles='<?php echo json_encode($idRoles); ?>'
+                                                data-colroles='<?php echo json_encode($colRolesBD); ?>'
+                                                data-bs-toggle="modal" data-bs-target="#modificarRoles">
                                                 Modificar roles
                                             </button>
+
                                             <button class="modificarUsuario btn btn-primary me-2" type="button"
                                                 data-idusuario="<?php echo $idusuario; ?>"
                                                 data-usnombre="<?php echo $usnombre; ?>"

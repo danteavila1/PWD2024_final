@@ -6,9 +6,12 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form name="form" method="post" action="accion/altaRol.php">
-                    <label class="form-label">Ingrese un nombre</label>
-                    <input type="text" class="form-control" id="rodescripcion">
+                <form id="formAlta" name="formAlta" method="post" action="accion/altaRol.php">
+                    <div class="mb-1">
+                        <label class="form-label">Ingrese un nombre</label>
+                        <input type="text" class="form-control" id="rodescripcion" name="rodescripcion">
+                        <div class="mensaje-error"></div>
+                    </div>
                 </form>
             </div>
             <div class="modal-footer">

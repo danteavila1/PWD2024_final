@@ -232,7 +232,7 @@ class Usuario
                 }
             }
         } else {
-            $this->setmensajeoperacion("usuario->listar: " . $base->getError());
+            // $this->setmensajeoperacion("usuario->listar: " . $base->getError());
         }
         return $arreglo;
     }

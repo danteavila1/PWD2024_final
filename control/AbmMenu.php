@@ -7,12 +7,16 @@ class AbmMenu
      */
     private function cargarObjeto($param)
     {
-        $obj = null;
 
-        if (array_key_exists('idmenu', $param) && array_key_exists('menombre', $param) && array_key_exists('melink', $param)){
+        $obj = null;
+        if (array_key_exists('menombre', $param)) {
             $obj = new Menu();
-            $obj->setIdMenu($param['idmenu']);
-            $obj->cargar();
+            $idmenu = $param['idmenu'] ?? null;
+            $menombre = $param['menombre'];
+            $medescripcion = $param['medescripcion'];
+            $melink = $param['melink'];
+            $medeshabilitado = $param['medeshabilitado'];
+            $obj->setear($idmenu, $menombre, $medescripcion, $melink, $medeshabilitado);
         }
         return $obj;
     }
@@ -27,7 +31,7 @@ class AbmMenu
 
         if (isset($param['idmenu'])) {
             $obj = new Menu();
-            $obj->setIdmenu($param['idmenu']);
+            $obj->setIdMenu($param['idmenu']);
         }
         return $obj;
     }
@@ -55,6 +59,7 @@ class AbmMenu
 
         $menu = $this->cargarObjeto($param);
         if ($menu !== null && $menu->insertar()) {
+
             $resp = true;
         }
         return $resp;
@@ -82,7 +87,7 @@ class AbmMenu
      * @param array $param
      * @return boolean
      */
-    public function modificar($param)
+    public function modificacion($param)
     {
 
         $resp = false;
@@ -94,18 +99,6 @@ class AbmMenu
         }
         return $resp;
     }
-
-    // /* permite actualizar la fecha de baja del usuario */
-    // public function borradoLogico($param)
-    // {
-
-    //     $resp = false;
-    //     if ($this->seteadosCamposClaves($param)) {
-    //         $unObjUsuario = $this->cargarObjetoConClave($param);
-    //         $unObjUsuario->deshabilitar();
-    //     }
-    //     return $resp;
-    // }
 
     /**
      * @param array $param
@@ -119,13 +112,38 @@ class AbmMenu
                 $where .= " and idmenu =" . $param['idmenu'];
             if (isset($param['menombre']))
                 $where .= " and menombre ='" . $param['menombre'] . "'";
-                if (isset($param['melink']))
+            if (isset($param['medescripcion']))
+                $where .= " and medescripcion ='" . $param['medescripcion'] . "'";
+            if (isset($param['melink']))
                 $where .= " and melink ='" . $param['melink'] . "'";
         }
         $obj = new Menu();
 
         $arreglo = $obj->listar($where);
         return $arreglo;
-    } //Cambios
+    }
 
+    /**
+     * Recibe como parámetro un idmenu.
+     * Deshabilita aplicando un borrado lógico. 
+     * Retorna array indicando éxito o fallo de la operación
+     * @param array $param
+     * @return array $response
+     */
+    public function deshabilitar($param)
+    {
+        $menu = $this->buscar($param);
+        $param['menombre'] = $menu[0]->getMeNombre();
+        $param['medescripcion'] = $menu[0]->getMeDescripcion();
+        $param['melink'] = $menu[0]->getMeLink();
+        $param['medeshabilitado'] = date('Y-m-d H:i:s');
+
+        if ($this->modificacion($param)) {
+            $response = ['mensaje' => 'Borrado lógico exitoso', 'icono' => 'success'];
+        } else {
+            $response = ['mensaje' => 'Borrado lógico fallido', 'icono' => 'error'];
+        }
+
+        return $response;
+    }
 }

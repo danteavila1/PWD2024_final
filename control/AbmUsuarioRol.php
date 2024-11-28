@@ -12,11 +12,10 @@ class AbmUsuarioRol
 
     private function cargarObjeto($param)
     {
-        //verEstructura($param);
-        $objtUsuarioRol = null;
+
         $objRol = null;
         $objUsuario = null;
-        //print_r($param);
+
         if (array_key_exists('idrol', $param) and $param['idrol'] != null) {
             $objRol = new Rol();
             $objRol->setIdrol($param['idrol']);
@@ -159,7 +158,45 @@ class AbmUsuarioRol
     }
 
     /**
-     * 
+     * Recibe como parámetro el id de usuario y un array con roles.
+     * Se encarga de modificar los roles, quitando o añadiendo roles.
+     * Retorna array con respuesta.
+     * @param array $param
+     * @return array $response
      */
-    public function cambiarRoles($param) {}
+    public function cambiarRoles($param)
+    {
+        $idusuario = $param['idusuario'];
+        $nuevosRoles = $param['idrol'];
+
+        // Creo parámetro de búsqueda
+        $usuario = ['idusuario' => $idusuario];
+
+        // Obtengo los roles actuales del usuario
+        $rolesActuales = $this->buscar($usuario);
+
+        $rolesActualesIds = [];
+        foreach ($rolesActuales as $rolActual) {
+            $rolesActualesIds[] = $rolActual->getObjRol()->getIdRol();
+        }
+
+        // Determino los roles a agregar y a eliminar
+        $agregarRoles = array_diff($nuevosRoles, $rolesActualesIds);
+        $eliminarRoles = array_diff($rolesActualesIds, $nuevosRoles);
+
+        // Agrego los nuevos roles
+        foreach ($agregarRoles as $idRol) {
+            $datos = ['idusuario' => $idusuario, 'idrol' => $idRol];
+            $this->alta($datos);
+        }
+
+        // Elimino los roles quitados
+        foreach ($eliminarRoles as $idRol) {
+            $datos = ['idusuario' => $idusuario, 'idrol' => $idRol];
+            $this->baja($datos);
+        }
+
+        $response = ['mensaje' => 'Roles modificados', 'icono' => 'success'];
+        return $response;
+    }
 }

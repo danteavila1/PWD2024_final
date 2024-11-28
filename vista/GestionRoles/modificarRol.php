@@ -6,13 +6,19 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form name="form" method="post" action="accion/modificarRol.php">
+                <form id="form" name="form" method="post" action="accion/modificarRol.php">
 
-                    <label for="idusuario">ID rol</label>
-                    <input type="text" class="form-control" id="idrolModif" name="idrolModif" readonly>
+                    <div class="mb-1">
+                        <label for="idusuario">ID rol</label>
+                        <input type="text" class="form-control" id="idrolModif" name="idrolModif" readonly>
+                        <div class="mensaje-error"></div>
+                    </div>
 
-                    <label for="usnombre">Rol descripción</label>
-                    <input type="text" class="form-control" id="rodescripcionModif" name="rodescripcionModif">
+                    <div class="mb-1">
+                        <label for="usnombre">Rol descripción</label>
+                        <input type="text" class="form-control" id="rodescripcionModif" name="rodescripcionModif">
+                        <div class="mensaje-error"></div>
+                    </div>
 
                 </form>
             </div>

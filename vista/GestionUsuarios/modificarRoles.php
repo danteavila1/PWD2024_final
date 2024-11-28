@@ -6,25 +6,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form name="form" method="post" action="./accionRol/modificarRoles.php" onsubmit="encriptar()">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th scope="col">ID</th>
-                                <th scope="col">Nombre usuario</th>
-                                <th scope="col">Roles actuales</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <th scope="row"><span name="idusuario"></span></th>
-                                <td><span name="usnombre"></span></td>
-                                <td><span name="roles"></span></td>
-                            </tr>
-                        </tbody>
-                    </table>
-
-                    <h5>Seleccionar nuevos roles actuales</h5>
+                <form name="form" method="post" action="accion/modificarRoles.php">
                     <?php
                     // Obtengo todos los roles existentes en la base de datos
                     $objRol = new AbmRol();

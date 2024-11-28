@@ -1,17 +1,25 @@
 function mostrarPass(show) {
-    // Selecciono la contraseña
-    const pass = document.getElementById("uspass");
-    const pass2 = document.getElementById("uspassAlta");
-    const icon = document.getElementById("toggleIcon");
+    // Selecciono todos los posibles elementos que contengan contraseña
+    var pass = document.getElementById("uspass");
+    var pass2 = document.getElementById("uspassAlta");
+    var icon = document.getElementById("toggleIcon");
 
-    if (pass !== "") {
-        pass.type = show ? "text" : "password";
-        icon.className = show ? "bi bi-eye" : "bi bi-eye-slash";
+    // Verifico si 'pass' existe
+    if (pass) {
+        if (pass.value != "") {
+            pass.type = show ? "text" : "password";
+        }
     }
 
-    if (pass2 !== "") {
-        pass2.type = show ? "text" : "password";
-        icon.className = show ? "bi bi-eye" : "bi bi-eye-slash";
+    // Verifico si 'pass2' existe
+    if (pass2) {
+        if (pass2.value != "") {
+            pass2.type = show ? "text" : "password";
+        }
     }
 
+    // Verifico si 'icon' existe
+    if (icon) {
+        icon.className = show ? "bi bi-eye" : "bi bi-eye-slash";
+    }
 }
