@@ -39,17 +39,32 @@ if (count($colCompras) > 0) {
                         // Itero sobre todas las compras
                         foreach ($colCompras as $compra):
 
-                            // Ids de compra
+                            // Id de la compra actual
                             $idcompra = $compra->getIdCompra();
-                            $compra = ['idcompra' => $idcompra];
+                            $compraParams = ['idcompra' => $idcompra];
 
-                            // Colección de ítems de cada compra
+                            // Verifico el estado de la compra
+                            $objCompraEstado = new AbmCompraEstado();
+                            $colCompraEstado = $objCompraEstado->buscar($compraParams);
+
+                            // Obtengo el último estado de la compra
+                            $estadoCompra = '';
+                            foreach ($colCompraEstado as $compraEstado) {
+                                $estadoCompra = $compraEstado->getObjCompraEstadoTipo()->getCetDescripcion();
+                            }
+
+                            // Solo procesar compras en estado "carrito"
+                            if ($estadoCompra !== "carrito") {
+                                continue;
+                            }
+
+                            // Colección de ítems de la compra en estado "carrito"
                             $objCompraItem = new AbmCompraItem();
-                            $colItemsCompra = $objCompraItem->buscar($compra);
+                            $colItemsCompra = $objCompraItem->buscar($compraParams);
 
                             $objProducto = new AbmProducto();
 
-                            // Itero los ítems de cada compra
+                            // Itero los ítems de la compra en estado "carrito"
                             foreach ($colItemsCompra as $itemCompra) {
                                 $idproducto = $itemCompra->getIdProducto();
                                 $cantProducto = $itemCompra->getCiCantidad();
@@ -63,7 +78,7 @@ if (count($colCompras) > 0) {
                                     $precioProducto = $producto->getProPrecio();
                                     $montoTotalGeneral += $precioProducto * $cantProducto; // Sumar al total general
                         ?>
-                                    <tr>
+                                    <tr data-idcompra="<?php echo $idcompra; ?>">
                                         <td><?php echo $nombreProducto; ?></td>
                                         <td><?php echo $cantProducto; ?></td>
                                         <td><?php echo "$" . ($precioProducto * $cantProducto); ?></td>
@@ -82,7 +97,7 @@ if (count($colCompras) > 0) {
                     </tfoot>
                 </table>
                 <div class="d-flex justify-content-end mt-3">
-                    <button class="btn btn-primary" id="comprarBtn">Comprar</button>
+                    <button class="btn btn-primary" id="comprarBtn" onclick="iniciarCompraCarrito()">Comprar</button>
                 </div>
             <?php else: ?>
                 <p><?php echo "Historial de compras vacío."; ?></p>
@@ -91,7 +106,6 @@ if (count($colCompras) > 0) {
     </div>
 </div>
 
-<script src="../js/ajax/cambiarEstadoCompra.js"></script>
 <?php
 include_once(ROOT_PATH . "vista/estructura/footer.php");
 ?>

@@ -58,6 +58,55 @@ function agregarCarrito(idProducto, idUsuario) {
     });
 }
 
+
+function iniciarCompraCarrito() {
+    // Recopilar los IDs de las compras desde la tabla
+    const compras = new Set(); // Usamos Set para evitar duplicados
+    const rows = document.querySelectorAll("tbody tr");
+
+    rows.forEach(row => {
+        const idCompra = row.dataset.idcompra;
+        if (idCompra) {
+            compras.add(idCompra);
+        }
+    });
+
+    // Convertir el Set a un Array
+    const idComprasArray = Array.from(compras);
+
+    // Verificar si hay compras seleccionadas
+    if (idComprasArray.length === 0) {
+        alert("No hay compras en el carrito.");
+        return;
+    }
+
+    // Enviar los IDs al servidor usando fetch
+    fetch("../vista/GestionCompras/accion/iniciarCompraCarrito.php", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ idCompras: idComprasArray })
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log(data.message);
+        if (data.success) {
+            alert("Compra iniciada con éxito.");
+            location.reload(); // Recargar la página para reflejar los cambios
+        } else {
+            alert("Error al iniciar la compra: " + data.error);
+        }
+    })
+    .catch(error => {
+        console.error("Error:", error);
+        alert("Ocurrió un error al procesar la solicitud.");
+    });
+}
+
+
+
+
 function redirigir(){
     location.href="../vista/login/formIniciarSesion.php";
 }
