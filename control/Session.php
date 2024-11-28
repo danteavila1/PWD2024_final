@@ -159,19 +159,28 @@ class Session
     }
 
     /**
-     * 
+     * Recibe como parámetro nombre de usuario y contraseña encriptada de un usuario.
+     * Se encarga de iniciar sesión siempre y cuando el usuario no esté deshabilitado.
+     * Retorna array con respuesta.
+     * @param array $param
+     * @return array $response
      */
     public function iniciarSesion($param)
     {
+        // Creo respuesta por defecto
         $response = ['mensaje' => 'Datos incorrectos', 'icono' => 'error'];
+
+        // Busco al usuario en la base de datos por el nombre
         $usnombre = $param['usnombre'];
         $objUsuario = new AbmUsuario();
         $colUsuarios = $objUsuario->buscar(['usnombre' => $usnombre]);
         $coincidencia = $colUsuarios[0];
 
+        // Si hay alguna coincidencia, busco su fecha de deshabilitado
         if (isset($coincidencia)) {
-            $usdeshabilitado = $colUsuarios[0]->getUsDeshabilitado();
 
+            // Si está habilitado, obtengo contraseña e inicio sesión
+            $usdeshabilitado = $colUsuarios[0]->getUsDeshabilitado();
             if ($usdeshabilitado === '0000-00-00 00:00:00') {
                 $uspass = $param['uspass'];
                 if ($this->iniciar($usnombre, $uspass)) {
@@ -185,11 +194,20 @@ class Session
         return $response;
     }
 
+    /**
+     * Recibe como parámetro nombre de usuario y contraseña encriptada de un usuario.
+     * Se encarga de asignar un mensaje y/o redirección dependiendo la respuesta del inicio de sesión.
+     * Retorna array si no inició sesión exitosamente, sino, redirecciona.
+     * @param array $param
+     * @return array $response
+     */
     public function loguear($param)
     {
+        // Ejecuto función y obtengo respuestas
         $response = $this->iniciarSesion($param);
         $msj = $response['mensaje'];
 
+        // Dependiendo la respuesta, mando mensajes y/o redirecciono
         if ($msj == 'Bienvenido') {
             header('Location:' . BASE_URL . '/vista/inicio.php');
         } elseif ($msj == 'Usuario deshabilitado') {
@@ -201,7 +219,6 @@ class Session
             setcookie("icono", "error", time() + 60, "/");
             header('Location:' . BASE_URL . '/vista/login/formIniciarSesion.php');
         }
-
 
         return $response;
     }

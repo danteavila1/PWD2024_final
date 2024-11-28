@@ -49,7 +49,7 @@ if (isset($_COOKIE['mensaje'])) {
 
             <div class="mt-3">
                 <div class="d-grid">
-                    <input type="submit" class="btn btn-success" value="Enviar">
+                    <input type="submit" class="btn btn-success" value="Ingresar">
                 </div>
             </div>
         </form>

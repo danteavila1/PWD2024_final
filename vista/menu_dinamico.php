@@ -46,11 +46,11 @@ echo '<ul class="navbar-nav ms-auto">';
 $arrMenu = [];
 $arr = [];
 $menues = new AbmMenuRol();
-if (count($roles) > 1){
+if (count($roles) > 1) {
   echo '<li class="nav-item" style="margin-top:5px !important;"><span class="text-white">Seleccionar rol: </span>';
   echo '<select id="roles" onchange="cambiaSel()">';
   foreach ($roles as $rol) {
-    echo '<option value="'.$rol->getIdRol().'">'.$rol->getRolDescripcion().'</option>';
+    echo '<option value="' . $rol->getIdRol() . '">' . $rol->getRolDescripcion() . '</option>';
   }
   echo '</select>';
   echo '</li>';
@@ -72,7 +72,7 @@ $men = new Menu();
 foreach ($arr as $menu) {
   //A partir de los id, me traigo los objeto menu y armo el item de la lista.
   $men = $menu->getObjMenu();
-  echo '<li class="nav-item"><a class="nav-link" href="' . BASE_URL . $men->getArchivoMenu() . '">' . $men->getNombreMenu() . '</a></li>';
+  echo '<li class="nav-item"><a class="nav-link" href="' . BASE_URL . $men->getMeLink() . '">' . $men->getMeNombre() . '</a></li>';
 }
 // echo '<a href="../cliente/carrito.php" class="ms-3">
 // <img src="' . BASE_URL . 'vista/images/carrito.png" alt="Carrito" class="imgCart me-2" style="height: 2em;">

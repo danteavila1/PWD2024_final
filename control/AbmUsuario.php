@@ -366,7 +366,9 @@ class AbmUsuario
     }
 
     /**
-     * Se enc
+     * Recibe como parámetro un array con datos de una nueva cuenta de usuario.
+     * Se encarga de redirigir al usuario una vez creada (o no) una nueva cuenta.
+     * @param $array $param
      */
     public function redirigir($param)
     {
@@ -387,13 +389,13 @@ class AbmUsuario
             case 'Mail en uso': {
                     setcookie("mensaje", $msj, time() + 60, "/");
                     setcookie("icono", $icono, time() + 60, "/");
-                    header('Location:' . BASE_URL . '/vista/login/formIniciarSesion.php');
+                    header('Location:' . BASE_URL . '/vista/login/formCrearCuenta.php');
                     break;
                 }
             case 'Nombre de usuario en uso': {
                     setcookie("mensaje", $msj, time() + 60, "/");
                     setcookie("icono", $icono, time() + 60, "/");
-                    header('Location:' . BASE_URL . '/vista/login/formIniciarSesion.php');
+                    header('Location:' . BASE_URL . '/vista/login/formCrearCuenta.php');
                 }
         }
     }
